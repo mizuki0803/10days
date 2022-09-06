@@ -1,11 +1,7 @@
 #include "Player.h"
 #include "Input.h"
 #include "GameScene.h"
-#include "StraightBullet.h"
-#include "HomingBullet.h"
 
-GameScene* Player::gameScene = nullptr;
-ObjModel* Player::bulletModel = nullptr;
 const Vector2 Player::rotLimit = { 35.0f, 25.0f };
 
 Player* Player::Create(ObjModel* model)
@@ -40,19 +36,6 @@ bool Player::Initialize()
 		return false;
 	}
 
-	//レティクルを生成
-	reticle.reset(Reticle::Create(1, 15.0f, { 100, 100 }));
-	reticle2.reset(Reticle::Create(1, 25.0f, { 50, 50 }));
-
-
-	//HPバー生成
-	const Vector2 hpBarPosition = { 20, 20 };
-	hpBar.reset(PlayerHPBar::Create(2, hpBarPosition, maxHP));
-	//HPバーフレーム生成
-	const float posDiff = 3.0f;	//HPバーの座標との差分
-	const Vector2 hpFramePosition = { hpBarPosition.x - posDiff, hpBarPosition.y - posDiff };
-	hpFrame.reset(PlayerHPFrame::Create(3, hpFramePosition));
-
 	return true;
 }
 
@@ -72,30 +55,6 @@ void Player::Update()
 
 	//オブジェクト更新
 	ObjObject3d::Update();
-
-	//レティクル更新
-	reticle->Update(matWorld, camera->GetMatView(), camera->GetMatProjection());
-	reticle2->Update(matWorld, camera->GetMatView(), camera->GetMatProjection());
-
-	//HPバー更新
-	hpBar->Update();
-	//HPバーフレーム更新
-	hpFrame->Update();
-
-	//攻撃
-	Attack();
-}
-
-void Player::DrawUI()
-{
-	//レティクル描画
-	reticle->Draw();
-	reticle2->Draw();
-
-	//HPバーフレーム描画
-	hpFrame->Draw();
-	//HPバー描画
-	hpBar->Draw();
 }
 
 void Player::OnCollisionDamage(const Vector3& subjectPos)
@@ -108,18 +67,6 @@ void Player::OnCollisionDamage(const Vector3& subjectPos)
 
 	//ノックバック情報をセット
 	SetKnockback(subjectPos);
-
-	//ダメージを喰らったのでHPバーの長さを変更する
-	hpBar->SetChangeLength(HP);
-}
-
-void Player::OnCollisionHeal()
-{
-	//回復
-	Heal();
-
-	//ダメージを喰らったのでHPバーの長さを変更する
-	hpBar->SetChangeLength(HP);
 }
 
 Vector3 Player::GetWorldPos()
@@ -151,17 +98,6 @@ void Player::Damage()
 
 	//ダメージ状態にする
 	isDamage = true;
-}
-
-void Player::Heal()
-{
-	//体力を増やす
-	HP += 10;
-
-	//HPは最大HP以上にならない
-	if (HP >= maxHP) {
-		HP = maxHP;
-	}
 }
 
 void Player::Rotate()
@@ -286,91 +222,6 @@ void Player::Move()
 	position.x = min(position.x, +moveLimit.x);
 	position.y = max(position.y, -moveLimit.y);
 	position.y = min(position.y, +moveLimit.y);
-}
-
-void Player::Attack()
-{
-	Input* input = Input::GetInstance();
-	//発射キーを押したら
-	if (input->PushKey(DIK_SPACE) || input->PushGamePadButton(Input::PAD_B)) {
-		//チャージ時間を加算
-		chargeTimer++;
-
-		//チャージ未完了時
-		if (!isChargeShotMode) {
-			//ホーミング弾に切り替わる時間
-			const int32_t changeModeTime = 60;
-			if (chargeTimer >= changeModeTime) {
-				isChargeShotMode = true;
-			}
-
-			//直進弾発射待機処理
-			if (isStraightShotWait) {
-				straightShotWaitTimer--;
-				if (straightShotWaitTimer <= 0) {
-					//待機終了
-					isStraightShotWait = false;
-				}
-				return;
-			}
-
-			//直進弾発射
-			ShotStraightBullet();
-
-			//直進弾発射待ち時間を設定
-			const int32_t waitTime = 10;
-			//待機開始
-			isStraightShotWait = true;
-			straightShotWaitTimer = waitTime;
-		}
-	}
-	//発射キーを離したら
-	else if (input->ReleaseKey(DIK_SPACE) || input->ReleaseGamePadButton(Input::PAD_B)) {
-		//チャージ完了時
-		if (isChargeShotMode) {
-			//ホーミング弾発射
-			ShotHomingBullet();
-		}
-
-		//次に発射ボタンを押した時にすぐ発射できるよう直進弾の発射待機をリセット
-		isStraightShotWait = false;
-		straightShotWaitTimer = 0;
-		//チャージショット状態をリセット
-		isChargeShotMode = false;
-		chargeTimer = 0;
-	}
-}
-
-void Player::ShotStraightBullet()
-{
-	//発射位置を自機のワールド座標に設定
-	Vector3 shotPos = GetWorldPos();
-
-	//弾の速度を設定
-	const float bulletSpeed = 5;
-	//自機からレティクルへのベクトルに合わせて飛ばす
-	Vector3 velocity = reticle->GetReticle3D()->GetWorldPos() - GetWorldPos();
-	velocity = velocity.normalize() * bulletSpeed;
-
-	//直進弾を生成
-	std::unique_ptr<PlayerBullet> newBullet;
-	newBullet.reset(StraightBullet::Create(bulletModel, shotPos, velocity));
-	gameScene->AddPlayerBullet(std::move(newBullet));
-}
-
-void Player::ShotHomingBullet()
-{
-	//発射位置を自機のワールド座標に設定
-	Vector3 shotPos = GetWorldPos();
-
-	//自機からレティクルへのベクトルに合わせて飛ばす
-	Vector3 velocity = reticle->GetReticle3D()->GetWorldPos() - GetWorldPos();
-	velocity.normalize();
-
-	//ホーミング弾を生成
-	std::unique_ptr<PlayerBullet> newBullet;
-	newBullet.reset(HomingBullet::Create(bulletModel, shotPos, velocity, reticle2->GetReticle2D()->GetLockonEnemy()));
-	gameScene->AddPlayerBullet(std::move(newBullet));
 }
 
 void Player::SetKnockback(const Vector3& subjectPos)

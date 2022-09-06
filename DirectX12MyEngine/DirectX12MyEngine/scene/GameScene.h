@@ -5,16 +5,10 @@
 #include "ParticleManager.h"
 #include "LightGroup.h"
 #include "Camera.h"
-#include "RailCamera.h"
 #include "CollisionShape.h"
 #include "Collision.h"
 #include "Player.h"
-#include "Enemy.h"
-#include "Boss.h"
 #include "Skydome.h"
-#include "HealingItem.h"
-
-#include <sstream>
 
 /// <summary>
 /// ゲームシーン
@@ -52,43 +46,9 @@ public: //メンバ関数
 	/// </summary>
 	void CollisionCheck3d();
 
-	/// <summary>
-	/// 2Dオブジェクトの衝突判定
-	/// </summary>
-	void CollisionCheck2d();
-
-	/// <summary>
-	/// 自機弾を追加する
-	/// </summary>
-	/// <param name="playerBullet">自機弾</param>
-	void AddPlayerBullet(std::unique_ptr<PlayerBullet> playerBullet);
-
-	/// <summary>
-	/// 敵弾を追加する
-	/// </summary>
-	/// <param name="enemyBullet">敵弾</param>
-	void AddEnemyBullet(std::unique_ptr<EnemyBullet> enemyBullet);
-
-	/// <summary>
-	/// 敵発生データ読み込み
-	/// </summary>
-	void LoadEnemySetData();
-
-	/// <summary>
-	/// 敵発生コマンドの更新
-	/// </summary>
-	void UpdateEnemySetCommands();
-
-	/// <summary>
-	/// ボスバトル開始判定処理
-	/// </summary>
-	void BossBattleStart();
-
 private: //メンバ変数
 	//カメラ
-	std::unique_ptr<Camera> normalCamera;
-	//レールカメラ
-	std::unique_ptr<RailCamera> railCamera;
+	std::unique_ptr<Camera> camera;
 
 	//ライト
 	std::unique_ptr<LightGroup> lightGroup;
@@ -121,38 +81,9 @@ private: //メンバ変数
 	std::unique_ptr<ObjModel> modelSkydome;
 	std::unique_ptr<ObjModel> modelSphere;
 	std::unique_ptr<ObjModel> modelFighter;
-	std::unique_ptr<ObjModel> modelBossMainBody;
-	std::unique_ptr<ObjModel> modelBossMainBodySleep;
-	std::unique_ptr<ObjModel> modelBossAvatar;
-	std::unique_ptr<ObjModel> modelBossAvatarSleep;
 
 	//自機
 	std::unique_ptr<Player> player;
-	//自機弾
-	std::list<std::unique_ptr<PlayerBullet>> playerBullets;
-	//敵
-	std::list<std::unique_ptr<Enemy>> enemys;
-	//敵弾
-	std::list<std::unique_ptr<EnemyBullet>> enemyBullets;
-	//敵発生コマンド
-	std::stringstream enemySetCommands;
-	//待機中か
-	bool isWait = false;
-	//待機タイマー
-	int32_t waitTimer = 0;
-	//ボス
-	std::unique_ptr<Boss> boss;
-	//ボス戦中か
-	bool isBossBattle = false;
 	//天球
 	std::unique_ptr<Skydome> objSkydome;
-	//回復アイテム
-	std::list<std::unique_ptr<HealingItem>> healingItems;
-	//ステージクリアか
-	bool isStageClear = false;
-
-
-	//その他変数
-	float soundVol = 0.1f;
-	char str[100];
 };

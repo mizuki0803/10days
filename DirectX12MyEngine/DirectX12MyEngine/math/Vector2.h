@@ -8,6 +8,8 @@ public:
 	//コンストラクタ
 	Vector2();					//零ベクトルとして生成
 	Vector2(float x, float y);	//x成分、y成分を指定しての生成
+	Vector2(const Vector2& vec2);
+	Vector2(const float* array);
 
 	//メンバ関数
 	float length() const;					//ノルム(長さ)を求める
