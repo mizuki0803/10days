@@ -15,6 +15,8 @@ void GameScene::Initialize()
 	//カメラ初期化
 	camera.reset(new Camera());
 	camera->Initialize();
+	//カメラ更新
+	camera->SetAngle({30, 0, 0});
 
 	//ライト生成
 	lightGroup.reset(LightGroup::Create());
@@ -40,15 +42,16 @@ void GameScene::Initialize()
 	//objからモデルデータを読み込む
 	modelSkydome.reset(ObjModel::LoadFromOBJ("skydome"));
 	modelSphere.reset(ObjModel::LoadFromOBJ("sphere", true));
-	modelFighter.reset(ObjModel::LoadFromOBJ("fighter", true));
+	modelSnowBall.reset(ObjModel::LoadFromOBJ("Snowball"));
+	modelRock.reset(ObjModel::LoadFromOBJ("Rock"));
 
-	//自機生成
-	player.reset(Player::Create(modelFighter.get()));
+	//雪玉生成
+	player.reset(Player::Create(modelSnowBall.get()));
 
 	//岩生成
 	for (int i = 0; i < 5; i++) {
 		std::unique_ptr<Rock> newRock;
-		newRock.reset(Rock::Create(modelSphere.get(), { (float)i * 6 - 15, 0, 50 }));
+		newRock.reset(Rock::Create(modelRock.get(), { (float)i * 6 - 15, 0, 10 }));
 		rocks.push_back(std::move(newRock));
 	}
 
@@ -67,6 +70,9 @@ void GameScene::Update()
 	Input* input = Input::GetInstance();
 	//デバッグテキストのインスタンスを取得
 	DebugText* debugText = DebugText::GetInstance();
+
+	//カメラ更新
+	camera->Update();
 
 	//オブジェクト更新
 	//自機

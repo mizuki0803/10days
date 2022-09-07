@@ -81,7 +81,8 @@ private: //メンバ変数
 	//objモデルデータ
 	std::unique_ptr<ObjModel> modelSkydome;
 	std::unique_ptr<ObjModel> modelSphere;
-	std::unique_ptr<ObjModel> modelFighter;
+	std::unique_ptr<ObjModel> modelRock;
+	std::unique_ptr<ObjModel> modelSnowBall;
 
 	//自機
 	std::unique_ptr<Player> player;
