@@ -1,4 +1,4 @@
-#include "TitleScene.h"
+#include "ResultScene.h"
 #include "SceneManager.h"
 #include "Input.h"
 #include "Audio.h"
@@ -13,7 +13,7 @@
 using namespace DirectX;
 
 
-void TitleScene::Initialize()
+void ResultScene::Initialize()
 {
 	//オーディオのインスタンスを取得
 	Audio* audio = Audio::GetInstance();
@@ -47,14 +47,14 @@ void TitleScene::Initialize()
 	//スプライト共通部分のインスタンスを取得
 	SpriteCommon* spriteCommon = SpriteCommon::GetInstance();
 	//スプライト用テクスチャ読み込み
-	spriteCommon->LoadTexture(1, "title.png");
+	spriteCommon->LoadTexture(1, "finish.png");
 
 	//スプライト生成
 	sprite.reset(Sprite::Create(1, { 0, 0 }));
 	sprite->SetSize({ 1280, 720 });
 }
 
-void TitleScene::Update()
+void ResultScene::Update()
 {
 	//入力のインスタンスを取得
 	Input* input = Input::GetInstance();
@@ -73,15 +73,15 @@ void TitleScene::Update()
 
 	//デバックテキスト
 	//X座標,Y座標,縮尺を指定して表示
-	debugText->Print("TITLE SCENE", 1000, 50);
+	debugText->Print("RESULT SCENE", 1000, 50);
 
 	if (input->TriggerKey(DIK_SPACE)) {
 		//シーン切り替え
-		SceneManager::GetInstance()->ChangeScene("GAME");
+		SceneManager::GetInstance()->ChangeScene("TITLE");
 	}
 }
 
-void TitleScene::Draw()
+void ResultScene::Draw()
 {
 	//背景スプライト共通コマンド
 	SpriteCommon::GetInstance()->DrawPrev();
@@ -125,3 +125,4 @@ void TitleScene::Draw()
 
 	///-------パーティクル描画ここまで-------///
 }
+

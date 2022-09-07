@@ -87,8 +87,17 @@
     <Filter Include="ソース ファイル\engine\behaviorTree">
       <UniqueIdentifier>{240114b8-f07a-420e-a5b4-fd60f15f402f}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\gameObject\Rock">
+    <Filter Include="ソース ファイル\gameUI">
+      <UniqueIdentifier>{b660a0ab-6a4e-489e-a59c-8736db77bffb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\gameObject\rock">
       <UniqueIdentifier>{0895f53a-a49c-425a-b76b-025d5d860ade}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\gameObject\snowPlate">
+      <UniqueIdentifier>{6505968d-b0de-48d7-ac2d-33ed045cf489}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\gameUI\snowBallSizeUI">
+      <UniqueIdentifier>{70c48f90-fd5c-4747-a326-e3b5baa168eb}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -192,10 +201,22 @@
       <Filter>ソース ファイル\engine\behaviorTree</Filter>
     </ClCompile>
     <ClCompile Include="gameObject\Rock.cpp">
-      <Filter>ソース ファイル\gameObject\Rock</Filter>
+      <Filter>ソース ファイル\gameObject\rock</Filter>
     </ClCompile>
     <ClCompile Include="SnowBall.cpp">
       <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="gameObject\SnowPlate.cpp">
+      <Filter>ソース ファイル\gameObject\snowPlate</Filter>
+    </ClCompile>
+    <ClCompile Include="scene\ResultScene.cpp">
+      <Filter>ソース ファイル\engine\scene</Filter>
+    </ClCompile>
+    <ClCompile Include="gameUI\NumberSprite.cpp">
+      <Filter>ソース ファイル\gameUI\snowBallSizeUI</Filter>
+    </ClCompile>
+    <ClCompile Include="gameUI\SnowBallSizeUI.cpp">
+      <Filter>ソース ファイル\gameUI\snowBallSizeUI</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -375,10 +396,22 @@
       <Filter>ソース ファイル\engine\behaviorTree</Filter>
     </ClInclude>
     <ClInclude Include="gameObject\Rock.h">
-      <Filter>ソース ファイル\gameObject\Rock</Filter>
+      <Filter>ソース ファイル\gameObject\rock</Filter>
     </ClInclude>
     <ClInclude Include="SnowBall.h">
       <Filter>ソース ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="gameObject\SnowPlate.h">
+      <Filter>ソース ファイル\gameObject\snowPlate</Filter>
+    </ClInclude>
+    <ClInclude Include="scene\ResultScene.h">
+      <Filter>ソース ファイル\engine\scene</Filter>
+    </ClInclude>
+    <ClInclude Include="gameUI\NumberSprite.h">
+      <Filter>ソース ファイル\gameUI\snowBallSizeUI</Filter>
+    </ClInclude>
+    <ClInclude Include="gameUI\SnowBallSizeUI.h">
+      <Filter>ソース ファイル\gameUI\snowBallSizeUI</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

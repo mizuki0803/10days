@@ -10,9 +10,9 @@
 #include "Collision.h"
 
 /// <summary>
-/// タイトルシーン
+/// リザルトシーン
 /// </summary>
-class TitleScene :public BaseScene
+class ResultScene :public BaseScene
 {
 private: // エイリアス
 // Microsoft::WRL::を省略

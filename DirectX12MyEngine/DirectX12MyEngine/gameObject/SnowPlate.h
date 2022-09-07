@@ -2,15 +2,15 @@
 #include "ObjObject3d.h"
 
 /// <summary>
-/// 天球
+/// 雪のフィールド
 /// </summary>
-class Skydome : public ObjObject3d
+class SnowPlate : public ObjObject3d
 {
 public:
 	/// <summary>
 	/// 生成処理
 	/// </summary>
 	/// <param name="model">モデル</param>
-	/// <returns>天球</returns>
-	static Skydome* Create(ObjModel* model);
+	/// <returns>雪のフィールド</returns>
+	static SnowPlate* Create(ObjModel* model, const Vector3& position);
 };
