@@ -87,9 +87,6 @@
     <Filter Include="ソース ファイル\engine\behaviorTree">
       <UniqueIdentifier>{240114b8-f07a-420e-a5b4-fd60f15f402f}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\gameObject\snowball">
-      <UniqueIdentifier>{c58d9d27-3b49-478c-9615-288df5724f0b}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="audio\Audio.cpp">
@@ -190,9 +187,6 @@
     </ClCompile>
     <ClCompile Include="behaviorTree\Sequencer.cpp">
       <Filter>ソース ファイル\engine\behaviorTree</Filter>
-    </ClCompile>
-    <ClCompile Include="SnowBall.cpp">
-      <Filter>ソース ファイル\gameObject\snowball</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -370,9 +364,6 @@
     </ClInclude>
     <ClInclude Include="behaviorTree\Sequencer.h">
       <Filter>ソース ファイル\engine\behaviorTree</Filter>
-    </ClInclude>
-    <ClInclude Include="SnowBall.h">
-      <Filter>ソース ファイル\gameObject\snowball</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
