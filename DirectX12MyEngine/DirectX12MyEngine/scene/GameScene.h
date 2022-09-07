@@ -8,6 +8,7 @@
 #include "CollisionShape.h"
 #include "Collision.h"
 #include "Player.h"
+#include "Rock.h"
 #include "Skydome.h"
 
 /// <summary>
@@ -84,6 +85,8 @@ private: //ƒƒ“ƒo•Ï”
 
 	//©‹@
 	std::unique_ptr<Player> player;
+	//Šâ
+	std::list<std::unique_ptr<Rock>> rocks;
 	//“V‹…
 	std::unique_ptr<Skydome> objSkydome;
 };
