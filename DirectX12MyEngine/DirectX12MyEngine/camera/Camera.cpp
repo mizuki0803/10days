@@ -61,6 +61,10 @@ void Camera::UpdateAngle()
 
 void Camera::UpdateMatView()
 {
+	//シェイク状態ならカメラをシェイクさせる
+	if (isShake) {
+		Shake();
+	}
 	//視点座標
 	XMVECTOR eyePosition = XMLoadFloat3(&XMFLOAT3(eye.x, eye.y, eye.z));
 	//注視店座標
@@ -176,4 +180,46 @@ void Camera::MoveTargetVector(const Vector3& move)
 	target_moved += move;
 
 	SetTarget(target_moved);
+}
+
+void Camera::ShakeStart(float shakeTime, float shakePower)
+{
+	//シェイクタイマーをリセット
+	shakeTimer = 0;
+	//シェイク状態にする
+	isShake = true;
+	//シェイクする時間をセット
+	this->shakeTime = shakeTime;
+	//シェイクの強さをセット
+	this->shakePower = shakePower;
+}
+
+void Camera::Shake()
+{
+	//タイマーをカウント
+	shakeTimer++;
+	const float time = shakeTimer / shakeTime;
+
+	//シェイクする値を計算
+	const float randShake = shakePower * (1 - time);
+	Vector3 shake{};
+
+	//ゼロ除算を避けるために0の場合はランダムを生成しない
+	if (!((int)randShake == 0)) {
+		shake.x = (float)((rand() % (int)randShake) - randShake / 2);
+		shake.y = (float)((rand() % (int)randShake) - randShake / 2);
+		shake.z = (float)((rand() % (int)randShake) - randShake / 2);
+	}
+
+	//値が大きいので割り算して小さくする
+	const float div = 100;
+	shake /= div;
+
+	//カメラにシェイクの値を加算
+	eye += shake;
+
+	//シェイクが完了したらシェイク状態を解除
+	if (shakeTimer >= shakeTime) {
+		isShake = false;
+	}
 }

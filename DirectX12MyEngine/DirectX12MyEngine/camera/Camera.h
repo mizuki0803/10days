@@ -61,6 +61,12 @@ public:
 	/// <param name="move">移動量</param>
 	void MoveTargetVector(const Vector3& move);
 
+	/// <summary>
+	/// シェイク開始
+	/// </summary>
+	/// <param name="shakeTime">シェイク時間</param>
+	/// <param name="shakePower">シェイクの強さ</param>
+	void ShakeStart(float shakeTime, float shakePower);
 
 	//getter
 	const Vector3& GetEye() { return eye; }
@@ -78,7 +84,13 @@ public:
 	void SetTarget(const Vector3& target) { this->target = target; dirtyView = true; }
 	void SetAngle(const Vector3& angle) { this->angle = angle; dirtyAngle = true; }
 	void SetDistance(const float distance) { this->distance = distance; dirtyAngle = true; }
-	
+
+protected:
+	/// <summary>
+	/// シェイク
+	/// </summary>
+	void Shake();
+
 protected:
 	//ワールド変換行列
 	DirectX::XMMATRIX matWorld = {};
@@ -100,6 +112,14 @@ protected:
 	Vector3 angle = { 0.0f, 0.0f, 0.0f };
 	//targetからカメラまでの距離
 	float distance = 10.0f;
+	//シェイクするか
+	bool isShake = false;
+	//カメラシェイク用タイマー
+	int32_t shakeTimer = 0;
+	//カメラシェイクする時間
+	float shakeTime = 0;
+	//シェイクする強さ
+	float shakePower = 0;
 	//ダーティフラグ
 	bool dirtyAngle = false;
 	bool dirtyView = false;

@@ -87,6 +87,21 @@ void GameScene::Update()
 	//衝突判定管理
 	CollisionCheck3d();
 
+	//とりあえず雪玉にカメラ追従させる
+	camera->SetTarget(player->GetPosition());
+	Vector3 eyePos = player->GetPosition();
+	eyePos.x = 0;
+	eyePos.y += 10;
+	eyePos.z -= 15;
+	camera->SetEye(eyePos);
+	Vector3 targetPos = player->GetPosition();
+	targetPos.x = 0;
+	targetPos.z += 5;
+	camera->SetTarget(targetPos);
+	if (input->TriggerKey(DIK_SPACE)) {
+		camera->ShakeStart(30, 100);
+	}
+
 	//デバックテキスト
 	//X座標,Y座標,縮尺を指定して表示
 	debugText->Print("GAME SCENE", 1000, 50);
@@ -163,6 +178,9 @@ void GameScene::CollisionCheck3d()
 		if (isCollision) {
 			//自機のダメージ用コールバック関数を呼び出す
 			player->OnCollisionDamage(posB);
+
+			//カメラシェイクを開始
+			camera->ShakeStart(30, 100);
 		}
 	}
 #pragma endregion
