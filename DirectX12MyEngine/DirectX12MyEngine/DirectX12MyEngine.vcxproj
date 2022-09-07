@@ -174,6 +174,7 @@
     <ClCompile Include="collision\CollisionShape.cpp" />
     <ClCompile Include="effect\Easing.cpp" />
     <ClCompile Include="gameObject\Player.cpp" />
+    <ClCompile Include="gameObject\Rock.cpp" />
     <ClCompile Include="gameObject\Skydome.cpp" />
     <ClCompile Include="input\Input.cpp" />
     <ClCompile Include="light\LightGroup.cpp" />
@@ -299,6 +300,7 @@
     <ClInclude Include="collision\CollisionShape.h" />
     <ClInclude Include="effect\Easing.h" />
     <ClInclude Include="gameObject\Player.h" />
+    <ClInclude Include="gameObject\Rock.h" />
     <ClInclude Include="gameObject\Skydome.h" />
     <ClInclude Include="input\Input.h" />
     <ClInclude Include="light\CircleShadow.h" />

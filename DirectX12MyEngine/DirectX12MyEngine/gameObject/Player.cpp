@@ -226,8 +226,8 @@ void Player::Move()
 
 void Player::SetKnockback(const Vector3& subjectPos)
 {
-	//ノックバックする方向を決める(対象のワールド座標 - 自機のワールド座標)
-	knockbackVec = subjectPos - GetWorldPos();
+	//ノックバックする方向を決める(自機のワールド座標 - 対象のワールド座標)
+	knockbackVec = GetWorldPos() - subjectPos;
 	//ベクトルを正規化
 	knockbackVec.normalize();
 
@@ -252,7 +252,7 @@ void Player::Knockback()
 
 	//自機をノックバックさせる
 	const float speed = 0.2f;
-	position += knockbackVel *= speed;
+	position.x += knockbackVel.x *= speed;
 
 	//移動限界から出ないようにする
 	const Vector2 moveLimit = { 10.0f, 5.0f };

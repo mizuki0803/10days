@@ -6,7 +6,6 @@
 #include "DebugText.h"
 #include "Easing.h"
 #include <cassert>
-//kakuninn kairin
 
 using namespace DirectX;
 
@@ -46,6 +45,13 @@ void GameScene::Initialize()
 	//自機生成
 	player.reset(Player::Create(modelFighter.get()));
 
+	//岩生成
+	for (int i = 0; i < 5; i++) {
+		std::unique_ptr<Rock> newRock;
+		newRock.reset(Rock::Create(modelSphere.get(), { (float)i * 6 - 15, 0, 10 }));
+		rocks.push_back(std::move(newRock));
+	}
+
 	//天球生成
 	objSkydome.reset(Skydome::Create(modelSkydome.get()));
 
@@ -65,6 +71,10 @@ void GameScene::Update()
 	//オブジェクト更新
 	//自機
 	player->Update();
+	//岩
+	for (const std::unique_ptr<Rock>& rock : rocks) {
+		rock->Update();
+	}
 	//天球
 	objSkydome->Update();
 
@@ -89,6 +99,10 @@ void GameScene::Draw()
 
 	//自機
 	player->Draw();
+	//岩
+	for (const std::unique_ptr<Rock>& rock : rocks) {
+		rock->Draw();
+	}
 	//天球
 	objSkydome->Draw();
 
@@ -99,7 +113,7 @@ void GameScene::Draw()
 	SpriteCommon::GetInstance()->DrawPrev();
 	///-------スプライト描画ここから-------///
 
-	
+
 
 
 	///-------スプライト描画ここまで-------///
@@ -120,32 +134,30 @@ void GameScene::Draw()
 void GameScene::CollisionCheck3d()
 {
 	//判定対象の座標
-//	Vector3 posA, posB;
-//	float radiusA, radiusB;
+	Vector3 posA, posB;
+	float radiusA, radiusB;
 
-//#pragma region 自機と敵の衝突判定
-//	//自機座標
-//	posA = player->GetWorldPos();
-//	//自機半径
-//	radiusA = player->GetScale().x;
-//
-//	//自機と全ての敵の衝突判定
-//	for (const std::unique_ptr<Enemy>& enemy : enemys) {
-//		//敵座標
-//		posB = enemy->GetWorldPos();
-//		//敵半径
-//		radiusB = enemy->GetScale().x;
-//
-//		//球と球の衝突判定を行う
-//		bool isCollision = Collision::CheckSphereToSphere(posA, posB, radiusA, radiusB);
-//
-//		//衝突していたら
-//		if (isCollision) {
-//			//自機のダメージ用コールバック関数を呼び出す
-//			player->OnCollisionDamage(posB);
-//			//カメラをシェイクさせる
-//			railCamera->ShakeStart();
-//		}
-//	}
-//#pragma endregion
+#pragma region 自機と敵の衝突判定
+	//自機座標
+	posA = player->GetWorldPos();
+	//自機半径
+	radiusA = player->GetScale().x;
+
+	//自機と全ての岩の衝突判定
+	for (const std::unique_ptr<Rock>& rock : rocks) {
+		//敵座標
+		posB = rock->GetWorldPos();
+		//敵半径
+		radiusB = rock->GetScale().x;
+
+		//球と球の衝突判定を行う
+		bool isCollision = Collision::CheckSphereToSphere(posA, posB, radiusA, radiusB);
+
+		//衝突していたら
+		if (isCollision) {
+			//自機のダメージ用コールバック関数を呼び出す
+			player->OnCollisionDamage(posB);
+		}
+	}
+#pragma endregion
 }
