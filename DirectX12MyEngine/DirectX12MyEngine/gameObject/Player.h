@@ -88,7 +88,7 @@ private: //静的メンバ変数
 	//最大体力
 	static const int maxHP = 100;
 	//スピードに掛ける値
-	const float speedRate = 0.05;
+	const float speedRate = 0.02f;
 	//scaleに掛ける値
 	const float scaleRate = 0.005f;
 

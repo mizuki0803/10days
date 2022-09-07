@@ -115,7 +115,6 @@ void Player::Rotate()
 	const float backSpeed = rotSpeed / 1.5f;
 	Vector3 rot = { 0, 0, 0 };
 
-
 	//どこまで傾けたら判定をとるか
 	const float stickNum = 200;
 	//y軸回転
@@ -151,63 +150,13 @@ void Player::Rotate()
 	}
 	//x軸回転
 	{
-		//キー入力で回転させる
-		if (input->PushKey(DIK_W) || input->PushKey(DIK_S)) {
-			if (input->PushKey(DIK_W)) { rot.x -= rotSpeed; }
-			if (input->PushKey(DIK_S)) { rot.x += rotSpeed; }
-		}
-
-		//パッドスティックY軸の判定を取る
-		else if (input->TiltGamePadLStickY(stickNum) || input->TiltGamePadLStickY(-stickNum)) {
-			//自機はスティックを倒した方向に動く
-			const float padRota = input->GetPadLStickAngle();
-			const float moveAngle = XMConvertToRadians(padRota);
-			const float padStickIncline = input->GetPadLStickIncline().y;
-			rot.x = rotSpeed * sinf(moveAngle) * fabsf(padStickIncline);
-		}
-		//キー入力なし&スティックを倒していない場合
-		else {
-			//x軸回転の傾きを修正する
-			if (rotation.x > 1.0f) {
-				rot.x -= backSpeed;
-			}
-			else if (rotation.x < -1.0f) {
-				rot.x += backSpeed;
-			}
-			else {
-				rotation.x = 0;
-			}
-		}
-	}
-	//z軸回転
-	{
-		//動きがないと寂しいのでゆらゆらさせておく
-		const float rotZSpeed = 0.03f;
-		const float rotZLimit = 0.8f;
-		//右回転
-		if (isRotZRight) {
-			swayZ += rotZSpeed;
-			if (swayZ >= rotZLimit) {
-				isRotZRight = false;
-			}
-		}
-		//左回転
-		else {
-			swayZ -= rotZSpeed;
-			if (swayZ <= -rotZLimit) {
-				isRotZRight = true;
-			}
-		}
-
-		rotation.z = -rotation.y + swayZ;
+		rot.x = rotSpeed * (scale.x);
 	}
 
 	//回転の更新
 	rotation += rot;
 
 	//角度の限界値からはみ出さない
-	rotation.x = max(rotation.x, -rotLimit.x);
-	rotation.x = min(rotation.x, +rotLimit.x);
 	rotation.y = max(rotation.y, -rotLimit.y);
 	rotation.y = min(rotation.y, +rotLimit.y);
 }
@@ -301,6 +250,6 @@ void Player::ChangeScale()
 
 float Player::VelicityZ(float time)
 {
-	float velZ = speedRate * time;
+	float velZ = (speedRate + scale.x / 50) * time;
 	return velZ;
 }
