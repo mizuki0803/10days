@@ -194,6 +194,9 @@
     <ClCompile Include="gameObject\Rock.cpp">
       <Filter>ソース ファイル\gameObject\Rock</Filter>
     </ClCompile>
+    <ClCompile Include="SnowBall.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\shaders\Basic.hlsli">
@@ -373,6 +376,9 @@
     </ClInclude>
     <ClInclude Include="gameObject\Rock.h">
       <Filter>ソース ファイル\gameObject\Rock</Filter>
+    </ClInclude>
+    <ClInclude Include="SnowBall.h">
+      <Filter>ソース ファイル</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
