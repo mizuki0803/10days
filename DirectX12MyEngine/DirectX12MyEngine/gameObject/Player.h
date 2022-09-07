@@ -72,6 +72,11 @@ private: //メンバ関数
 	void Knockback();
 
 	/// <summary>
+	/// ノックバック
+	/// </summary>
+	void ChangeScale();
+
+	/// <summary>
 	/// 移動量Zの計算
 	/// </summary>
 	float VelicityZ(float time);
@@ -84,6 +89,8 @@ private: //静的メンバ変数
 	static const int maxHP = 100;
 	//スピードに掛ける値
 	const float speedRate = 0.05;
+	//scaleに掛ける値
+	const float scaleRate = 0.005f;
 
 private: //メンバ変数
 	//体力
@@ -106,4 +113,6 @@ private: //メンバ変数
 	float time = 0.00f;
 	//ゴールの位置
 	float goalPosition = 100.0f;
+	//サイズ
+	float ballScale = 1.0f;
 };

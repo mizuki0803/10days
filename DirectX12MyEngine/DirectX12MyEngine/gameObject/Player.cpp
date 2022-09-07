@@ -29,7 +29,7 @@ Player* Player::Create(ObjModel* model)
 bool Player::Initialize()
 {
 	position = { 0 ,1 ,10 };
-	scale = { 1.5f, 1.5f, 1.5f };
+	scale = { 1.0f, 1.0f, 1.0f };
 
 	//3Dオブジェクトの初期化
 	if (!ObjObject3d::Initialize()) {
@@ -43,6 +43,8 @@ void Player::Update()
 {
 	//回転
 	Rotate();
+
+	ChangeScale();
 
 	//ダメージ状態ならノックバックする
 	if (isDamage) {
@@ -276,6 +278,25 @@ void Player::Knockback()
 		isDamage = false;
 		color = { 1,1,1,1 };
 	}
+}
+
+void Player::ChangeScale()
+{
+	if (isDamage) {
+		ballScale = 1.0f;
+	}
+	else
+	{
+		if (ballScale < 5.0f)
+		{
+			ballScale += scaleRate;
+		}
+		else
+		{
+			ballScale = 5.0f;
+		}
+	}
+	scale = { ballScale,ballScale,ballScale };
 }
 
 float Player::VelicityZ(float time)
