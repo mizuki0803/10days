@@ -71,11 +71,19 @@ private: //メンバ関数
 	/// </summary>
 	void Knockback();
 
+	/// <summary>
+	/// 移動量Zの計算
+	/// </summary>
+	float VelicityZ(float time);
+
+
 private: //静的メンバ変数
 	//自機の回転限界
 	static const Vector2 rotLimit;
 	//最大体力
 	static const int maxHP = 100;
+	//スピードに掛ける値
+	const float speedRate = 0.05;
 
 private: //メンバ変数
 	//体力
@@ -94,4 +102,8 @@ private: //メンバ変数
 	bool isRotZRight = true;
 	//z軸ゆらゆら回転用
 	float swayZ = 0.0f;
+	//時間
+	float time = 0.00f;
+	//ゴールの位置
+	float goalPosition = 100.0f;
 };

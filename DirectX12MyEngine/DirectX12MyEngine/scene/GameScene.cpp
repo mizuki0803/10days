@@ -48,7 +48,7 @@ void GameScene::Initialize()
 	//ä‚ê∂ê¨
 	for (int i = 0; i < 5; i++) {
 		std::unique_ptr<Rock> newRock;
-		newRock.reset(Rock::Create(modelSphere.get(), { (float)i * 6 - 15, 0, 10 }));
+		newRock.reset(Rock::Create(modelSphere.get(), { (float)i * 6 - 15, 0, 50 }));
 		rocks.push_back(std::move(newRock));
 	}
 
