@@ -94,6 +94,9 @@ void Player::Damage()
 		HP = 0;
 	}
 
+	//雪玉の時間を0にする(移動量用)
+	time = 0.00f;
+
 	color = { 1,0,0,1 };
 
 	//ダメージ状態にする
@@ -209,19 +212,24 @@ void Player::Rotate()
 
 void Player::Move()
 {
+	//移動量用のタイマー
+	time += 0.02f;
 	//自機が傾いている角度に移動させる
 	Vector3 move = { 0, 0, 0 };
 	const float moveSpeed = 0.15f;
 	move.x = moveSpeed * (rotation.y / rotLimit.y);
-	move.y = moveSpeed * -(rotation.x / rotLimit.x);
+	//move.y = moveSpeed * -(rotation.x / rotLimit.x);
+	move.z = VelicityZ(time);
 	position += move;
 
-	//移動限界から出ないようにする
-	const Vector2 moveLimit = { 10.0f, 5.0f };
+	//移動限界から出ないようにする(Zを追加したのでVector3にした)
+	const Vector3 moveLimit = { 10.0f, 5.0f, goalPosition };
 	position.x = max(position.x, -moveLimit.x);
 	position.x = min(position.x, +moveLimit.x);
 	position.y = max(position.y, -moveLimit.y);
 	position.y = min(position.y, +moveLimit.y);
+	position.z = max(position.z, -moveLimit.z);
+	position.z = min(position.z, +moveLimit.z);
 }
 
 void Player::SetKnockback(const Vector3& subjectPos)
@@ -254,16 +262,24 @@ void Player::Knockback()
 	const float speed = 0.2f;
 	position.x += knockbackVel.x *= speed;
 
-	//移動限界から出ないようにする
-	const Vector2 moveLimit = { 10.0f, 5.0f };
+	//移動限界から出ないようにする(Zを追加したのでVector3にした)
+	const Vector3 moveLimit = { 10.0f, 5.0f, goalPosition };
 	position.x = max(position.x, -moveLimit.x);
 	position.x = min(position.x, +moveLimit.x);
 	position.y = max(position.y, -moveLimit.y);
 	position.y = min(position.y, +moveLimit.y);
+	position.z = max(position.z, -moveLimit.z);
+	position.z = min(position.z, +moveLimit.z);
 
 	//ノックバックが終了したらダメージ状態を解除する
 	if (knockbackTimer >= knockbackTime) {
 		isDamage = false;
 		color = { 1,1,1,1 };
 	}
+}
+
+float Player::VelicityZ(float time)
+{
+	float velZ = speedRate * time;
+	return velZ;
 }
