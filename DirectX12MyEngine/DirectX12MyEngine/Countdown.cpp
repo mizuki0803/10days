@@ -23,8 +23,8 @@ bool Countdown::Initialize(UINT texNumber, const Vector2& position, const Vector
 	for (int i = 0; i < 4; i++) {
 		std::unique_ptr<NumberSprite> newNumberSprite;
 
-		Vector2 pos = position;
-		pos.x -= i * size.x;
+		pos = position;
+		pos.x += (i * 400) - 1300;
 		pos.x += size.x * 3;
 
 		newNumberSprite.reset(NumberSprite::Create(texNumber, pos, size));
@@ -39,6 +39,8 @@ void Countdown::Update()
 	BeforeStart();
 	//雪玉の大きさに応じて数字変更
 	ChangeNumber();
+	//移動処理
+	Move();
 
 	//スプライト描画
 	for (int i = 0; i < numberSprites.size(); i++)
@@ -50,9 +52,17 @@ void Countdown::Update()
 void Countdown::Draw()
 {
 	//スプライト描画
-	for (int i = 0; i < numberSprites.size(); i++)
+	if (isThree)
 	{
-		numberSprites[i]->Draw();
+		numberSprites[1]->Draw();
+	}
+	if (isTwo)
+	{
+		numberSprites[2]->Draw();
+	}
+	if (isOne)
+	{
+		numberSprites[3]->Draw();
 	}
 }
 
@@ -77,10 +87,12 @@ void Countdown::BeforeStart()
 		}
 		if (countTime == 120)
 		{
+			isOne = false;
 			isTwo = true;
 		}
 		if (countTime == 60)
 		{
+			isTwo = false;
 			isThree = true;
 		}
 	}
@@ -92,4 +104,27 @@ void Countdown::BeforeStart()
 		isThree = false;
 	}
 }
+
+void Countdown::Move()
+{
+	if (isOne)
+	{
+		numberSprites[3]->SetPosition({ 1040,120 });
+		numberSprites[2]->SetPosition({ 640,120 });
+		numberSprites[1]->SetPosition({ 240,120 });
+	}
+	if (isTwo)
+	{
+		numberSprites[3]->SetPosition({ 1440,120 });
+		numberSprites[2]->SetPosition({ 1040,120 });
+		numberSprites[1]->SetPosition({ 640,120 });
+	}
+	if (isThree)
+	{
+		numberSprites[3]->SetPosition({ 1840,120 });
+		numberSprites[2]->SetPosition({ 1440,120 });
+		numberSprites[1]->SetPosition({ 1040,120 });
+	}
+}
+
 

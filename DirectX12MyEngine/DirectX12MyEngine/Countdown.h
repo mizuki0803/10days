@@ -1,6 +1,7 @@
 #pragma once
 #include "NumberSprite.h"
 #include "Player.h"
+#include "Easing.h"
 
 /// <summary>
 /// 雪玉の大きさを表示するUI
@@ -35,6 +36,12 @@ public: //メンバ関数
 	/// </summary>
 	void BeforeStart();
 
+	/// <summary>
+	/// 移動処理
+	/// </summary>
+	void Move();
+
+
 	//getter
 	bool GetIsStart() { return isStart; }
 
@@ -48,6 +55,8 @@ private: //メンバ関数
 private: //メンバ変数
 	//雪玉
 	Player* player = nullptr;
+
+	Vector2 pos = { 0, 0 };
 	//数字スプライト
 	std::vector<std::unique_ptr<NumberSprite>> numberSprites;
 
