@@ -96,8 +96,23 @@ void Player::Damage()
 		HP = 0;
 	}
 
-	//雪玉の時間を0にする(移動量用)
-	time = 0.00f;
+	//今はノックバックがあるので正確な挙動にはなっていない
+	if (ballScale < 2.0f)
+	{
+		//雪玉の時間を0にする(移動量用)
+		time /= 2.0f;
+	}
+	else if (ballScale < 3.0f)
+	{
+		//雪玉の時間を0にする(移動量用)
+		time /= 1.5f;
+	}
+	else if (ballScale < 4.0f)
+	{
+		//雪玉の時間を0にする(移動量用)
+		time = 1.2f;
+	}
+
 
 	color = { 1,0,0,1 };
 
@@ -231,8 +246,24 @@ void Player::Knockback()
 
 void Player::ChangeScale()
 {
-	if (isDamage) {
-		ballScale = 1.0f;
+	if (isDamage)
+	{
+		if (ballScale < 2.0f)
+		{
+			ballScale = 1.0f;
+		}
+		else if (ballScale < 3.0f)
+		{
+			ballScale / 1.5;
+		}
+		else if (ballScale < 4.0f)
+		{
+			ballScale / 1.2;
+		}
+		else
+		{
+			ballScale / 1.05;
+		}
 	}
 	else
 	{
