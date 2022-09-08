@@ -13,6 +13,7 @@
 #include "Skydome.h"
 #include "SnowPlate.h"
 #include "Countdown.h"
+#include <sstream>
 
 /// <summary>
 /// ゲームシーン
@@ -50,6 +51,16 @@ public: //メンバ関数
 	/// </summary>
 	void CollisionCheck3d();
 
+	/// <summary>
+	/// 障害物csvデータ読み込み
+	/// </summary>
+	void LoadObstacleSetData();
+
+	/// <summary>
+	/// 障害物セット
+	/// </summary>
+	void ObstacleSet();
+
 private: //メンバ変数
 	//カメラ
 	std::unique_ptr<Camera> camera;
@@ -83,7 +94,6 @@ private: //メンバ変数
 
 	//objモデルデータ
 	std::unique_ptr<ObjModel> modelSkydome;
-	std::unique_ptr<ObjModel> modelSphere;
 	std::unique_ptr<ObjModel> modelRock;
 	std::unique_ptr<ObjModel> modelSnowBall;
 	std::unique_ptr<ObjModel> modelSnowPlate;
@@ -94,6 +104,8 @@ private: //メンバ変数
 	std::unique_ptr<SnowBallSizeUI> snowBallSizeUI;
 	//岩
 	std::list<std::unique_ptr<Rock>> rocks;
+	//障害物コマンド
+	std::stringstream obstacleSetCommands;
 	//天球
 	std::unique_ptr<Skydome> skydome;
 	//雪のフィールド

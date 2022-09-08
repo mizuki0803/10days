@@ -22,6 +22,9 @@ Rock* Rock::Create(ObjModel* model, const Vector3& position)
 	//座標をセット
 	rock->position = position;
 
+	//座標をセット
+	rock->scale = { 2.5f, 2.5f, 2.5f };
+
 	return rock;
 }
 

@@ -182,7 +182,7 @@ void Player::Move()
 	time += 0.02f;
 	//Ž©‹@‚ªŒX‚¢‚Ä‚¢‚éŠp“x‚ÉˆÚ“®‚³‚¹‚é
 	Vector3 move = { 0, 0, 0 };
-	const float moveSpeed = 0.15f;
+	const float moveSpeed = 0.4f * ((scale.x * scale.x) / 10);
 	move.x = moveSpeed * (rotation.y / rotLimit.y);
 	//move.y = moveSpeed * -(rotation.x / rotLimit.x);
 	move.z = VelicityZ(time);
@@ -254,15 +254,15 @@ void Player::ChangeScale()
 		}
 		else if (ballScale < 3.0f)
 		{
-			ballScale /= 1.5;
+			ballScale /= 1.5f;
 		}
 		else if (ballScale < 4.0f)
 		{
-			ballScale /= 1.2;
+			ballScale /= 1.2f;
 		}
 		else
 		{
-			ballScale /= 1.05;
+			ballScale /= 1.05f;
 		}
 	}
 	else

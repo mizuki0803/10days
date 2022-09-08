@@ -6,6 +6,8 @@
 #include "DebugText.h"
 #include "Easing.h"
 #include <cassert>
+#include <fstream>
+#include <iomanip>
 
 using namespace DirectX;
 
@@ -40,7 +42,6 @@ void GameScene::Initialize()
 
 	//objからモデルデータを読み込む
 	modelSkydome.reset(ObjModel::LoadFromOBJ("skydome"));
-	modelSphere.reset(ObjModel::LoadFromOBJ("sphere", true));
 	modelSnowBall.reset(ObjModel::LoadFromOBJ("Snowball", true));
 	modelRock.reset(ObjModel::LoadFromOBJ("Rock"));
 	modelSnowPlate.reset(ObjModel::LoadFromOBJ("Snowplate"));
@@ -56,17 +57,14 @@ void GameScene::Initialize()
 	countdown.reset(Countdown::Create(2, { 640, 120 }, { 32, 48 }));
 
 	//岩生成
-	for (int i = 0; i < 5; i++) {
-		std::unique_ptr<Rock> newRock;
-		newRock.reset(Rock::Create(modelRock.get(), { (float)i * 6 - 15, 0, 30 }));
-		rocks.push_back(std::move(newRock));
-	}
+	LoadObstacleSetData();
+	ObstacleSet();
 
 	//天球生成
 	skydome.reset(Skydome::Create(modelSkydome.get()));
 	//雪のフィールド生成
 	for (int i = 0; i < 3; i++) {
-		for (int j = 0; j < 20; j++) {
+		for (int j = 0; j < 35; j++) {
 			std::unique_ptr<SnowPlate> newSnowPlate;
 
 			Vector3 pos = { -50 + (float)(50 * i), 0, (float)(50 * j) };
@@ -231,4 +229,60 @@ void GameScene::CollisionCheck3d()
 		}
 	}
 #pragma endregion
+}
+
+void GameScene::LoadObstacleSetData()
+{
+	//ファイルを開く
+	std::ifstream file;
+	file.open("Resources/obstacleSet.csv");
+	assert(file.is_open());
+
+	//ファイルの内容を文字列ストリームにコピー
+	obstacleSetCommands << file.rdbuf();
+
+	//ファイルを閉じる
+	file.close();
+}
+
+void GameScene::ObstacleSet()
+{
+	//1行分の文字列を入れる変数
+	std::string line;
+	//csvファイルの数字を入れておく2重vector
+	std::vector<std::vector<int>> mapData;
+	//行数
+	int lineNum = 0;
+
+	//全ての行を読み取る
+	while (getline(obstacleSetCommands, line)) {
+		//1行分の文字列をストリーム変換して解析しやすく
+		std::istringstream line_stream(line);
+		//1文字を入れる変数
+		std::string word;
+
+		//行数を増やす
+		lineNum++;
+		mapData.resize(lineNum);
+
+		//行の全ての文字を読み取る
+		while (std::getline(line_stream, word, ',')) {
+			//要素番号は0からなので、行番号 - 1
+			const int elementNumber = lineNum - 1;
+			//文字を記録
+			mapData[elementNumber].push_back(std::atoi(word.c_str()));
+		}
+	}
+
+	//読み込んだデータを元に障害物を設置する
+	for (int i = 0; i < mapData.size(); i++) {
+		for (int j = 0; j < mapData[i].size(); j++) {
+			//1のときは岩をセット
+			if (mapData[i][j] == 1) {
+				std::unique_ptr<Rock> newRock;
+				newRock.reset(Rock::Create(modelRock.get(), { (float)j * 5 - 17.5f, 0, (float)i * 50 + 30 }));
+				rocks.push_back(std::move(newRock));
+			}
+		}
+	}
 }

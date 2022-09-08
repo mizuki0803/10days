@@ -25,17 +25,11 @@ NumberSprite* NumberSprite::Create(UINT texNumber, const Vector2& position, cons
 	return numberSprite;
 }
 
-void NumberSprite::Update()
+void NumberSprite::SetNumber(const int number)
 {
-	//表示する数字を更新
-	UpdateNumber();
+	//数字を更新
+	this->number = number;
 
-	//スプライト更新
-	Sprite::Update();
-}
-
-void NumberSprite::UpdateNumber()
-{
 	//スプライトの左上切り出し座標をテクスチャサイズ * 数字で算出する
 	texLeftTop.x = texSize.x * number;
 }

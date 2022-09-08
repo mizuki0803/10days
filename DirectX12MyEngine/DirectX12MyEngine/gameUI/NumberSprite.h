@@ -15,20 +15,10 @@ public:
 
 public: //メンバ関数
 	/// <summary>
-	/// 更新
-	/// </summary>
-	void Update() override;
-
-	/// <summary>
-	/// 表示する番号を更新
-	/// </summary>
-	void UpdateNumber();
-
-	/// <summary>
 	/// 表示する番号をセット
 	/// </summary>
 	/// <param name="number">表示する番号(0～9, 10は.)</param>
-	void SetNumber(const int number) { this->number = number; }
+	void SetNumber(const int number);
 
 private: //メンバ変数
 	//表示する番号
