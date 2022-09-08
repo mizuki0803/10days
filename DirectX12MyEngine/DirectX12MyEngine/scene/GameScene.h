@@ -12,6 +12,7 @@
 #include "Rock.h"
 #include "Skydome.h"
 #include "SnowPlate.h"
+#include "Countdown.h"
 
 /// <summary>
 /// ゲームシーン
@@ -97,4 +98,6 @@ private: //メンバ変数
 	std::unique_ptr<Skydome> skydome;
 	//雪のフィールド
 	std::list < std::unique_ptr<SnowPlate>> snowPlates;
+	//カウントダウン
+	std::unique_ptr<Countdown> countdown;
 };

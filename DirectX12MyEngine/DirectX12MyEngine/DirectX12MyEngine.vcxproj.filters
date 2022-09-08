@@ -218,6 +218,9 @@
     <ClCompile Include="gameUI\SnowBallSizeUI.cpp">
       <Filter>ソース ファイル\gameUI\snowBallSizeUI</Filter>
     </ClCompile>
+    <ClCompile Include="Countdown.cpp">
+      <Filter>ソース ファイル\gameUI\snowBallSizeUI</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\shaders\Basic.hlsli">
@@ -411,6 +414,9 @@
       <Filter>ソース ファイル\gameUI\snowBallSizeUI</Filter>
     </ClInclude>
     <ClInclude Include="gameUI\SnowBallSizeUI.h">
+      <Filter>ソース ファイル\gameUI\snowBallSizeUI</Filter>
+    </ClInclude>
+    <ClInclude Include="Countdown.h">
       <Filter>ソース ファイル\gameUI\snowBallSizeUI</Filter>
     </ClInclude>
   </ItemGroup>

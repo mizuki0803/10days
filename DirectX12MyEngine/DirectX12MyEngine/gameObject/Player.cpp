@@ -110,7 +110,7 @@ void Player::Damage()
 	else if (ballScale < 4.0f)
 	{
 		//á‹Ê‚ÌŽžŠÔ‚ð0‚É‚·‚é(ˆÚ“®—Ê—p)
-		time = 1.2f;
+		time /= 1.2f;
 	}
 
 
@@ -189,7 +189,7 @@ void Player::Move()
 	position += move;
 
 	//ˆÚ“®ŒÀŠE‚©‚ço‚È‚¢‚æ‚¤‚É‚·‚é(Z‚ð’Ç‰Á‚µ‚½‚Ì‚ÅVector3‚É‚µ‚½)
-	const Vector3 moveLimit = { 10.0f, 5.0f, goalPosition };
+	const Vector3 moveLimit = { 20.0f, 5.0f, goalPosition };
 	position.x = max(position.x, -moveLimit.x);
 	position.x = min(position.x, +moveLimit.x);
 	position.y = max(position.y, -moveLimit.y);
@@ -254,15 +254,15 @@ void Player::ChangeScale()
 		}
 		else if (ballScale < 3.0f)
 		{
-			ballScale / 1.5;
+			ballScale /= 1.5;
 		}
 		else if (ballScale < 4.0f)
 		{
-			ballScale / 1.2;
+			ballScale /= 1.2;
 		}
 		else
 		{
-			ballScale / 1.05;
+			ballScale /= 1.05;
 		}
 	}
 	else
