@@ -112,7 +112,7 @@ private: //メンバ変数
 	//時間
 	float time = 0.00f;
 	//ゴールの位置
-	float goalPosition = 100.0f;
+	float goalPosition = 1500.0f;
 	//サイズ
 	float ballScale = 1.0f;
 };

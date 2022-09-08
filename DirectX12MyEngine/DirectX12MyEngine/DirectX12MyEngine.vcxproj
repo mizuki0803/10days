@@ -172,6 +172,7 @@
     <ClCompile Include="camera\Camera.cpp" />
     <ClCompile Include="collision\Collision.cpp" />
     <ClCompile Include="collision\CollisionShape.cpp" />
+    <ClCompile Include="Countdown.cpp" />
     <ClCompile Include="effect\Easing.cpp" />
     <ClCompile Include="gameObject\Player.cpp" />
     <ClCompile Include="gameObject\Rock.cpp" />
@@ -303,6 +304,7 @@
     <ClInclude Include="camera\Camera.h" />
     <ClInclude Include="collision\Collision.h" />
     <ClInclude Include="collision\CollisionShape.h" />
+    <ClInclude Include="Countdown.h" />
     <ClInclude Include="effect\Easing.h" />
     <ClInclude Include="gameObject\Player.h" />
     <ClInclude Include="gameObject\Rock.h" />

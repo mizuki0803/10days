@@ -52,6 +52,9 @@ void GameScene::Initialize()
 	snowBallSizeUI.reset(SnowBallSizeUI::Create(2, { 640, 60 }, { 32, 48 }));
 	snowBallSizeUI->SetPlayer(player.get());
 
+	//カウントダウンUI表示生成
+	countdown.reset(Countdown::Create(2, { 640, 120 }, { 32, 48 }));
+
 	//岩生成
 	for (int i = 0; i < 5; i++) {
 		std::unique_ptr<Rock> newRock;
@@ -110,9 +113,16 @@ void GameScene::Update()
 	//カメラ更新
 	camera->Update();
 
+	countdown->Update();
+
+	bool isStart = countdown->GetIsStart();
+
 	//オブジェクト更新
-	//自機
-	player->Update();
+	if (isStart)
+	{
+		//自機
+		player->Update();
+	}
 	//岩
 	for (const std::unique_ptr<Rock>& rock : rocks) {
 		rock->Update();
@@ -172,7 +182,7 @@ void GameScene::Draw()
 
 	//UI描画
 	snowBallSizeUI->Draw();
-
+	countdown->Draw();
 
 	///-------スプライト描画ここまで-------///
 
