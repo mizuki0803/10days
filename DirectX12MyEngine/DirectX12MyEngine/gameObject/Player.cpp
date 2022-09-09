@@ -188,6 +188,8 @@ void Player::Move()
 	move.z = VelicityZ(time);
 	position += move;
 
+	position.y = ballScale;
+
 	//ˆÚ“®ŒÀŠE‚©‚ço‚È‚¢‚æ‚¤‚É‚·‚é(Z‚ğ’Ç‰Á‚µ‚½‚Ì‚ÅVector3‚É‚µ‚½)
 	const Vector3 moveLimit = { 20.0f, 5.0f, goalPosition };
 	position.x = max(position.x, -moveLimit.x);
