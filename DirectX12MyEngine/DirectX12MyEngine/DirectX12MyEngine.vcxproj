@@ -177,7 +177,11 @@
     <ClCompile Include="gameObject\Player.cpp" />
     <ClCompile Include="gameObject\Rock.cpp" />
     <ClCompile Include="gameObject\Skydome.cpp" />
+    <ClCompile Include="gameObject\SnowMan.cpp" />
+    <ClCompile Include="gameObject\SnowManUnder.cpp" />
+    <ClCompile Include="gameObject\SnowManUpper.cpp" />
     <ClCompile Include="gameObject\SnowPlate.cpp" />
+    <ClCompile Include="gameUI\FinalSnowBallSize.cpp" />
     <ClCompile Include="gameUI\NumberSprite.cpp" />
     <ClCompile Include="gameUI\SnowBallSizeUI.cpp" />
     <ClCompile Include="input\Input.cpp" />
@@ -309,7 +313,11 @@
     <ClInclude Include="gameObject\Player.h" />
     <ClInclude Include="gameObject\Rock.h" />
     <ClInclude Include="gameObject\Skydome.h" />
+    <ClInclude Include="gameObject\SnowMan.h" />
+    <ClInclude Include="gameObject\SnowManUnder.h" />
+    <ClInclude Include="gameObject\SnowManUpper.h" />
     <ClInclude Include="gameObject\SnowPlate.h" />
+    <ClInclude Include="gameUI\FinalSnowBallSize.h" />
     <ClInclude Include="gameUI\NumberSprite.h" />
     <ClInclude Include="gameUI\SnowBallSizeUI.h" />
     <ClInclude Include="input\Input.h" />

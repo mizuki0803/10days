@@ -8,6 +8,9 @@
 #include "Camera.h"
 #include "CollisionShape.h"
 #include "Collision.h"
+#include "SnowMan.h"
+#include "Skydome.h"
+#include "SnowPlate.h"
 
 /// <summary>
 /// リザルトシーン
@@ -71,6 +74,19 @@ private: //メンバ変数
 	float circleShadowAtten[3] = { 0.5f, 0.6f, 0.0f };
 	float circleShadowFactorAngle[2] = { 0.0f, 0.5f };
 
+	//objモデルデータ
+	std::unique_ptr<ObjModel> modelSkydome;
+	std::unique_ptr<ObjModel> modelRock;
+	std::unique_ptr<ObjModel> modelSnowBall;
+	std::unique_ptr<ObjModel> modelSnowPlate;
+
+	//雪だるま
+	std::unique_ptr<SnowMan> snowMan;
+
 	//スプライト
 	std::unique_ptr<Sprite> sprite;
+	//天球
+	std::unique_ptr<Skydome> skydome;
+	//雪のフィールド
+	std::list < std::unique_ptr<SnowPlate>> snowPlates;
 };

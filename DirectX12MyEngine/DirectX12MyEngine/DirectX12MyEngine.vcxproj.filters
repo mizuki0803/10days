@@ -99,6 +99,12 @@
     <Filter Include="ソース ファイル\gameUI\snowBallSizeUI">
       <UniqueIdentifier>{70c48f90-fd5c-4747-a326-e3b5baa168eb}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\gameObject\snowMan">
+      <UniqueIdentifier>{5878cd9d-9d6c-41b5-9c62-bc6a8f86d621}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\gameUI\countDown">
+      <UniqueIdentifier>{c55a5df8-3bd3-4212-89ef-167dc220d675}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="audio\Audio.cpp">
@@ -212,13 +218,25 @@
     <ClCompile Include="scene\ResultScene.cpp">
       <Filter>ソース ファイル\engine\scene</Filter>
     </ClCompile>
-    <ClCompile Include="gameUI\NumberSprite.cpp">
-      <Filter>ソース ファイル\gameUI\snowBallSizeUI</Filter>
-    </ClCompile>
     <ClCompile Include="gameUI\SnowBallSizeUI.cpp">
       <Filter>ソース ファイル\gameUI\snowBallSizeUI</Filter>
     </ClCompile>
+    <ClCompile Include="gameObject\SnowMan.cpp">
+      <Filter>ソース ファイル\gameObject\snowMan</Filter>
+    </ClCompile>
+    <ClCompile Include="gameObject\SnowManUnder.cpp">
+      <Filter>ソース ファイル\gameObject\snowMan</Filter>
+    </ClCompile>
+    <ClCompile Include="gameObject\SnowManUpper.cpp">
+      <Filter>ソース ファイル\gameObject\snowMan</Filter>
+    </ClCompile>
     <ClCompile Include="Countdown.cpp">
+      <Filter>ソース ファイル\gameUI\countDown</Filter>
+    </ClCompile>
+    <ClCompile Include="gameUI\NumberSprite.cpp">
+      <Filter>ソース ファイル\gameUI</Filter>
+    </ClCompile>
+    <ClCompile Include="gameUI\FinalSnowBallSize.cpp">
       <Filter>ソース ファイル\gameUI\snowBallSizeUI</Filter>
     </ClCompile>
   </ItemGroup>
@@ -410,13 +428,25 @@
     <ClInclude Include="scene\ResultScene.h">
       <Filter>ソース ファイル\engine\scene</Filter>
     </ClInclude>
-    <ClInclude Include="gameUI\NumberSprite.h">
-      <Filter>ソース ファイル\gameUI\snowBallSizeUI</Filter>
-    </ClInclude>
     <ClInclude Include="gameUI\SnowBallSizeUI.h">
       <Filter>ソース ファイル\gameUI\snowBallSizeUI</Filter>
     </ClInclude>
+    <ClInclude Include="gameObject\SnowMan.h">
+      <Filter>ソース ファイル\gameObject\snowMan</Filter>
+    </ClInclude>
+    <ClInclude Include="gameObject\SnowManUnder.h">
+      <Filter>ソース ファイル\gameObject\snowMan</Filter>
+    </ClInclude>
+    <ClInclude Include="gameObject\SnowManUpper.h">
+      <Filter>ソース ファイル\gameObject\snowMan</Filter>
+    </ClInclude>
     <ClInclude Include="Countdown.h">
+      <Filter>ソース ファイル\gameUI\countDown</Filter>
+    </ClInclude>
+    <ClInclude Include="gameUI\NumberSprite.h">
+      <Filter>ソース ファイル\gameUI</Filter>
+    </ClInclude>
+    <ClInclude Include="gameUI\FinalSnowBallSize.h">
       <Filter>ソース ファイル\gameUI\snowBallSizeUI</Filter>
     </ClInclude>
   </ItemGroup>

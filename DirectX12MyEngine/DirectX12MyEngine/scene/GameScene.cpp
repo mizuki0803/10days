@@ -5,6 +5,7 @@
 #include "SpriteCommon.h"
 #include "DebugText.h"
 #include "Easing.h"
+#include "FinalSnowBallSize.h"
 #include <cassert>
 #include <fstream>
 #include <iomanip>
@@ -62,6 +63,7 @@ void GameScene::Initialize()
 
 	//天球生成
 	skydome.reset(Skydome::Create(modelSkydome.get()));
+	skydome->SetRotation({ -30, 0, 0 });
 	//雪のフィールド生成
 	for (int i = 0; i < 3; i++) {
 		for (int j = 0; j < 35; j++) {
@@ -147,6 +149,8 @@ void GameScene::Update()
 		SceneManager::GetInstance()->ChangeScene("GAME");
 	}
 	if (input->TriggerKey(DIK_SPACE)) {
+		FinalSnowBallSize::DetermineFinalSize(player->GetScale().x);
+
 		//シーン切り替え
 		SceneManager::GetInstance()->ChangeScene("RESULT");
 	}

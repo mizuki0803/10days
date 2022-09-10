@@ -10,23 +10,18 @@
 #include <sstream>
 #include <iomanip>
 
+#include "FinalSnowBallSize.h"
+
 using namespace DirectX;
 
 
 void ResultScene::Initialize()
 {
-	//オーディオのインスタンスを取得
-	Audio* audio = Audio::GetInstance();
-
-	//音全体のボリューム変更
-	audio->ChangeVolume(0.1f);
-	//audio->PlayWave("BGM.wav", true);
-
 	//カメラ初期化
 	camera.reset(new Camera());
 	camera->Initialize();
-	camera->SetTarget({ 0, 2.5f, 0 });
-	camera->SetDistance(8.0f);
+	camera->SetEye({ 0, 7, -4 });
+	camera->SetTarget({ 0, 5, 5 });
 
 	//ライト生成
 	lightGroup.reset(LightGroup::Create());
@@ -52,6 +47,33 @@ void ResultScene::Initialize()
 	//スプライト生成
 	sprite.reset(Sprite::Create(1, { 0, 0 }));
 	sprite->SetSize({ 1280, 720 });
+
+	//objからモデルデータを読み込む
+	modelSkydome.reset(ObjModel::LoadFromOBJ("skydome"));
+	modelSnowBall.reset(ObjModel::LoadFromOBJ("Snowball", true));
+	modelRock.reset(ObjModel::LoadFromOBJ("Rock"));
+	modelSnowPlate.reset(ObjModel::LoadFromOBJ("Snowplate"));
+
+	//雪だるま生成
+	snowMan.reset(SnowMan::Create(modelSnowBall.get(), modelSnowBall.get(), { 0, 0, 15 }, FinalSnowBallSize::GetFinalSize()));
+
+	//天球生成
+	skydome.reset(Skydome::Create(modelSkydome.get()));
+	//雪のフィールド生成
+	for (int i = 0; i < 3; i++) {
+		for (int j = 0; j < 35; j++) {
+			std::unique_ptr<SnowPlate> newSnowPlate;
+
+			Vector3 pos = { -50 + (float)(50 * i), 0, (float)(50 * j) };
+			newSnowPlate.reset(SnowPlate::Create(modelSnowPlate.get(), pos));
+			snowPlates.push_back(std::move(newSnowPlate));
+		}
+	}
+
+	//objオブジェクトにカメラをセット
+	ObjObject3d::SetCamera(camera.get());
+	//objオブジェクトにライトをセット
+	ObjObject3d::SetLightGroup(lightGroup.get());
 }
 
 void ResultScene::Update()
@@ -62,14 +84,24 @@ void ResultScene::Update()
 	DebugText* debugText = DebugText::GetInstance();
 
 
-	//ライト更新
-	lightGroup->Update();
-
 	//カメラ更新
 	camera->Update();
 
+	//雪玉更新
+	snowMan->Update();
+	//天球
+	skydome->Update();
+	//雪のフィールド
+	for (const std::unique_ptr<SnowPlate>& snowPlate : snowPlates) {
+		snowPlate->Update();
+	}
+
+
 	//スプライト更新
 	sprite->Update();
+
+	std::string scale = std::to_string(FinalSnowBallSize::GetFinalSize());
+	DebugText::GetInstance()->Print("Scale : " + scale, 100, 200);
 
 	//デバックテキスト
 	//X座標,Y座標,縮尺を指定して表示
@@ -99,6 +131,15 @@ void ResultScene::Draw()
 	ObjObject3d::DrawPrev();
 	///-------Object3d描画ここから-------///
 
+	//雪玉描画
+	snowMan->Draw();
+	//天球
+	skydome->Draw();
+	//雪のフィールド
+	for (const std::unique_ptr<SnowPlate>& snowPlate : snowPlates) {
+		snowPlate->Draw();
+	}
+
 
 	///-------Object3d描画ここまで-------///
 
@@ -108,7 +149,7 @@ void ResultScene::Draw()
 	///-------スプライト描画ここから-------///
 
 
-	sprite->Draw();
+	//sprite->Draw();
 
 
 	///-------スプライト描画ここまで-------///
