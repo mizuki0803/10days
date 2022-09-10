@@ -161,6 +161,7 @@
     <ClCompile Include="3d\ObjObject3d.cpp" />
     <ClCompile Include="3d\ParticleManager.cpp" />
     <ClCompile Include="audio\Audio.cpp" />
+    <ClCompile Include="AutoPlayer.cpp" />
     <ClCompile Include="base\AndosGame.cpp" />
     <ClCompile Include="base\DirectXBase.cpp" />
     <ClCompile Include="base\FrameWork.cpp" />
@@ -295,6 +296,7 @@
     <ClInclude Include="3d\ObjObject3d.h" />
     <ClInclude Include="3d\ParticleManager.h" />
     <ClInclude Include="audio\Audio.h" />
+    <ClInclude Include="AutoPlayer.h" />
     <ClInclude Include="base\AbstractSceneFactory.h" />
     <ClInclude Include="base\AndosGame.h" />
     <ClInclude Include="base\DirectXBase.h" />
