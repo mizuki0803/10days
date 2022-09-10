@@ -2,12 +2,19 @@
 #include "BaseScene.h"
 #include "Sprite.h"
 #include "ObjObject3d.h"
-#include "FbxObject3d.h"
 #include "ParticleManager.h"
 #include "LightGroup.h"
 #include "Camera.h"
 #include "CollisionShape.h"
 #include "Collision.h"
+#include "Player.h"
+#include "SnowBallSizeUI.h"
+#include "Rock.h"
+#include "Skydome.h"
+#include "SnowPlate.h"
+#include "Countdown.h"
+#include <sstream>
+
 
 /// <summary>
 /// タイトルシーン
@@ -39,6 +46,21 @@ public: //メンバ関数
 	/// 描画
 	/// </summary>
 	void Draw() override;
+
+	/// <summary>
+	/// 3Dオブジェクトの衝突判定
+	/// </summary>
+	void CollisionCheck3d();
+
+	/// <summary>
+	/// 障害物csvデータ読み込み
+	/// </summary>
+	void LoadObstacleSetData();
+
+	/// <summary>
+	/// 障害物セット
+	/// </summary>
+	void ObstacleSet();
 
 private: //メンバ変数
 	//カメラ
@@ -73,4 +95,22 @@ private: //メンバ変数
 
 	//スプライト
 	std::unique_ptr<Sprite> sprite;
+	//objモデルデータ
+	std::unique_ptr<ObjModel> modelSkydome;
+	std::unique_ptr<ObjModel> modelRock;
+	std::unique_ptr<ObjModel> modelSnowBall;
+	std::unique_ptr<ObjModel> modelSnowPlate;
+
+	//自機
+	std::unique_ptr<Player> player;
+	//雪玉の大きさ表示
+	std::unique_ptr<SnowBallSizeUI> snowBallSizeUI;
+	//岩
+	std::list<std::unique_ptr<Rock>> rocks;
+	//障害物コマンド
+	std::stringstream obstacleSetCommands;
+	//天球
+	std::unique_ptr<Skydome> skydome;
+	//雪のフィールド
+	std::list < std::unique_ptr<SnowPlate>> snowPlates;
 };

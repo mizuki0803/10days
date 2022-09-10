@@ -8,6 +8,7 @@
 #include "FbxLoader.h"
 #include <cassert>
 #include <sstream>
+#include <fstream>
 #include <iomanip>
 
 using namespace DirectX;
@@ -48,10 +49,60 @@ void TitleScene::Initialize()
 	SpriteCommon* spriteCommon = SpriteCommon::GetInstance();
 	//スプライト用テクスチャ読み込み
 	spriteCommon->LoadTexture(1, "title.png");
+	spriteCommon->LoadTexture(2, "Number.png");
 
 	//スプライト生成
 	sprite.reset(Sprite::Create(1, { 0, 0 }));
 	sprite->SetSize({ 1280, 720 });
+
+
+
+	//objからモデルデータを読み込む
+	modelSkydome.reset(ObjModel::LoadFromOBJ("skydome"));
+	modelSnowBall.reset(ObjModel::LoadFromOBJ("Snowball", true));
+	modelRock.reset(ObjModel::LoadFromOBJ("Rock"));
+	modelSnowPlate.reset(ObjModel::LoadFromOBJ("Snowplate"));
+
+	//雪玉生成
+	player.reset(Player::Create(modelSnowBall.get()));
+
+	//雪玉の大きさ表示生成
+	snowBallSizeUI.reset(SnowBallSizeUI::Create(2, { 640, 60 }, { 32, 48 }));
+	snowBallSizeUI->SetPlayer(player.get());
+
+	//岩生成
+	LoadObstacleSetData();
+	ObstacleSet();
+
+	//天球生成
+	skydome.reset(Skydome::Create(modelSkydome.get()));
+	//雪のフィールド生成
+	for (int i = 0; i < 3; i++) {
+		for (int j = 0; j < 35; j++) {
+			std::unique_ptr<SnowPlate> newSnowPlate;
+
+			Vector3 pos = { -50 + (float)(50 * i), 0, (float)(50 * j) };
+			newSnowPlate.reset(SnowPlate::Create(modelSnowPlate.get(), pos));
+			snowPlates.push_back(std::move(newSnowPlate));
+		}
+	}
+
+	//とりあえず雪玉にカメラ追従させる
+	camera->SetTarget(player->GetPosition());
+	Vector3 eyePos = player->GetPosition();
+	eyePos.x = 0;
+	eyePos.y += 10;
+	eyePos.z -= 15;
+	camera->SetEye(eyePos);
+	Vector3 targetPos = player->GetPosition();
+	targetPos.x = 0;
+	targetPos.z += 5;
+	camera->SetTarget(targetPos);
+	camera->Update();
+	//objオブジェクトにカメラをセット
+	ObjObject3d::SetCamera(camera.get());
+	//objオブジェクトにライトをセット
+	ObjObject3d::SetLightGroup(lightGroup.get());
 }
 
 void TitleScene::Update()
@@ -64,12 +115,40 @@ void TitleScene::Update()
 
 	//ライト更新
 	lightGroup->Update();
-
+	//とりあえず雪玉にカメラ追従させる
+	camera->SetTarget(player->GetPosition());
+	Vector3 eyePos = player->GetPosition();
+	eyePos.y += 10;
+	eyePos.z -= 15;
+	camera->SetEye(eyePos);
+	Vector3 targetPos = player->GetPosition();
+	targetPos.z += 5;
+	camera->SetTarget(targetPos);
 	//カメラ更新
 	camera->Update();
 
+	//自機
+	player->Update();
+
 	//スプライト更新
 	sprite->Update();
+
+	//岩
+	for (const std::unique_ptr<Rock>& rock : rocks) {
+		rock->Update();
+	}
+	//天球
+	skydome->Update();
+	//雪のフィールド
+	for (const std::unique_ptr<SnowPlate>& snowPlate : snowPlates) {
+		snowPlate->Update();
+	}
+
+	//UI更新
+	snowBallSizeUI->Update();
+
+	//衝突判定管理
+	CollisionCheck3d();
 
 	//デバックテキスト
 	//X座標,Y座標,縮尺を指定して表示
@@ -98,7 +177,18 @@ void TitleScene::Draw()
 	//Object3d共通コマンド
 	ObjObject3d::DrawPrev();
 	///-------Object3d描画ここから-------///
-
+	//自機
+	player->Draw();
+	//岩
+	for (const std::unique_ptr<Rock>& rock : rocks) {
+		rock->Draw();
+	}
+	//天球
+	skydome->Draw();
+	//雪のフィールド
+	for (const std::unique_ptr<SnowPlate>& snowPlate : snowPlates) {
+		snowPlate->Draw();
+	}
 
 	///-------Object3d描画ここまで-------///
 
@@ -107,8 +197,9 @@ void TitleScene::Draw()
 	SpriteCommon::GetInstance()->DrawPrev();
 	///-------スプライト描画ここから-------///
 
-
-	sprite->Draw();
+	//UI描画
+	snowBallSizeUI->Draw();
+	//sprite->Draw();
 
 
 	///-------スプライト描画ここまで-------///
@@ -124,4 +215,94 @@ void TitleScene::Draw()
 
 
 	///-------パーティクル描画ここまで-------///
+}
+
+void TitleScene::CollisionCheck3d()
+{
+	//判定対象の座標
+	Vector3 posA, posB;
+	float radiusA, radiusB;
+
+#pragma region 自機と敵の衝突判定
+	//自機座標
+	posA = player->GetWorldPos();
+	//自機半径
+	radiusA = player->GetScale().x;
+
+	//自機と全ての岩の衝突判定
+	for (const std::unique_ptr<Rock>& rock : rocks) {
+		//敵座標
+		posB = rock->GetWorldPos();
+		//敵半径
+		radiusB = rock->GetScale().x;
+
+		//球と球の衝突判定を行う
+		bool isCollision = Collision::CheckSphereToSphere(posA, posB, radiusA, radiusB);
+
+		//衝突していたら
+		if (isCollision) {
+			//自機のダメージ用コールバック関数を呼び出す
+			player->OnCollisionDamage(posB);
+
+			//カメラシェイクを開始
+			camera->ShakeStart(30, 100);
+		}
+	}
+#pragma endregion
+}
+
+void TitleScene::LoadObstacleSetData()
+{
+	//ファイルを開く
+	std::ifstream file;
+	file.open("Resources/obstacleSet.csv");
+	assert(file.is_open());
+
+	//ファイルの内容を文字列ストリームにコピー
+	obstacleSetCommands << file.rdbuf();
+
+	//ファイルを閉じる
+	file.close();
+}
+
+void TitleScene::ObstacleSet()
+{
+	//1行分の文字列を入れる変数
+	std::string line;
+	//csvファイルの数字を入れておく2重vector
+	std::vector<std::vector<int>> mapData;
+	//行数
+	int lineNum = 0;
+
+	//全ての行を読み取る
+	while (getline(obstacleSetCommands, line)) {
+		//1行分の文字列をストリーム変換して解析しやすく
+		std::istringstream line_stream(line);
+		//1文字を入れる変数
+		std::string word;
+
+		//行数を増やす
+		lineNum++;
+		mapData.resize(lineNum);
+
+		//行の全ての文字を読み取る
+		while (std::getline(line_stream, word, ',')) {
+			//要素番号は0からなので、行番号 - 1
+			const int elementNumber = lineNum - 1;
+			//文字を記録
+			mapData[elementNumber].push_back(std::atoi(word.c_str()));
+		}
+	}
+
+	//読み込んだデータを元に障害物を設置する
+	for (int i = 0; i < mapData.size(); i++) {
+		for (int j = 0; j < mapData[i].size(); j++) {
+			//1のときは岩をセット
+			if (mapData[i][j] == 1) {
+				std::unique_ptr<Rock> newRock;
+				newRock.reset(Rock::Create(modelRock.get(), { (float)j * 5 - 17.5f, 0, (float)i * 50 + 30 }));
+				rocks.push_back(std::move(newRock));
+			}
+		}
+	}
 }
