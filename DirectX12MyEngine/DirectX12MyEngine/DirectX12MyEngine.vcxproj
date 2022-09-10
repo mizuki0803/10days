@@ -175,6 +175,7 @@
     <ClCompile Include="collision\CollisionShape.cpp" />
     <ClCompile Include="Countdown.cpp" />
     <ClCompile Include="effect\Easing.cpp" />
+    <ClCompile Include="gameObject\Obstacle.cpp" />
     <ClCompile Include="gameObject\Player.cpp" />
     <ClCompile Include="gameObject\Rock.cpp" />
     <ClCompile Include="gameObject\Skydome.cpp" />
@@ -182,8 +183,15 @@
     <ClCompile Include="gameObject\SnowManUnder.cpp" />
     <ClCompile Include="gameObject\SnowManUpper.cpp" />
     <ClCompile Include="gameObject\SnowPlate.cpp" />
+    <ClCompile Include="gameObject\Tree.cpp" />
     <ClCompile Include="gameUI\FinalSnowBallSize.cpp" />
+    <ClCompile Include="gameUI\FinalSnowBallSizeUI.cpp" />
+    <ClCompile Include="gameUI\LankSprite.cpp" />
+    <ClCompile Include="gameUI\MiniMap.cpp" />
+    <ClCompile Include="gameUI\MiniMapSnowBall.cpp" />
+    <ClCompile Include="gameUI\MiniMapSprite.cpp" />
     <ClCompile Include="gameUI\NumberSprite.cpp" />
+    <ClCompile Include="gameUI\SnowBallLankUI.cpp" />
     <ClCompile Include="gameUI\SnowBallSizeUI.cpp" />
     <ClCompile Include="input\Input.cpp" />
     <ClCompile Include="light\LightGroup.cpp" />
@@ -312,6 +320,7 @@
     <ClInclude Include="collision\CollisionShape.h" />
     <ClInclude Include="Countdown.h" />
     <ClInclude Include="effect\Easing.h" />
+    <ClInclude Include="gameObject\Obstacle.h" />
     <ClInclude Include="gameObject\Player.h" />
     <ClInclude Include="gameObject\Rock.h" />
     <ClInclude Include="gameObject\Skydome.h" />
@@ -319,8 +328,15 @@
     <ClInclude Include="gameObject\SnowManUnder.h" />
     <ClInclude Include="gameObject\SnowManUpper.h" />
     <ClInclude Include="gameObject\SnowPlate.h" />
+    <ClInclude Include="gameObject\Tree.h" />
     <ClInclude Include="gameUI\FinalSnowBallSize.h" />
+    <ClInclude Include="gameUI\FinalSnowBallSizeUI.h" />
+    <ClInclude Include="gameUI\LankSprite.h" />
+    <ClInclude Include="gameUI\MiniMap.h" />
+    <ClInclude Include="gameUI\MiniMapSnowBall.h" />
+    <ClInclude Include="gameUI\MiniMapSprite.h" />
     <ClInclude Include="gameUI\NumberSprite.h" />
+    <ClInclude Include="gameUI\SnowBallLankUI.h" />
     <ClInclude Include="gameUI\SnowBallSizeUI.h" />
     <ClInclude Include="input\Input.h" />
     <ClInclude Include="light\CircleShadow.h" />

@@ -41,18 +41,21 @@ bool Player::Initialize()
 
 void Player::Update()
 {
-	//回転
-	Rotate();
+	//ゲーム開始していたらゲーム処理をする
+	if (isGameStart) {
+		//回転
+		Rotate();
 
-	ChangeScale();
+		ChangeScale();
 
-	//ダメージ状態ならノックバックする
-	if (isDamage) {
-		Knockback();
-	}
-	//ダメージ状態でないなら通常移動
-	else {
-		Move();
+		//ダメージ状態ならノックバックする
+		if (isDamage) {
+			Knockback();
+		}
+		//ダメージ状態でないなら通常移動
+		else {
+			Move();
+		}
 	}
 
 	//オブジェクト更新
@@ -85,17 +88,6 @@ Vector3 Player::GetWorldPos()
 
 void Player::Damage()
 {
-	//体力を減らす
-	HP -= 10;
-
-	//HPが0以下になったら死亡させる
-	if (HP <= 0) {
-		isDead = true;
-
-		//HPは0以下にならない
-		HP = 0;
-	}
-
 	//今はノックバックがあるので正確な挙動にはなっていない
 	if (ballScale < 2.0f)
 	{
@@ -134,14 +126,15 @@ void Player::Rotate()
 	const float stickNum = 200;
 	//y軸回転
 	{
+		//ゴールしていなければ左右回転を受け付ける
 		//キー入力で回転させる
-		if (input->PushKey(DIK_A) || input->PushKey(DIK_D)) {
+		if (!isGoal && (input->PushKey(DIK_A) || input->PushKey(DIK_D))) {
 			if (input->PushKey(DIK_A)) { rot.y -= rotSpeed; }
 			if (input->PushKey(DIK_D)) { rot.y += rotSpeed; }
 		}
 
 		//パッドスティックX軸の判定を取る
-		else if (input->TiltGamePadLStickX(stickNum) || input->TiltGamePadLStickX(-stickNum)) {
+		else if (!isGoal && (input->TiltGamePadLStickX(stickNum) || input->TiltGamePadLStickX(-stickNum))) {
 			//自機はスティックを倒した方向に動く
 			const float padRota = input->GetPadLStickAngle();
 			const float moveAngle = XMConvertToRadians(padRota);
@@ -190,14 +183,10 @@ void Player::Move()
 
 	position.y = ballScale;
 
-	//移動限界から出ないようにする(Zを追加したのでVector3にした)
-	const Vector3 moveLimit = { 20.0f, 5.0f, goalPosition };
-	position.x = max(position.x, -moveLimit.x);
-	position.x = min(position.x, +moveLimit.x);
-	position.y = max(position.y, -moveLimit.y);
-	position.y = min(position.y, +moveLimit.y);
-	position.z = max(position.z, -moveLimit.z);
-	position.z = min(position.z, +moveLimit.z);
+	//移動限界から出ないようにする
+	const float moveLimitX = 20.0f - scale.x;
+	position.x = max(position.x, -moveLimitX);
+	position.x = min(position.x, +moveLimitX);
 }
 
 void Player::SetKnockback(const Vector3& subjectPos)
@@ -230,14 +219,10 @@ void Player::Knockback()
 	const float speed = 0.2f;
 	position.x += knockbackVel.x *= speed;
 
-	//移動限界から出ないようにする(Zを追加したのでVector3にした)
-	const Vector3 moveLimit = { 10.0f, 5.0f, goalPosition };
-	position.x = max(position.x, -moveLimit.x);
-	position.x = min(position.x, +moveLimit.x);
-	position.y = max(position.y, -moveLimit.y);
-	position.y = min(position.y, +moveLimit.y);
-	position.z = max(position.z, -moveLimit.z);
-	position.z = min(position.z, +moveLimit.z);
+	//移動限界から出ないようにする
+	const float moveLimitX = 20.0f - scale.x;
+	position.x = max(position.x, -moveLimitX);
+	position.x = min(position.x, +moveLimitX);
 
 	//ノックバックが終了したらダメージ状態を解除する
 	if (knockbackTimer >= knockbackTime) {
@@ -248,6 +233,9 @@ void Player::Knockback()
 
 void Player::ChangeScale()
 {
+	//ゴール後なら抜ける
+	if (isGoal) { return; }
+
 	if (isDamage)
 	{
 		if (ballScale < 2.0f)

@@ -10,6 +10,9 @@
 #include <fstream>
 #include <iomanip>
 
+#include "Rock.h"
+#include "Tree.h"
+
 using namespace DirectX;
 
 
@@ -39,12 +42,15 @@ void GameScene::Initialize()
 	//スプライト用テクスチャ読み込み
 	spriteCommon->LoadTexture(1, "white1x1.png");
 	spriteCommon->LoadTexture(2, "Number.png");
+	spriteCommon->LoadTexture(3, "miniMap.png");
+	spriteCommon->LoadTexture(4, "miniSnowBall.png");
 
 
 	//objからモデルデータを読み込む
 	modelSkydome.reset(ObjModel::LoadFromOBJ("skydome"));
 	modelSnowBall.reset(ObjModel::LoadFromOBJ("Snowball", true));
 	modelRock.reset(ObjModel::LoadFromOBJ("Rock"));
+	modelTree.reset(ObjModel::LoadFromOBJ("tree"));
 	modelSnowPlate.reset(ObjModel::LoadFromOBJ("Snowplate"));
 
 	//雪玉生成
@@ -57,16 +63,21 @@ void GameScene::Initialize()
 	//カウントダウンUI表示生成
 	countdown.reset(Countdown::Create(2, { 640, 120 }, { 32, 48 }));
 
-	//岩生成
+	//ミニマップ生成
+	miniMap.reset(MiniMap::Create(3, 4, { 50, 150 }, { 20, 400 }, goalPosition));
+	miniMap->SetPlayer(player.get());
+
+	//障害物生成
 	LoadObstacleSetData();
 	ObstacleSet();
+	Obstacle::SetPlayer(player.get());
 
 	//天球生成
 	skydome.reset(Skydome::Create(modelSkydome.get()));
 	skydome->SetRotation({ -30, 0, 0 });
 	//雪のフィールド生成
 	for (int i = 0; i < 3; i++) {
-		for (int j = 0; j < 35; j++) {
+		for (int j = 0; j < 40; j++) {
 			std::unique_ptr<SnowPlate> newSnowPlate;
 
 			Vector3 pos = { -50 + (float)(50 * i), 0, (float)(50 * j) };
@@ -74,6 +85,7 @@ void GameScene::Initialize()
 			snowPlates.push_back(std::move(newSnowPlate));
 		}
 	}
+	SnowPlate::SetPlayer(player.get());
 
 	//とりあえず雪玉にカメラ追従させる
 	camera->SetTarget(player->GetPosition());
@@ -100,32 +112,59 @@ void GameScene::Update()
 	//デバッグテキストのインスタンスを取得
 	DebugText* debugText = DebugText::GetInstance();
 
+	//ゴールしていないとき
+	if (!isGoal) {
+		//死亡した障害物の削除
+		obstacles.remove_if([](std::unique_ptr<Obstacle>& obstacle) {
+			return obstacle->GetIsDead();
+			});
+		//死亡した雪のフィールドの削除
+		snowPlates.remove_if([](std::unique_ptr<SnowPlate>& snowPlate) {
+			return snowPlate->GetIsDead();
+			});
 
-	//とりあえず雪玉にカメラ追従させる
-	camera->SetTarget(player->GetPosition());
-	Vector3 eyePos = player->GetPosition();
-	eyePos.y += 10;
-	eyePos.z -= 15;
-	camera->SetEye(eyePos);
-	Vector3 targetPos = player->GetPosition();
-	targetPos.z += 5;
-	camera->SetTarget(targetPos);
+		//雪玉にカメラ追従させる
+		camera->SetTarget(player->GetPosition());
+		Vector3 eyePos = player->GetPosition();
+		eyePos.y += 10;
+		eyePos.z -= 15;
+		camera->SetEye(eyePos);
+		Vector3 targetPos = player->GetPosition();
+		targetPos.z += 5;
+		camera->SetTarget(targetPos);
+
+		//プレイヤーがゴールラインより奥にいったらゴール
+		if (player->GetPosition().z >= goalPosition) {
+			isGoal = true;
+			player->SetIsGoal(true);
+
+			//ゴールした瞬間の大きさを記録しておく
+			FinalSnowBallSize::DetermineFinalSize(player->GetScale().x);
+		}
+	}
+	//ゴール後
+	else {
+		//ゴール後の余韻時間
+		const int goalAfterTime = 300;
+		//タイマーを更新
+		goalAfterTimer++;
+
+		//タイマーが指定した時間になったら
+		if (goalAfterTimer >= goalAfterTime) {
+			//シーン切り替え
+			SceneManager::GetInstance()->ChangeScene("RESULT");
+		}
+	}
+
 	//カメラ更新
 	camera->Update();
 
-	countdown->Update();
-
-	bool isStart = countdown->GetIsStart();
-
 	//オブジェクト更新
-	if (isStart)
-	{
-		//自機
-		player->Update();
-	}
-	//岩
-	for (const std::unique_ptr<Rock>& rock : rocks) {
-		rock->Update();
+	//自機
+	player->Update();
+	//障害物
+	for (const std::unique_ptr<Obstacle>& obstacle : obstacles) {
+		obstacle->Update();
 	}
 	//天球
 	skydome->Update();
@@ -135,7 +174,21 @@ void GameScene::Update()
 	}
 
 	//UI更新
+	//大きさUI更新
 	snowBallSizeUI->Update();
+	//カウントダウン更新
+	if (countdown) {
+		countdown->Update();
+
+		//カウントダウンが終了したらゲーム開始
+		if (countdown->GetIsStart()) {
+			player->SetIsGameStart(true);
+			//カウントダウンのインスタンスを削除
+			countdown.reset();
+		}
+	}
+	//ミニマップ更新
+	miniMap->Update();
 
 	//衝突判定管理
 	CollisionCheck3d();
@@ -143,16 +196,20 @@ void GameScene::Update()
 	//デバックテキスト
 	//X座標,Y座標,縮尺を指定して表示
 	debugText->Print("GAME SCENE", 1000, 50);
+	std::string obstacleNum = std::to_string(obstacles.size());
+	DebugText::GetInstance()->Print("obstacle : " + obstacleNum, 10, 50);
+	std::string placeNum = std::to_string(snowPlates.size());
+	DebugText::GetInstance()->Print("Plate : " + placeNum, 10, 70);
 
 	if (input->TriggerKey(DIK_RETURN)) {
 		//シーン切り替え
 		SceneManager::GetInstance()->ChangeScene("GAME");
 	}
 	if (input->TriggerKey(DIK_SPACE)) {
-		FinalSnowBallSize::DetermineFinalSize(player->GetScale().x);
-
 		//シーン切り替え
 		SceneManager::GetInstance()->ChangeScene("RESULT");
+		//ゴールした瞬間の大きさを記録しておく
+		FinalSnowBallSize::DetermineFinalSize(player->GetScale().x);
 	}
 }
 
@@ -164,9 +221,9 @@ void GameScene::Draw()
 
 	//自機
 	player->Draw();
-	//岩
-	for (const std::unique_ptr<Rock>& rock : rocks) {
-		rock->Draw();
+	//障害物
+	for (const std::unique_ptr<Obstacle>& obstacle : obstacles) {
+		obstacle->Draw();
 	}
 	//天球
 	skydome->Draw();
@@ -184,7 +241,11 @@ void GameScene::Draw()
 
 	//UI描画
 	snowBallSizeUI->Draw();
-	countdown->Draw();
+	if (countdown) {
+		countdown->Draw();
+	}
+	//ミニマップ更新
+	miniMap->Draw();
 
 	///-------スプライト描画ここまで-------///
 
@@ -213,12 +274,15 @@ void GameScene::CollisionCheck3d()
 	//自機半径
 	radiusA = player->GetScale().x;
 
-	//自機と全ての岩の衝突判定
-	for (const std::unique_ptr<Rock>& rock : rocks) {
-		//敵座標
-		posB = rock->GetWorldPos();
-		//敵半径
-		radiusB = rock->GetScale().x;
+	//自機と全ての障害物の衝突判定
+	for (const std::unique_ptr<Obstacle>& obstacle : obstacles) {
+		//障害物が描画されていなければ飛ばす
+		if (!obstacle->GetIsDraw()) { continue; }
+
+		//障害物座標
+		posB = obstacle->GetWorldPos();
+		//障害物半径
+		radiusB = obstacle->GetScale().x;
 
 		//球と球の衝突判定を行う
 		bool isCollision = Collision::CheckSphereToSphere(posA, posB, radiusA, radiusB);
@@ -285,7 +349,13 @@ void GameScene::ObstacleSet()
 			if (mapData[i][j] == 1) {
 				std::unique_ptr<Rock> newRock;
 				newRock.reset(Rock::Create(modelRock.get(), { (float)j * 5 - 17.5f, 0, (float)i * 50 + 30 }));
-				rocks.push_back(std::move(newRock));
+				obstacles.push_back(std::move(newRock));
+			}
+			//2のときは木をセット
+			else if (mapData[i][j] == 2) {
+				std::unique_ptr<Tree> newTree;
+				newTree.reset(Tree::Create(modelTree.get(), { (float)j * 5 - 17.5f, 0, (float)i * 50 + 30 }));
+				obstacles.push_back(std::move(newTree));
 			}
 		}
 	}

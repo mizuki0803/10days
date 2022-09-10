@@ -9,8 +9,10 @@
 #include "CollisionShape.h"
 #include "Collision.h"
 #include "SnowMan.h"
+#include "FinalSnowBallSizeUI.h"
 #include "Skydome.h"
 #include "SnowPlate.h"
+#include "SnowBallLankUI.h"
 
 /// <summary>
 /// リザルトシーン
@@ -82,11 +84,14 @@ private: //メンバ変数
 
 	//雪だるま
 	std::unique_ptr<SnowMan> snowMan;
-
+	//最終的な雪玉の大きさ表示
+	std::unique_ptr<FinalSnowBallSizeUI> finalSnowBallSizeUI;
 	//スプライト
 	std::unique_ptr<Sprite> sprite;
 	//天球
 	std::unique_ptr<Skydome> skydome;
 	//雪のフィールド
 	std::list < std::unique_ptr<SnowPlate>> snowPlates;
+	//雪玉の大きさランクを表示するUI
+	std::unique_ptr<SnowBallLankUI> snowBallLankUI;
 };

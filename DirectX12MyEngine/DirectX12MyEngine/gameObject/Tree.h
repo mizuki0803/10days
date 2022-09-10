@@ -2,15 +2,15 @@
 #include "Obstacle.h"
 
 /// <summary>
-/// Šâ
+/// –Ø
 /// </summary>
-class Rock : public Obstacle
+class Tree : public Obstacle
 {
 public: //Ã“Iƒƒ“ƒoŠÖ”
 	/// <summary>
 	/// ¶¬ˆ—
 	/// </summary>
 	/// <param name="model">ƒ‚ƒfƒ‹</param>
-	/// <returns>Šâ</returns>
-	static Rock* Create(ObjModel* model, const Vector3& position);
+	/// <returns>–Ø</returns>
+	static Tree* Create(ObjModel* model, const Vector3& position);
 };
