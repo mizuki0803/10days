@@ -7,7 +7,7 @@
 #include "Camera.h"
 #include "CollisionShape.h"
 #include "Collision.h"
-#include "Player.h"
+#include "AutoPlayer.h"
 #include "SnowBallSizeUI.h"
 #include "Rock.h"
 #include "Skydome.h"
@@ -102,7 +102,7 @@ private: //ƒƒ“ƒo•Ï”
 	std::unique_ptr<ObjModel> modelSnowPlate;
 
 	//©‹@
-	std::unique_ptr<Player> player;
+	std::unique_ptr<AutoPlayer> autoPlayer;
 	//á‹Ê‚Ì‘å‚«‚³•\¦
 	std::unique_ptr<SnowBallSizeUI> snowBallSizeUI;
 	//Šâ

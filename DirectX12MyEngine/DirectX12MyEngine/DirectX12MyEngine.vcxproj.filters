@@ -239,6 +239,9 @@
     <ClCompile Include="gameUI\FinalSnowBallSize.cpp">
       <Filter>ソース ファイル\gameUI\snowBallSizeUI</Filter>
     </ClCompile>
+    <ClCompile Include="AutoPlayer.cpp">
+      <Filter>ソース ファイル\gameObject\player</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\shaders\Basic.hlsli">
@@ -448,6 +451,9 @@
     </ClInclude>
     <ClInclude Include="gameUI\FinalSnowBallSize.h">
       <Filter>ソース ファイル\gameUI\snowBallSizeUI</Filter>
+    </ClInclude>
+    <ClInclude Include="AutoPlayer.h">
+      <Filter>ソース ファイル\gameObject\player</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

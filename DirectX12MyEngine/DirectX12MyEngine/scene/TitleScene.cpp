@@ -64,11 +64,7 @@ void TitleScene::Initialize()
 	modelSnowPlate.reset(ObjModel::LoadFromOBJ("Snowplate"));
 
 	//雪玉生成
-	player.reset(Player::Create(modelSnowBall.get()));
-
-	//雪玉の大きさ表示生成
-	snowBallSizeUI.reset(SnowBallSizeUI::Create(2, { 640, 60 }, { 32, 48 }));
-	snowBallSizeUI->SetPlayer(player.get());
+	autoPlayer.reset(AutoPlayer::Create(modelSnowBall.get()));
 
 	//岩生成
 	LoadObstacleSetData();
@@ -88,13 +84,13 @@ void TitleScene::Initialize()
 	}
 
 	//とりあえず雪玉にカメラ追従させる
-	camera->SetTarget(player->GetPosition());
-	Vector3 eyePos = player->GetPosition();
+	camera->SetTarget(autoPlayer->GetPosition());
+	Vector3 eyePos = autoPlayer->GetPosition();
 	eyePos.x = 0;
 	eyePos.y += 10;
 	eyePos.z -= 15;
 	camera->SetEye(eyePos);
-	Vector3 targetPos = player->GetPosition();
+	Vector3 targetPos = autoPlayer->GetPosition();
 	targetPos.x = 0;
 	targetPos.z += 5;
 	camera->SetTarget(targetPos);
@@ -116,19 +112,19 @@ void TitleScene::Update()
 	//ライト更新
 	lightGroup->Update();
 	//とりあえず雪玉にカメラ追従させる
-	camera->SetTarget(player->GetPosition());
-	Vector3 eyePos = player->GetPosition();
+	camera->SetTarget(autoPlayer->GetPosition());
+	Vector3 eyePos = autoPlayer->GetPosition();
 	eyePos.y += 10;
 	eyePos.z -= 15;
 	camera->SetEye(eyePos);
-	Vector3 targetPos = player->GetPosition();
+	Vector3 targetPos = autoPlayer->GetPosition();
 	targetPos.z += 5;
 	camera->SetTarget(targetPos);
 	//カメラ更新
 	camera->Update();
 
 	//自機
-	player->Update();
+	autoPlayer->Update();
 
 	//スプライト更新
 	sprite->Update();
@@ -143,9 +139,6 @@ void TitleScene::Update()
 	for (const std::unique_ptr<SnowPlate>& snowPlate : snowPlates) {
 		snowPlate->Update();
 	}
-
-	//UI更新
-	snowBallSizeUI->Update();
 
 	//衝突判定管理
 	CollisionCheck3d();
@@ -178,7 +171,7 @@ void TitleScene::Draw()
 	ObjObject3d::DrawPrev();
 	///-------Object3d描画ここから-------///
 	//自機
-	player->Draw();
+	autoPlayer->Draw();
 	//岩
 	for (const std::unique_ptr<Rock>& rock : rocks) {
 		rock->Draw();
@@ -197,8 +190,6 @@ void TitleScene::Draw()
 	SpriteCommon::GetInstance()->DrawPrev();
 	///-------スプライト描画ここから-------///
 
-	//UI描画
-	snowBallSizeUI->Draw();
 	//sprite->Draw();
 
 
@@ -225,9 +216,9 @@ void TitleScene::CollisionCheck3d()
 
 #pragma region 自機と敵の衝突判定
 	//自機座標
-	posA = player->GetWorldPos();
+	posA = autoPlayer->GetWorldPos();
 	//自機半径
-	radiusA = player->GetScale().x;
+	radiusA = autoPlayer->GetScale().x;
 
 	//自機と全ての岩の衝突判定
 	for (const std::unique_ptr<Rock>& rock : rocks) {
@@ -242,7 +233,7 @@ void TitleScene::CollisionCheck3d()
 		//衝突していたら
 		if (isCollision) {
 			//自機のダメージ用コールバック関数を呼び出す
-			player->OnCollisionDamage(posB);
+			autoPlayer->OnCollisionDamage(posB);
 
 			//カメラシェイクを開始
 			camera->ShakeStart(30, 100);
