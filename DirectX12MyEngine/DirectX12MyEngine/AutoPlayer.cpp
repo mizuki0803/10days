@@ -122,6 +122,7 @@ void AutoPlayer::Damage()
 
 void AutoPlayer::Rotate()
 {
+	timer++;
 	Input* input = Input::GetInstance();
 
 	//回転速度
@@ -134,19 +135,10 @@ void AutoPlayer::Rotate()
 	const float stickNum = 200;
 	//y軸回転
 	{
-		//キー入力で回転させる
-		if (input->PushKey(DIK_A) || input->PushKey(DIK_D)) {
-			if (input->PushKey(DIK_A)) { rot.y -= rotSpeed; }
-			if (input->PushKey(DIK_D)) { rot.y += rotSpeed; }
-		}
-
-		//パッドスティックX軸の判定を取る
-		else if (input->TiltGamePadLStickX(stickNum) || input->TiltGamePadLStickX(-stickNum)) {
-			//自機はスティックを倒した方向に動く
-			const float padRota = input->GetPadLStickAngle();
-			const float moveAngle = XMConvertToRadians(padRota);
-			const float padStickIncline = input->GetPadLStickIncline().x;
-			rot.y = rotSpeed * cosf(moveAngle) * fabsf(padStickIncline);
+		//オートプレイ
+		if (timer % 300 > 90 && timer % 300 < 150 || timer % 300 > 240 && timer % 300 < 300) {
+			if (timer % 300 > 90 && timer % 300 < 150) { rot.y -= rotSpeed; }
+			if (timer % 300 > 240 && timer % 300 < 300) { rot.y += rotSpeed; }
 		}
 
 		//キー入力なし&スティックを倒していない場合

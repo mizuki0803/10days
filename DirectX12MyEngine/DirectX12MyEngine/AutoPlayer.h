@@ -116,4 +116,6 @@ private: //メンバ変数
 	float goalPosition = 1500.0f;
 	//サイズ
 	float ballScale = 1.0f;
+	//タイマー
+	int timer = 0;
 };
