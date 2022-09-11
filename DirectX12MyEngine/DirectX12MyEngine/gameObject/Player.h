@@ -102,6 +102,8 @@ protected: //メンバ変数
 	Vector3 knockbackVec;
 	//ノックバック速度
 	Vector3 knockbackVel;
+	//ノックバック時の大きさ
+	float knockbackScale;
 	//時間
 	float time = 0.00f;
 	//サイズ

@@ -103,6 +103,10 @@ void GameScene::Initialize()
 	ObjObject3d::SetCamera(camera.get());
 	//objオブジェクトにライトをセット
 	ObjObject3d::SetLightGroup(lightGroup.get());
+
+	//雪玉エフェクトマネージャーの生成
+	snowEffectManager.reset(SnowEffectManager::Create());
+	SnowEffectManager::SetModel(modelSnowBall.get());
 }
 
 void GameScene::Update()
@@ -190,6 +194,9 @@ void GameScene::Update()
 	//ミニマップ更新
 	miniMap->Update();
 
+	//雪玉エフェクトマネージャー更新
+	snowEffectManager->Update();
+
 	//衝突判定管理
 	CollisionCheck3d();
 
@@ -231,6 +238,9 @@ void GameScene::Draw()
 	for (const std::unique_ptr<SnowPlate>& snowPlate : snowPlates) {
 		snowPlate->Draw();
 	}
+
+	//雪玉エフェクトマネージャー描画
+	snowEffectManager->Draw();
 
 	///-------Object3d描画ここまで-------///
 
@@ -294,6 +304,9 @@ void GameScene::CollisionCheck3d()
 
 			//カメラシェイクを開始
 			camera->ShakeStart(30, 100);
+
+			//雪玉エフェクトの追加
+			snowEffectManager->AddSnowEffect(player->GetPosition());
 		}
 	}
 #pragma endregion

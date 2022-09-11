@@ -111,6 +111,9 @@
     <Filter Include="ソース ファイル\gameUI\snowBallLankUI">
       <UniqueIdentifier>{c50f2cbc-9f72-4d69-8770-224b4d1e08e3}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\effect\snow">
+      <UniqueIdentifier>{66b33d7e-8ef3-47a4-84ce-bf3b6d1017d0}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="audio\Audio.cpp">
@@ -271,6 +274,12 @@
     </ClCompile>
     <ClCompile Include="gameUI\FinalSnowBallSizeUI.cpp">
       <Filter>ソース ファイル\gameUI\snowBallSizeUI</Filter>
+    </ClCompile>
+    <ClCompile Include="effect\SnowEffect.cpp">
+      <Filter>ソース ファイル\effect\snow</Filter>
+    </ClCompile>
+    <ClCompile Include="effect\SnowEffectManager.cpp">
+      <Filter>ソース ファイル\effect\snow</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -508,6 +517,12 @@
     </ClInclude>
     <ClInclude Include="gameUI\FinalSnowBallSizeUI.h">
       <Filter>ソース ファイル\gameUI\snowBallSizeUI</Filter>
+    </ClInclude>
+    <ClInclude Include="effect\SnowEffect.h">
+      <Filter>ソース ファイル\effect\snow</Filter>
+    </ClInclude>
+    <ClInclude Include="effect\SnowEffectManager.h">
+      <Filter>ソース ファイル\effect\snow</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

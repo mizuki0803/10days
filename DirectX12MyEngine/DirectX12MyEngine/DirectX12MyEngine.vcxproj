@@ -175,6 +175,8 @@
     <ClCompile Include="collision\CollisionShape.cpp" />
     <ClCompile Include="Countdown.cpp" />
     <ClCompile Include="effect\Easing.cpp" />
+    <ClCompile Include="effect\SnowEffect.cpp" />
+    <ClCompile Include="effect\SnowEffectManager.cpp" />
     <ClCompile Include="gameObject\Obstacle.cpp" />
     <ClCompile Include="gameObject\Player.cpp" />
     <ClCompile Include="gameObject\Rock.cpp" />
@@ -320,6 +322,8 @@
     <ClInclude Include="collision\CollisionShape.h" />
     <ClInclude Include="Countdown.h" />
     <ClInclude Include="effect\Easing.h" />
+    <ClInclude Include="effect\SnowEffect.h" />
+    <ClInclude Include="effect\SnowEffectManager.h" />
     <ClInclude Include="gameObject\Obstacle.h" />
     <ClInclude Include="gameObject\Player.h" />
     <ClInclude Include="gameObject\Rock.h" />

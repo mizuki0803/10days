@@ -67,11 +67,11 @@ void Player::OnCollisionDamage(const Vector3& subjectPos)
 	//ダメージ状態なら抜ける
 	if (isDamage) { return; }
 
-	//ダメージを喰らう
-	Damage();
-
 	//ノックバック情報をセット
 	SetKnockback(subjectPos);
+
+	//ダメージを喰らう
+	Damage();
 }
 
 Vector3 Player::GetWorldPos()
@@ -104,9 +104,6 @@ void Player::Damage()
 		//雪玉の時間を0にする(移動量用)
 		time /= 1.2f;
 	}
-
-
-	color = { 1,0,0,1 };
 
 	//ダメージ状態にする
 	isDamage = true;
@@ -195,6 +192,8 @@ void Player::SetKnockback(const Vector3& subjectPos)
 	knockbackVec = GetWorldPos() - subjectPos;
 	//ベクトルを正規化
 	knockbackVec.normalize();
+	//ノックバック字の大きさを記録
+	knockbackScale = scale.x;
 
 	//ノックバックタイマーを初期化
 	knockbackTimer = 0;
@@ -203,21 +202,23 @@ void Player::SetKnockback(const Vector3& subjectPos)
 void Player::Knockback()
 {
 	//ノックバックする時間
-	const float knockbackTime = 30;
+	const float knockbackTime = 30 + 2 * knockbackScale;
 	knockbackTimer++;
 	const float time = knockbackTimer / knockbackTime;
 
 	//速度を作成
 	knockbackVel = knockbackVec;
 	knockbackVel.normalize();
-	//Z軸方向には移動しないようにする
-	knockbackVel.z = 0;
+	//Y方向には移動しないようにする
+	knockbackVel.y = 0;
+	//Z方向は大きさで強さが変わる
+	knockbackVel.z *= knockbackScale;
 	//ノックバック時間を速度にかけて減速っぽくする
 	knockbackVel *= (1 - time);
 
 	//自機をノックバックさせる
 	const float speed = 0.2f;
-	position.x += knockbackVel.x *= speed;
+	position += knockbackVel *= speed;
 
 	//移動限界から出ないようにする
 	const float moveLimitX = 20.0f - scale.x;
