@@ -55,6 +55,11 @@ void AutoPlayer::Update()
 		Move();
 	}
 
+	if (position.z >= goalPosition)
+	{
+		DemoEnd();
+	}
+
 	//オブジェクト更新
 	ObjObject3d::Update();
 }
@@ -271,6 +276,16 @@ void AutoPlayer::ChangeScale()
 		}
 	}
 	scale = { ballScale,ballScale,ballScale };
+}
+
+void AutoPlayer::DemoEnd()
+{
+	position = { 0 ,1 ,10 };
+	ballScale = 1.0f;
+	isDamage = false;
+	time = 0.0f;
+	timer = 0.0f;
+	rotation.y = 0;
 }
 
 float AutoPlayer::VelicityZ(float time)
