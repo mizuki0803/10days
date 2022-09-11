@@ -1,39 +1,9 @@
-#include "SnowPlate.h"
+#include "Obstacle.h"
+#include "Obstacle.h"
 
-Player* SnowPlate::player = nullptr;
+Player* Obstacle::player = nullptr;
 
-SnowPlate* SnowPlate::Create(ObjModel* model, const Vector3& position)
-{
-	//雪のフィールドのインスタンスを生成
-	SnowPlate* snowPlate = new SnowPlate();
-	if (snowPlate == nullptr) {
-		return nullptr;
-	}
-
-	// 初期化
-	if (!snowPlate->Initialize()) {
-		delete snowPlate;
-		assert(0);
-		return nullptr;
-	}
-
-	//モデルをセット
-	assert(model);
-	snowPlate->model = model;
-
-	//座標をセット
-	snowPlate->position = position;
-
-	//大きさをセット
-	snowPlate->scale = { 5, 5, 5 };
-
-	//色をセット
-	snowPlate->color = { 0.6f, 0.6f, 0.6f, 1 };
-
-	return snowPlate;
-}
-
-void SnowPlate::Update()
+void Obstacle::Update()
 {
 	//描画するかチェック
 	CheckIsDraw();
@@ -48,7 +18,7 @@ void SnowPlate::Update()
 	ObjObject3d::Update();
 }
 
-void SnowPlate::Draw()
+void Obstacle::Draw()
 {
 	//描画しなければ抜ける
 	if (!isDraw) { return; }
@@ -57,7 +27,19 @@ void SnowPlate::Draw()
 	ObjObject3d::Draw();
 }
 
-void SnowPlate::CheckIsDraw()
+Vector3 Obstacle::GetWorldPos()
+{
+	//ワールド座標を入れる変数
+	Vector3 worldPos;
+	//平行移動成分を取得
+	worldPos.x = matWorld.r[3].m128_f32[0];
+	worldPos.y = matWorld.r[3].m128_f32[1];
+	worldPos.z = matWorld.r[3].m128_f32[2];
+
+	return worldPos;
+}
+
+void Obstacle::CheckIsDraw()
 {
 	//既に描画されていたら抜ける
 	if (isDraw) { return; }
@@ -74,7 +56,7 @@ void SnowPlate::CheckIsDraw()
 	isDraw = true;
 }
 
-void SnowPlate::CheckIsDead()
+void Obstacle::CheckIsDead()
 {
 	//プレイヤーが設定されていなければ抜ける
 	if (player == nullptr) { return; }

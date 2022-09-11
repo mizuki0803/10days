@@ -9,10 +9,11 @@
 #include "Collision.h"
 #include "Player.h"
 #include "SnowBallSizeUI.h"
-#include "Rock.h"
+#include "Obstacle.h"
 #include "Skydome.h"
 #include "SnowPlate.h"
 #include "Countdown.h"
+#include "MiniMap.h"
 #include <sstream>
 
 /// <summary>
@@ -95,6 +96,7 @@ private: //メンバ変数
 	//objモデルデータ
 	std::unique_ptr<ObjModel> modelSkydome;
 	std::unique_ptr<ObjModel> modelRock;
+	std::unique_ptr<ObjModel> modelTree;
 	std::unique_ptr<ObjModel> modelSnowBall;
 	std::unique_ptr<ObjModel> modelSnowPlate;
 
@@ -102,8 +104,8 @@ private: //メンバ変数
 	std::unique_ptr<Player> player;
 	//雪玉の大きさ表示
 	std::unique_ptr<SnowBallSizeUI> snowBallSizeUI;
-	//岩
-	std::list<std::unique_ptr<Rock>> rocks;
+	//障害物
+	std::list<std::unique_ptr<Obstacle>> obstacles;
 	//障害物コマンド
 	std::stringstream obstacleSetCommands;
 	//天球
@@ -112,4 +114,13 @@ private: //メンバ変数
 	std::list < std::unique_ptr<SnowPlate>> snowPlates;
 	//カウントダウン
 	std::unique_ptr<Countdown> countdown;
+	//ミニマップ
+	std::unique_ptr<MiniMap> miniMap;
+
+	//ゴールの位置
+	const float goalPosition = 1500.0f;
+	//ゴールしたか
+	bool isGoal = false;
+	//ゴール後の余韻時間
+	int32_t goalAfterTimer = 0;
 };

@@ -3,9 +3,6 @@
 #include "Vector2.h"
 #include <memory>
 
-//ゲームシーンの前方宣言
-class GameScene;
-
 /// <summary>
 /// 自機
 /// </summary>
@@ -40,12 +37,14 @@ public: //メンバ関数
 
 	//getter
 	Vector3 GetWorldPos();
-	const int GetHP() { return HP; }
 	const bool GetIsDamage() { return isDamage; }
-	const bool GetIsDead() { return isDead; }
 	const Vector3& GetKnockbackVel() { return knockbackVel; }
 
-private: //メンバ関数
+	//setter
+	void SetIsGameStart(const bool isGameStart) { this->isGameStart = isGameStart; }
+	void SetIsGoal(const bool isGoal) { this->isGoal = isGoal; }
+
+protected: //メンバ関数
 	/// <summary>
 	/// ダメージを喰らう
 	/// </summary>
@@ -82,19 +81,19 @@ private: //メンバ関数
 	float VelicityZ(float time);
 
 
-private: //静的メンバ変数
+protected: //静的メンバ変数
 	//自機の回転限界
 	static const Vector2 rotLimit;
-	//最大体力
-	static const int maxHP = 100;
 	//スピードに掛ける値
 	const float speedRate = 0.02f;
 	//scaleに掛ける値
 	const float scaleRate = 0.005f;
 
-private: //メンバ変数
-	//体力
-	int HP = maxHP;
+protected: //メンバ変数
+	//ゲーム開始か
+	bool isGameStart = false;
+	//ゴールしたか
+	bool isGoal = false;
 	//ダメージフラグ
 	bool isDamage = false;
 	//ノックバック用タイマー
@@ -103,16 +102,8 @@ private: //メンバ変数
 	Vector3 knockbackVec;
 	//ノックバック速度
 	Vector3 knockbackVel;
-	//死亡フラグ
-	bool isDead = false;
-	//z軸ゆらゆら回転が右回転か
-	bool isRotZRight = true;
-	//z軸ゆらゆら回転用
-	float swayZ = 0.0f;
 	//時間
 	float time = 0.00f;
-	//ゴールの位置
-	float goalPosition = 1500.0f;
 	//サイズ
 	float ballScale = 1.0f;
 };

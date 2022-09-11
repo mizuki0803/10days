@@ -9,7 +9,7 @@
 #include "Collision.h"
 #include "AutoPlayer.h"
 #include "SnowBallSizeUI.h"
-#include "Rock.h"
+#include "Obstacle.h"
 #include "Skydome.h"
 #include "SnowPlate.h"
 #include "Countdown.h"
@@ -98,6 +98,7 @@ private: //メンバ変数
 	//objモデルデータ
 	std::unique_ptr<ObjModel> modelSkydome;
 	std::unique_ptr<ObjModel> modelRock;
+	std::unique_ptr<ObjModel> modelTree;
 	std::unique_ptr<ObjModel> modelSnowBall;
 	std::unique_ptr<ObjModel> modelSnowPlate;
 
@@ -105,8 +106,8 @@ private: //メンバ変数
 	std::unique_ptr<AutoPlayer> autoPlayer;
 	//雪玉の大きさ表示
 	std::unique_ptr<SnowBallSizeUI> snowBallSizeUI;
-	//岩
-	std::list<std::unique_ptr<Rock>> rocks;
+	//障害物
+	std::list<std::unique_ptr<Obstacle>> obstacles;
 	//障害物コマンド
 	std::stringstream obstacleSetCommands;
 	//天球

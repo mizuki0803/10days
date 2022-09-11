@@ -43,6 +43,8 @@ void ResultScene::Initialize()
 	SpriteCommon* spriteCommon = SpriteCommon::GetInstance();
 	//スプライト用テクスチャ読み込み
 	spriteCommon->LoadTexture(1, "finish.png");
+	spriteCommon->LoadTexture(2, "Number.png");
+	spriteCommon->LoadTexture(3, "lank.png");
 
 	//スプライト生成
 	sprite.reset(Sprite::Create(1, { 0, 0 }));
@@ -57,23 +59,30 @@ void ResultScene::Initialize()
 	//雪だるま生成
 	snowMan.reset(SnowMan::Create(modelSnowBall.get(), modelSnowBall.get(), { 0, 0, 15 }, FinalSnowBallSize::GetFinalSize()));
 
+	//最終的な雪玉の大きさ表示生成
+	finalSnowBallSizeUI.reset(FinalSnowBallSizeUI::Create(2, { 640, 60 }, { 32, 48 }, FinalSnowBallSize::GetFinalSize()));
+
 	//天球生成
 	skydome.reset(Skydome::Create(modelSkydome.get()));
 	//雪のフィールド生成
-	for (int i = 0; i < 3; i++) {
-		for (int j = 0; j < 35; j++) {
+	for (int i = 0; i < 10; i++) {
+		for (int j = 0; j < 10; j++) {
 			std::unique_ptr<SnowPlate> newSnowPlate;
 
-			Vector3 pos = { -50 + (float)(50 * i), 0, (float)(50 * j) };
+			Vector3 pos = { -250 + (float)(50 * i), 0, -50 + (float)(50 * j) };
 			newSnowPlate.reset(SnowPlate::Create(modelSnowPlate.get(), pos));
 			snowPlates.push_back(std::move(newSnowPlate));
 		}
 	}
+	SnowPlate::SetPlayer(nullptr);
 
 	//objオブジェクトにカメラをセット
 	ObjObject3d::SetCamera(camera.get());
 	//objオブジェクトにライトをセット
 	ObjObject3d::SetLightGroup(lightGroup.get());
+
+	//雪玉の大きさランクを表示するUI
+	snowBallLankUI.reset(SnowBallLankUI::Create(3, { 1000, 200 }, { 50, 50 }, FinalSnowBallSize::GetFinalSize()));
 }
 
 void ResultScene::Update()
@@ -99,6 +108,12 @@ void ResultScene::Update()
 
 	//スプライト更新
 	sprite->Update();
+
+	//UI更新
+	//大きさUI更新
+	finalSnowBallSizeUI->Update();
+	//雪玉の大きさランクUI更新
+	snowBallLankUI->Update();
 
 	std::string scale = std::to_string(FinalSnowBallSize::GetFinalSize());
 	DebugText::GetInstance()->Print("Scale : " + scale, 100, 200);
@@ -149,7 +164,11 @@ void ResultScene::Draw()
 	///-------スプライト描画ここから-------///
 
 
-	//sprite->Draw();
+	//UI更新
+	//大きさUI更新
+	finalSnowBallSizeUI->Draw();
+	//雪玉の大きさランクUI描画
+	snowBallLankUI->Draw();
 
 
 	///-------スプライト描画ここまで-------///

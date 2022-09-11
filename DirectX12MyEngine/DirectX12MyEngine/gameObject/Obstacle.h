@@ -3,20 +3,14 @@
 #include "Player.h"
 
 /// <summary>
-/// 雪のフィールド
+/// 障害物
 /// </summary>
-class SnowPlate : public ObjObject3d
+class Obstacle : public ObjObject3d
 {
-public:
-	/// <summary>
-	/// 生成処理
-	/// </summary>
-	/// <param name="model">モデル</param>
-	/// <returns>雪のフィールド</returns>
-	static SnowPlate* Create(ObjModel* model, const Vector3& position);
+public: //静的メンバ関数
 
 	//setter
-	static void SetPlayer(Player* player) { SnowPlate::player = player; }
+	static void SetPlayer(Player* player) { Obstacle::player = player; }
 
 public: //メンバ関数
 	/// <summary>
@@ -30,6 +24,8 @@ public: //メンバ関数
 	void Draw() override;
 
 	//getter
+	Vector3 GetWorldPos();
+	const bool GetIsDraw() { return isDraw; }
 	const bool GetIsDead() { return isDead; }
 
 public: //メンバ関数
