@@ -78,6 +78,11 @@ private: //メンバ関数
 	void ChangeScale();
 
 	/// <summary>
+	/// ノックバック
+	/// </summary>
+	void DemoEnd();
+
+	/// <summary>
 	/// 移動量Zの計算
 	/// </summary>
 	float VelicityZ(float time);
@@ -113,7 +118,7 @@ private: //メンバ変数
 	//時間
 	float time = 0.00f;
 	//ゴールの位置
-	float goalPosition = 1500.0f;
+	float goalPosition = 600.0f;
 	//サイズ
 	float ballScale = 1.0f;
 	//タイマー

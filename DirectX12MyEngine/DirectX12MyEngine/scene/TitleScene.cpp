@@ -255,7 +255,7 @@ void TitleScene::LoadObstacleSetData()
 {
 	//ファイルを開く
 	std::ifstream file;
-	file.open("Resources/obstacleSet.csv");
+	file.open("Resources/demoPlay.csv");
 	assert(file.is_open());
 
 	//ファイルの内容を文字列ストリームにコピー
