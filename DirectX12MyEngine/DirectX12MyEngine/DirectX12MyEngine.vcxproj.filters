@@ -120,6 +120,12 @@
     <Filter Include="ソース ファイル\gameUI\goal">
       <UniqueIdentifier>{22721463-6050-446b-a708-82e32e0562ef}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\gameUI\pushA">
+      <UniqueIdentifier>{3ccebec0-ab6b-44f8-a93e-140e1ac7e2a7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\gameUI\titleLogo">
+      <UniqueIdentifier>{814fa406-3466-462b-9b7a-8f1a0af60c2e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="audio\Audio.cpp">
@@ -292,6 +298,12 @@
     </ClCompile>
     <ClCompile Include="gameUI\GoalSprite.cpp">
       <Filter>ソース ファイル\gameUI\goal</Filter>
+    </ClCompile>
+    <ClCompile Include="gameUI\PushASprite.cpp">
+      <Filter>ソース ファイル\gameUI\pushA</Filter>
+    </ClCompile>
+    <ClCompile Include="gameUI\TitleLogo.cpp">
+      <Filter>ソース ファイル\gameUI\titleLogo</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -541,6 +553,12 @@
     </ClInclude>
     <ClInclude Include="gameUI\GoalSprite.h">
       <Filter>ソース ファイル\gameUI\goal</Filter>
+    </ClInclude>
+    <ClInclude Include="gameUI\PushASprite.h">
+      <Filter>ソース ファイル\gameUI\pushA</Filter>
+    </ClInclude>
+    <ClInclude Include="gameUI\TitleLogo.h">
+      <Filter>ソース ファイル\gameUI\titleLogo</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -128,6 +128,10 @@ void GameScene::Update()
 	//暗転用スプライトのインスタンスを取得
 	Blackout* blackout = Blackout::GetInstance();
 
+	//オブジェクト更新
+	//自機
+	player->Update();
+
 	//ゴールしていないとき
 	if (!isGoal) {
 		//死亡した障害物の削除
@@ -140,7 +144,6 @@ void GameScene::Update()
 			});
 
 		//雪玉にカメラ追従させる
-		camera->SetTarget(player->GetPosition());
 		Vector3 eyePos = player->GetPosition();
 		eyePos.y += 10;
 		eyePos.z -= 15;
@@ -184,12 +187,7 @@ void GameScene::Update()
 		}
 	}
 
-	//カメラ更新
-	camera->Update();
-
 	//オブジェクト更新
-	//自機
-	player->Update();
 	//障害物
 	for (const std::unique_ptr<Obstacle>& obstacle : obstacles) {
 		obstacle->Update();
@@ -200,6 +198,9 @@ void GameScene::Update()
 	for (const std::unique_ptr<SnowPlate>& snowPlate : snowPlates) {
 		snowPlate->Update();
 	}
+	//カメラ更新
+	camera->Update();
+
 
 	//UI更新
 	//大きさUI更新

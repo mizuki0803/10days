@@ -25,5 +25,8 @@ Tree* Tree::Create(ObjModel* model, const Vector3& position)
 	//座標をセット
 	tree->scale = { 2.5f, 2.5f, 2.5f };
 
+	//回転をセット
+	tree->rotation = { -30, 0, 0 };
+
 	return tree;
 }

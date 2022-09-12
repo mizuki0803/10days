@@ -47,10 +47,6 @@ void ResultScene::Initialize()
 	spriteCommon->LoadTexture(2, "Number.png");
 	spriteCommon->LoadTexture(3, "lank.png");
 
-	//スプライト生成
-	sprite.reset(Sprite::Create(1, { 0, 0 }));
-	sprite->SetSize({ 1280, 720 });
-
 	//objからモデルデータを読み込む
 	modelSkydome.reset(ObjModel::LoadFromOBJ("skydome"));
 	modelSnowBall.reset(ObjModel::LoadFromOBJ("Snowball", true));
@@ -113,9 +109,6 @@ void ResultScene::Update()
 	}
 
 
-	//スプライト更新
-	sprite->Update();
-
 	//UI更新
 	//大きさUI更新
 	finalSnowBallSizeUI->Update();
@@ -148,8 +141,6 @@ void ResultScene::Draw()
 	SpriteCommon::GetInstance()->DrawPrev();
 	///-------背景スプライト描画ここから-------///
 
-
-	//sprite->Draw();
 
 	//dxbase->ClearDepthBuffer();
 

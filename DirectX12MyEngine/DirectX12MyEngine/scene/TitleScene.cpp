@@ -54,12 +54,7 @@ void TitleScene::Initialize()
 	//スプライト用テクスチャ読み込み
 	spriteCommon->LoadTexture(1, "title.png");
 	spriteCommon->LoadTexture(2, "Number.png");
-
-	//スプライト生成
-	sprite.reset(Sprite::Create(1, { 0, 0 }));
-	sprite->SetSize({ 1280, 720 });
-
-
+	spriteCommon->LoadTexture(3, "pushAStart.png");
 
 	//objからモデルデータを読み込む
 	modelSkydome.reset(ObjModel::LoadFromOBJ("skydome"));
@@ -111,6 +106,11 @@ void TitleScene::Initialize()
 	if (Blackout::GetInstance()->GetColor().w != 0.0f) {
 		Blackout::GetInstance()->SetBlackoutReturn();
 	}
+
+	//タイトルロゴ生成
+	titleLogo.reset(TitleLogo::Create(1, { 640, 150 }, { 600, 500 }));
+	//PushAスプライト生成
+	pushASprite.reset(PushASprite::Create(3, { 640, 500 }, { 350, 50 }));
 }
 
 void TitleScene::Update()
@@ -139,10 +139,6 @@ void TitleScene::Update()
 
 	//自機
 	autoPlayer->Update();
-
-	//スプライト更新
-	sprite->Update();
-
 	//障害物
 	for (const std::unique_ptr<Obstacle>& obstacle : obstacles) {
 		obstacle->Update();
@@ -153,6 +149,11 @@ void TitleScene::Update()
 	for (const std::unique_ptr<SnowPlate>& snowPlate : snowPlates) {
 		snowPlate->Update();
 	}
+
+	//タイトルロゴ描画
+	titleLogo->Update();
+	//PushAスプライト更新
+	pushASprite->Update();
 
 	//衝突判定管理
 	CollisionCheck3d();
@@ -166,6 +167,9 @@ void TitleScene::Update()
 			//暗転開始
 			blackout->SetBlackout();
 			isStart = true;
+
+			//PushAスプライトの点滅の速さを変える
+			pushASprite->ChangeFlashingSpeed();
 		}
 	}
 	//画面が真っ暗になったら
@@ -212,7 +216,11 @@ void TitleScene::Draw()
 	SpriteCommon::GetInstance()->DrawPrev();
 	///-------スプライト描画ここから-------///
 
-	//sprite->Draw();
+
+	//タイトルロゴ描画
+	titleLogo->Draw();
+	//PushAスプライト描画
+	pushASprite->Draw();
 
 
 	///-------スプライト描画ここまで-------///

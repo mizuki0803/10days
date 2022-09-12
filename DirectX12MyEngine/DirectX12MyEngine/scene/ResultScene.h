@@ -86,8 +86,6 @@ private: //メンバ変数
 	std::unique_ptr<SnowMan> snowMan;
 	//最終的な雪玉の大きさ表示
 	std::unique_ptr<FinalSnowBallSizeUI> finalSnowBallSizeUI;
-	//スプライト
-	std::unique_ptr<Sprite> sprite;
 	//天球
 	std::unique_ptr<Skydome> skydome;
 	//雪のフィールド

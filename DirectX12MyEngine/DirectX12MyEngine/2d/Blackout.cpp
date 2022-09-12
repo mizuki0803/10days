@@ -64,7 +64,7 @@ void Blackout::SetBlackoutReturn()
 void Blackout::BlackoutUpdate()
 {
 	//暗転を行う時間
-	const int blackoutTime = 50;
+	const int blackoutTime = 80;
 
 	//タイマー更新
 	blackoutTimer++;

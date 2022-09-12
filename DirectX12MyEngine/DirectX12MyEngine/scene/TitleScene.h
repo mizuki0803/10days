@@ -8,11 +8,13 @@
 #include "CollisionShape.h"
 #include "Collision.h"
 #include "AutoPlayer.h"
+#include "TitleLogo.h"
 #include "SnowBallSizeUI.h"
 #include "Obstacle.h"
 #include "Skydome.h"
 #include "SnowPlate.h"
 #include "Countdown.h"
+#include "PushASprite.h"
 #include <sstream>
 
 
@@ -95,8 +97,6 @@ private: //メンバ変数
 
 	bool isStart = false;
 
-	//スプライト
-	std::unique_ptr<Sprite> sprite;
 	//objモデルデータ
 	std::unique_ptr<ObjModel> modelSkydome;
 	std::unique_ptr<ObjModel> modelRock;
@@ -115,5 +115,9 @@ private: //メンバ変数
 	//天球
 	std::unique_ptr<Skydome> skydome;
 	//雪のフィールド
-	std::list < std::unique_ptr<SnowPlate>> snowPlates;
+	std::list<std::unique_ptr<SnowPlate>> snowPlates;
+	//タイトルロゴ
+	std::unique_ptr<TitleLogo> titleLogo;
+	//PushAスプライト
+	std::unique_ptr<PushASprite> pushASprite;
 };

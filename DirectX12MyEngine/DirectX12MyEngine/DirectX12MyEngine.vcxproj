@@ -195,8 +195,10 @@
     <ClCompile Include="gameUI\MiniMapSnowBall.cpp" />
     <ClCompile Include="gameUI\MiniMapSprite.cpp" />
     <ClCompile Include="gameUI\NumberSprite.cpp" />
+    <ClCompile Include="gameUI\PushASprite.cpp" />
     <ClCompile Include="gameUI\SnowBallLankUI.cpp" />
     <ClCompile Include="gameUI\SnowBallSizeUI.cpp" />
+    <ClCompile Include="gameUI\TitleLogo.cpp" />
     <ClCompile Include="input\Input.cpp" />
     <ClCompile Include="light\LightGroup.cpp" />
     <ClCompile Include="main.cpp" />
@@ -344,8 +346,10 @@
     <ClInclude Include="gameUI\MiniMapSnowBall.h" />
     <ClInclude Include="gameUI\MiniMapSprite.h" />
     <ClInclude Include="gameUI\NumberSprite.h" />
+    <ClInclude Include="gameUI\PushASprite.h" />
     <ClInclude Include="gameUI\SnowBallLankUI.h" />
     <ClInclude Include="gameUI\SnowBallSizeUI.h" />
+    <ClInclude Include="gameUI\TitleLogo.h" />
     <ClInclude Include="input\Input.h" />
     <ClInclude Include="light\CircleShadow.h" />
     <ClInclude Include="light\DirectionalLight.h" />
