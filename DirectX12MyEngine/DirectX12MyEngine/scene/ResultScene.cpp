@@ -130,7 +130,7 @@ void ResultScene::Update()
 	debugText->Print("RESULT SCENE", 1000, 50);
 
 	if (blackout->GetColor().w == 0.0f) {
-		if (input->TriggerKey(DIK_SPACE)) {
+		if (input->TriggerKey(DIK_SPACE) || input->TriggerGamePadButton(Input::PAD_A)) {
 			//ˆÃ“]ŠJŽn
 			blackout->SetBlackout();
 		}

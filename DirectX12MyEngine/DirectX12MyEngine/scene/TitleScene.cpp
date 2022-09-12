@@ -162,13 +162,14 @@ void TitleScene::Update()
 	debugText->Print("TITLE SCENE", 1000, 50);
 
 	if (blackout->GetColor().w == 0.0f) {
-		if (input->TriggerKey(DIK_SPACE)) {
+		if (input->TriggerKey(DIK_SPACE) || input->TriggerGamePadButton(Input::PAD_A)) {
 			//暗転開始
 			blackout->SetBlackout();
+			isStart = true;
 		}
 	}
 	//画面が真っ暗になったら
-	if (blackout->GetIsAllBlack()) {
+	if (blackout->GetIsAllBlack() && isStart == true) {
 		//シーン切り替え
 		SceneManager::GetInstance()->ChangeScene("GAME");
 	}
