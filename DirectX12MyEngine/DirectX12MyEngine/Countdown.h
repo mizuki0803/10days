@@ -45,6 +45,10 @@ public: //メンバ関数
 	//getter
 	bool GetIsStart() { return isStart; }
 
+public:
+	const int center = 640;
+	const int leftSide = -200;
+	const int rightSide = 1480;
 
 private: //メンバ関数
 	/// <summary>
@@ -67,6 +71,13 @@ private: //メンバ変数
 	bool isOne = false;
 	bool isTwo = false;
 	bool isThree = false;
-	//カウントダウン用のタイマー
+	//カウントダウン用の変数
 	int countTime = 300;
+	float onePos;
+	float twoPos;
+	float threePos;
+	float easeTimer;
+	float easeTimer2;
+	float easeTimer3;
+	float timeRate;
 };
