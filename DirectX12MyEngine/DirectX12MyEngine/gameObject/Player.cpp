@@ -88,25 +88,11 @@ Vector3 Player::GetWorldPos()
 
 void Player::Damage()
 {
-	//今はノックバックがあるので正確な挙動にはなっていない
-	if (ballScale < 2.0f)
-	{
-		//雪玉の時間を0にする(移動量用)
-		time /= 2.0f;
-	}
-	else if (ballScale < 3.0f)
-	{
-		//雪玉の時間を0にする(移動量用)
-		time /= 1.5f;
-	}
-	else if (ballScale < 4.0f)
-	{
-		//雪玉の時間を0にする(移動量用)
-		time /= 1.2f;
-	}
+	time = 0;
 
 	//ダメージ状態にする
 	isDamage = true;
+	isDam = true;
 }
 
 void Player::Rotate()
@@ -204,6 +190,10 @@ void Player::Knockback()
 	//ノックバックする時間
 	const float knockbackTime = 30 + 2 * knockbackScale;
 	knockbackTimer++;
+	if (knockbackTimer > 0)
+	{
+		isDam = false;
+	}
 	const float time = knockbackTimer / knockbackTime;
 
 	//速度を作成
@@ -237,7 +227,7 @@ void Player::ChangeScale()
 	//ゴール後なら抜ける
 	if (isGoal) { return; }
 
-	if (isDamage)
+	if (isDam)
 	{
 		if (ballScale < 2.0f)
 		{
@@ -245,28 +235,33 @@ void Player::ChangeScale()
 		}
 		else if (ballScale < 3.0f)
 		{
-			ballScale /= 1.5f;
+			ballScale /= 2.0f;
 		}
 		else if (ballScale < 4.0f)
 		{
-			ballScale /= 1.2f;
+			ballScale /= 1.5f;
 		}
 		else
 		{
-			ballScale /= 1.05f;
+			ballScale /= 1.25f;
 		}
 	}
 	else
 	{
-		if (ballScale < 5.0f)
+		if (!isDamage)
 		{
-			ballScale += scaleRate;
-		}
-		else
-		{
-			ballScale = 5.0f;
+			if (ballScale < 5.0f)
+			{
+				ballScale += scaleRate;
+			}
+			else
+			{
+				ballScale = 5.0f;
+			}
 		}
 	}
+
+	position.y = ballScale;
 	scale = { ballScale,ballScale,ballScale };
 }
 
