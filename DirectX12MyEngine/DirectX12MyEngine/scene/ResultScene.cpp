@@ -4,6 +4,7 @@
 #include "Audio.h"
 #include "SpriteCommon.h"
 #include "DebugText.h"
+#include "Blackout.h"
 #include "Easing.h"
 #include "FbxLoader.h"
 #include <cassert>
@@ -83,6 +84,11 @@ void ResultScene::Initialize()
 
 	//雪玉の大きさランクを表示するUI
 	snowBallLankUI.reset(SnowBallLankUI::Create(3, { 1000, 200 }, { 50, 50 }, FinalSnowBallSize::GetFinalSize()));
+
+	//暗転中なら暗転解除
+	if (Blackout::GetInstance()->GetColor().w != 0.0f) {
+		Blackout::GetInstance()->SetBlackoutReturn();
+	}
 }
 
 void ResultScene::Update()
@@ -91,7 +97,8 @@ void ResultScene::Update()
 	Input* input = Input::GetInstance();
 	//デバッグテキストのインスタンスを取得
 	DebugText* debugText = DebugText::GetInstance();
-
+	//暗転用スプライトのインスタンスを取得
+	Blackout* blackout = Blackout::GetInstance();
 
 	//カメラ更新
 	camera->Update();
@@ -122,7 +129,14 @@ void ResultScene::Update()
 	//X座標,Y座標,縮尺を指定して表示
 	debugText->Print("RESULT SCENE", 1000, 50);
 
-	if (input->TriggerKey(DIK_SPACE)) {
+	if (blackout->GetColor().w == 0.0f) {
+		if (input->TriggerKey(DIK_SPACE)) {
+			//暗転開始
+			blackout->SetBlackout();
+		}
+	}
+	//画面が真っ暗になったら
+	if (blackout->GetIsAllBlack()) {
 		//シーン切り替え
 		SceneManager::GetInstance()->ChangeScene("TITLE");
 	}

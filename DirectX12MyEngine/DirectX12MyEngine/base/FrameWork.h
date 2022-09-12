@@ -5,6 +5,7 @@
 #include "Audio.h"
 #include "SpriteCommon.h"
 #include "DebugText.h"
+#include "Blackout.h"
 #include "PostEffect.h"
 #include "SceneManager.h"
 #include "AbstractSceneFactory.h"
@@ -62,6 +63,8 @@ protected: //メンバ変数
 	SpriteCommon* spriteCommon = nullptr;
 	//デバッグテキスト
 	DebugText* debugText = nullptr;
+	//暗転用スプライト
+	Blackout* blackout = nullptr;
 	//ポストエフェクト
 	PostEffect* postEffect = nullptr;
 	//シーン工場

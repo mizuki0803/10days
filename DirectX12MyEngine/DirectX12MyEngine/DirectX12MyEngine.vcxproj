@@ -150,6 +150,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="2d\Blackout.cpp" />
     <ClCompile Include="2d\DebugText.cpp" />
     <ClCompile Include="2d\PostEffect.cpp" />
     <ClCompile Include="2d\Sprite.cpp" />
@@ -188,6 +189,7 @@
     <ClCompile Include="gameObject\Tree.cpp" />
     <ClCompile Include="gameUI\FinalSnowBallSize.cpp" />
     <ClCompile Include="gameUI\FinalSnowBallSizeUI.cpp" />
+    <ClCompile Include="gameUI\GoalSprite.cpp" />
     <ClCompile Include="gameUI\LankSprite.cpp" />
     <ClCompile Include="gameUI\MiniMap.cpp" />
     <ClCompile Include="gameUI\MiniMapSnowBall.cpp" />
@@ -295,6 +297,7 @@
     </FxCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="2d\Blackout.h" />
     <ClInclude Include="2d\DebugText.h" />
     <ClInclude Include="2d\PostEffect.h" />
     <ClInclude Include="2d\Sprite.h" />
@@ -335,6 +338,7 @@
     <ClInclude Include="gameObject\Tree.h" />
     <ClInclude Include="gameUI\FinalSnowBallSize.h" />
     <ClInclude Include="gameUI\FinalSnowBallSizeUI.h" />
+    <ClInclude Include="gameUI\GoalSprite.h" />
     <ClInclude Include="gameUI\LankSprite.h" />
     <ClInclude Include="gameUI\MiniMap.h" />
     <ClInclude Include="gameUI\MiniMapSnowBall.h" />

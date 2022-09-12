@@ -4,6 +4,7 @@
 #include "Audio.h"
 #include "SpriteCommon.h"
 #include "DebugText.h"
+#include "Blackout.h"
 #include "Easing.h"
 #include "FinalSnowBallSize.h"
 #include <cassert>
@@ -40,10 +41,11 @@ void GameScene::Initialize()
 	//スプライト共通部分のインスタンスを取得
 	SpriteCommon* spriteCommon = SpriteCommon::GetInstance();
 	//スプライト用テクスチャ読み込み
-	spriteCommon->LoadTexture(1, "white1x1.png");
+
 	spriteCommon->LoadTexture(2, "Number.png");
 	spriteCommon->LoadTexture(3, "miniMap.png");
 	spriteCommon->LoadTexture(4, "miniSnowBall.png");
+	spriteCommon->LoadTexture(5, "goal.png");
 
 
 	//objからモデルデータを読み込む
@@ -66,6 +68,9 @@ void GameScene::Initialize()
 	//ミニマップ生成
 	miniMap.reset(MiniMap::Create(3, 4, { 50, 150 }, { 20, 400 }, goalPosition));
 	miniMap->SetPlayer(player.get());
+
+	//ゴールスプライト生成
+	goalSprite.reset(GoalSprite::Create(5, { 400, 200 }));
 
 	//障害物生成
 	LoadObstacleSetData();
@@ -107,6 +112,11 @@ void GameScene::Initialize()
 	//雪玉エフェクトマネージャーの生成
 	snowEffectManager.reset(SnowEffectManager::Create());
 	SnowEffectManager::SetModel(modelSnowBall.get());
+
+	//暗転中なら暗転解除
+	if (Blackout::GetInstance()->GetColor().w != 0.0f) {
+		Blackout::GetInstance()->SetBlackoutReturn();
+	}
 }
 
 void GameScene::Update()
@@ -115,6 +125,8 @@ void GameScene::Update()
 	Input* input = Input::GetInstance();
 	//デバッグテキストのインスタンスを取得
 	DebugText* debugText = DebugText::GetInstance();
+	//暗転用スプライトのインスタンスを取得
+	Blackout* blackout = Blackout::GetInstance();
 
 	//ゴールしていないとき
 	if (!isGoal) {
@@ -140,7 +152,12 @@ void GameScene::Update()
 		//プレイヤーがゴールラインより奥にいったらゴール
 		if (player->GetPosition().z >= goalPosition) {
 			isGoal = true;
+
+			//プレイヤーをゴール後の動きにする
 			player->SetIsGoal(true);
+
+			//ゴールスプライトを動かす
+			goalSprite->MoveStart();
 
 			//ゴールした瞬間の大きさを記録しておく
 			FinalSnowBallSize::DetermineFinalSize(player->GetScale().x);
@@ -149,12 +166,19 @@ void GameScene::Update()
 	//ゴール後
 	else {
 		//ゴール後の余韻時間
-		const int goalAfterTime = 300;
+		const int goalAfterTime = 240;
 		//タイマーを更新
 		goalAfterTimer++;
 
 		//タイマーが指定した時間になったら
-		if (goalAfterTimer >= goalAfterTime) {
+		if (blackout->GetColor().w == 0.0f) {
+			if (goalAfterTimer >= goalAfterTime) {
+				//暗転開始
+				blackout->SetBlackout();
+			}
+		}
+		//画面が真っ暗になったら
+		if (blackout->GetIsAllBlack()) {
 			//シーン切り替え
 			SceneManager::GetInstance()->ChangeScene("RESULT");
 		}
@@ -193,6 +217,8 @@ void GameScene::Update()
 	}
 	//ミニマップ更新
 	miniMap->Update();
+	//ゴールスプライト更新
+	goalSprite->Update();
 
 	//雪玉エフェクトマネージャー更新
 	snowEffectManager->Update();
@@ -208,16 +234,16 @@ void GameScene::Update()
 	std::string placeNum = std::to_string(snowPlates.size());
 	DebugText::GetInstance()->Print("Plate : " + placeNum, 10, 70);
 
-	if (input->TriggerKey(DIK_RETURN)) {
-		//シーン切り替え
-		SceneManager::GetInstance()->ChangeScene("GAME");
-	}
-	if (input->TriggerKey(DIK_SPACE)) {
-		//シーン切り替え
-		SceneManager::GetInstance()->ChangeScene("RESULT");
-		//ゴールした瞬間の大きさを記録しておく
-		FinalSnowBallSize::DetermineFinalSize(player->GetScale().x);
-	}
+	//if (input->TriggerKey(DIK_RETURN)) {
+	//	//シーン切り替え
+	//	SceneManager::GetInstance()->ChangeScene("GAME");
+	//}
+	//if (input->TriggerKey(DIK_SPACE)) {
+	//	//シーン切り替え
+	//	SceneManager::GetInstance()->ChangeScene("RESULT");
+	//	//ゴールした瞬間の大きさを記録しておく
+	//	FinalSnowBallSize::DetermineFinalSize(player->GetScale().x);
+	//}
 }
 
 void GameScene::Draw()
@@ -254,8 +280,10 @@ void GameScene::Draw()
 	if (countdown) {
 		countdown->Draw();
 	}
-	//ミニマップ更新
+	//ミニマップ描画
 	miniMap->Draw();
+	//ゴールスプライト描画
+	goalSprite->Draw();
 
 	///-------スプライト描画ここまで-------///
 

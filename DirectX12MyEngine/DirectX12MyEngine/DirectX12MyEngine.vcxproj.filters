@@ -114,6 +114,12 @@
     <Filter Include="ソース ファイル\effect\snow">
       <UniqueIdentifier>{66b33d7e-8ef3-47a4-84ce-bf3b6d1017d0}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\engine\2d\blackout">
+      <UniqueIdentifier>{39b45f4c-a6ff-41ec-8d34-07d88db4dfed}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\gameUI\goal">
+      <UniqueIdentifier>{22721463-6050-446b-a708-82e32e0562ef}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="audio\Audio.cpp">
@@ -280,6 +286,12 @@
     </ClCompile>
     <ClCompile Include="effect\SnowEffectManager.cpp">
       <Filter>ソース ファイル\effect\snow</Filter>
+    </ClCompile>
+    <ClCompile Include="2d\Blackout.cpp">
+      <Filter>ソース ファイル\engine\2d\blackout</Filter>
+    </ClCompile>
+    <ClCompile Include="gameUI\GoalSprite.cpp">
+      <Filter>ソース ファイル\gameUI\goal</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -523,6 +535,12 @@
     </ClInclude>
     <ClInclude Include="effect\SnowEffectManager.h">
       <Filter>ソース ファイル\effect\snow</Filter>
+    </ClInclude>
+    <ClInclude Include="2d\Blackout.h">
+      <Filter>ソース ファイル\engine\2d\blackout</Filter>
+    </ClInclude>
+    <ClInclude Include="gameUI\GoalSprite.h">
+      <Filter>ソース ファイル\gameUI\goal</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

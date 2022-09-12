@@ -14,6 +14,7 @@
 #include "SnowPlate.h"
 #include "Countdown.h"
 #include "MiniMap.h"
+#include "GoalSprite.h"
 #include "SnowEffectManager.h"
 #include <sstream>
 
@@ -117,6 +118,8 @@ private: //メンバ変数
 	std::unique_ptr<Countdown> countdown;
 	//ミニマップ
 	std::unique_ptr<MiniMap> miniMap;
+	//ゴールスプライト
+	std::unique_ptr<GoalSprite> goalSprite;
 	//雪玉エフェクト
 	std::unique_ptr<SnowEffectManager> snowEffectManager;
 

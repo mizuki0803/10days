@@ -4,6 +4,7 @@
 #include "Audio.h"
 #include "SpriteCommon.h"
 #include "DebugText.h"
+#include "Blackout.h"
 #include "Easing.h"
 #include "FbxLoader.h"
 #include <cassert>
@@ -105,6 +106,11 @@ void TitleScene::Initialize()
 	ObjObject3d::SetCamera(camera.get());
 	//objオブジェクトにライトをセット
 	ObjObject3d::SetLightGroup(lightGroup.get());
+
+	//暗転中なら暗転解除
+	if (Blackout::GetInstance()->GetColor().w != 0.0f) {
+		Blackout::GetInstance()->SetBlackoutReturn();
+	}
 }
 
 void TitleScene::Update()
@@ -113,6 +119,8 @@ void TitleScene::Update()
 	Input* input = Input::GetInstance();
 	//デバッグテキストのインスタンスを取得
 	DebugText* debugText = DebugText::GetInstance();
+	//暗転用スプライトのインスタンスを取得
+	Blackout* blackout = Blackout::GetInstance();
 
 
 	//ライト更新
@@ -153,7 +161,14 @@ void TitleScene::Update()
 	//X座標,Y座標,縮尺を指定して表示
 	debugText->Print("TITLE SCENE", 1000, 50);
 
-	if (input->TriggerKey(DIK_SPACE)) {
+	if (blackout->GetColor().w == 0.0f) {
+		if (input->TriggerKey(DIK_SPACE)) {
+			//暗転開始
+			blackout->SetBlackout();
+		}
+	}
+	//画面が真っ暗になったら
+	if (blackout->GetIsAllBlack()) {
 		//シーン切り替え
 		SceneManager::GetInstance()->ChangeScene("GAME");
 	}

@@ -59,6 +59,14 @@ void FrameWork::Initialize()
 	debugText = DebugText::GetInstance();
 	debugText->Initialize(debugTextNumber);
 
+	//暗転用のテクスチャ番号を指定
+	const int blackoutNumber = 10;
+	//デバッグテキスト用のテクスチャ読み込み
+	spriteCommon->LoadTexture(blackoutNumber, "white1x1.png");
+	//デバッグテキスト初期化
+	blackout = Blackout::GetInstance();
+	blackout->Initialize(blackoutNumber);
+
 	//Object3d共通初期化処理
 	PostEffect::PostEffectCommon(dxbase->GetDevice(), dxbase->GetCmdList());
 	//ポストエフェクトの初期化
@@ -127,6 +135,9 @@ void FrameWork::Update()
 
 	//シーン更新
 	SceneManager::GetInstance()->Update();
+
+	//暗転用スプライト描画
+	blackout->Update();
 }
 
 void FrameWork::Draw()
@@ -149,6 +160,8 @@ void FrameWork::Draw()
 	spriteCommon->DrawPrev();
 	//デバックテキスト描画
 	debugText->DrawAll();
+	//暗転用スプライト描画
+	blackout->Draw();
 
 	//グラフィックスコマンド(後)
 	dxbase->GraphicsCommandRear();
