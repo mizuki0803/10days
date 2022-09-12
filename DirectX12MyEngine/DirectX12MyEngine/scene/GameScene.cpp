@@ -229,11 +229,11 @@ void GameScene::Update()
 
 	//デバックテキスト
 	//X座標,Y座標,縮尺を指定して表示
-	debugText->Print("GAME SCENE", 1000, 50);
+	/*debugText->Print("GAME SCENE", 1000, 50);
 	std::string obstacleNum = std::to_string(obstacles.size());
 	DebugText::GetInstance()->Print("obstacle : " + obstacleNum, 10, 50);
 	std::string placeNum = std::to_string(snowPlates.size());
-	DebugText::GetInstance()->Print("Plate : " + placeNum, 10, 70);
+	DebugText::GetInstance()->Print("Plate : " + placeNum, 10, 70);*/
 
 	//if (input->TriggerKey(DIK_RETURN)) {
 	//	//シーン切り替え

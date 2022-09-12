@@ -26,8 +26,8 @@ void SnowEffectManager::Update()
 		snowEffect->Update();
 	}
 
-	std::string snowEffectNum = std::to_string(snowEffects.size());
-	DebugText::GetInstance()->Print("snowEffectNum : " + snowEffectNum, 100, 200);
+	//std::string snowEffectNum = std::to_string(snowEffects.size());
+	//DebugText::GetInstance()->Print("snowEffectNum : " + snowEffectNum, 100, 200);
 }
 
 void SnowEffectManager::Draw()

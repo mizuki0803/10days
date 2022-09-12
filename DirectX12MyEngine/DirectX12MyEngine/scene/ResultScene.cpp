@@ -45,7 +45,8 @@ void ResultScene::Initialize()
 	//スプライト用テクスチャ読み込み
 	spriteCommon->LoadTexture(1, "finish.png");
 	spriteCommon->LoadTexture(2, "Number.png");
-	spriteCommon->LoadTexture(3, "lank.png");
+	spriteCommon->LoadTexture(3, "rank.png");
+	spriteCommon->LoadTexture(4, "rankWord.png");
 
 	//objからモデルデータを読み込む
 	modelSkydome.reset(ObjModel::LoadFromOBJ("skydome"));
@@ -79,7 +80,7 @@ void ResultScene::Initialize()
 	ObjObject3d::SetLightGroup(lightGroup.get());
 
 	//雪玉の大きさランクを表示するUI
-	snowBallLankUI.reset(SnowBallLankUI::Create(3, { 1000, 200 }, { 50, 50 }, FinalSnowBallSize::GetFinalSize()));
+	snowBallRankUI.reset(SnowBallRankUI::Create(3, 4, { 1000, 200 }, FinalSnowBallSize::GetFinalSize()));
 
 	//暗転中なら暗転解除
 	if (Blackout::GetInstance()->GetColor().w != 0.0f) {
@@ -113,14 +114,14 @@ void ResultScene::Update()
 	//大きさUI更新
 	finalSnowBallSizeUI->Update();
 	//雪玉の大きさランクUI更新
-	snowBallLankUI->Update();
+	snowBallRankUI->Update();
 
-	std::string scale = std::to_string(FinalSnowBallSize::GetFinalSize());
-	DebugText::GetInstance()->Print("Scale : " + scale, 100, 200);
+	//std::string scale = std::to_string(FinalSnowBallSize::GetFinalSize());
+	//DebugText::GetInstance()->Print("Scale : " + scale, 100, 200);
 
-	//デバックテキスト
-	//X座標,Y座標,縮尺を指定して表示
-	debugText->Print("RESULT SCENE", 1000, 50);
+	////デバックテキスト
+	////X座標,Y座標,縮尺を指定して表示
+	//debugText->Print("RESULT SCENE", 1000, 50);
 
 	if (blackout->GetColor().w == 0.0f) {
 		if (input->TriggerKey(DIK_SPACE) || input->TriggerGamePadButton(Input::PAD_A)) {
@@ -173,7 +174,7 @@ void ResultScene::Draw()
 	//大きさUI更新
 	finalSnowBallSizeUI->Draw();
 	//雪玉の大きさランクUI描画
-	snowBallLankUI->Draw();
+	snowBallRankUI->Draw();
 
 
 	///-------スプライト描画ここまで-------///

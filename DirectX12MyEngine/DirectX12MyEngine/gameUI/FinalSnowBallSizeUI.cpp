@@ -20,7 +20,7 @@ FinalSnowBallSizeUI* FinalSnowBallSizeUI::Create(UINT texNumber, const Vector2& 
 
 bool FinalSnowBallSizeUI::Initialize(UINT texNumber, const Vector2& position, const Vector2& size, const float finalSnowBallSize)
 {
-	for (int i = 0; i < 6; i++) {
+	for (int i = 0; i < 4; i++) {
 		std::unique_ptr<NumberSprite> newNumberSprite;
 
 		Vector2 pos = position;
@@ -60,6 +60,4 @@ void FinalSnowBallSizeUI::ChangeNumber(const float finalSnowBallSize)
 	numberSprites[1]->SetNumber((scaleNum / 10) % 10);		//000 10
 	numberSprites[2]->SetNumber(10);						//000.00
 	numberSprites[3]->SetNumber((scaleNum / 100) % 10);		//001 00
-	numberSprites[4]->SetNumber((scaleNum / 1000) % 10);	//010 00
-	numberSprites[5]->SetNumber((scaleNum / 10000) % 10);	//100 00
 }

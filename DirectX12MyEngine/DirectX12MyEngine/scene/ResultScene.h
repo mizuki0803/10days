@@ -12,7 +12,7 @@
 #include "FinalSnowBallSizeUI.h"
 #include "Skydome.h"
 #include "SnowPlate.h"
-#include "SnowBallLankUI.h"
+#include "SnowBallRankUI.h"
 
 /// <summary>
 /// リザルトシーン
@@ -91,5 +91,5 @@ private: //メンバ変数
 	//雪のフィールド
 	std::list < std::unique_ptr<SnowPlate>> snowPlates;
 	//雪玉の大きさランクを表示するUI
-	std::unique_ptr<SnowBallLankUI> snowBallLankUI;
+	std::unique_ptr<SnowBallRankUI> snowBallRankUI;
 };

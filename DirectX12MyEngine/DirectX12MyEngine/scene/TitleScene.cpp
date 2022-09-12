@@ -160,7 +160,7 @@ void TitleScene::Update()
 
 	//デバックテキスト
 	//X座標,Y座標,縮尺を指定して表示
-	debugText->Print("TITLE SCENE", 1000, 50);
+	//debugText->Print("TITLE SCENE", 1000, 50);
 
 	if (blackout->GetColor().w == 0.0f) {
 		if (input->TriggerKey(DIK_SPACE) || input->TriggerGamePadButton(Input::PAD_A)) {

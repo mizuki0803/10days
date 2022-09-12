@@ -278,10 +278,10 @@
     <ClCompile Include="gameUI\MiniMapSprite.cpp">
       <Filter>ソース ファイル\gameUI\miniMap</Filter>
     </ClCompile>
-    <ClCompile Include="gameUI\LankSprite.cpp">
+    <ClCompile Include="gameUI\RankSprite.cpp">
       <Filter>ソース ファイル\gameUI\snowBallLankUI</Filter>
     </ClCompile>
-    <ClCompile Include="gameUI\SnowBallLankUI.cpp">
+    <ClCompile Include="gameUI\SnowBallRankUI.cpp">
       <Filter>ソース ファイル\gameUI\snowBallLankUI</Filter>
     </ClCompile>
     <ClCompile Include="gameUI\FinalSnowBallSizeUI.cpp">
@@ -304,6 +304,9 @@
     </ClCompile>
     <ClCompile Include="gameUI\TitleLogo.cpp">
       <Filter>ソース ファイル\gameUI\titleLogo</Filter>
+    </ClCompile>
+    <ClCompile Include="gameUI\RankWordSprite.cpp">
+      <Filter>ソース ファイル\gameUI\snowBallLankUI</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -533,10 +536,10 @@
     <ClInclude Include="gameUI\MiniMapSprite.h">
       <Filter>ソース ファイル\gameUI\miniMap</Filter>
     </ClInclude>
-    <ClInclude Include="gameUI\LankSprite.h">
+    <ClInclude Include="gameUI\RankSprite.h">
       <Filter>ソース ファイル\gameUI\snowBallLankUI</Filter>
     </ClInclude>
-    <ClInclude Include="gameUI\SnowBallLankUI.h">
+    <ClInclude Include="gameUI\SnowBallRankUI.h">
       <Filter>ソース ファイル\gameUI\snowBallLankUI</Filter>
     </ClInclude>
     <ClInclude Include="gameUI\FinalSnowBallSizeUI.h">
@@ -559,6 +562,9 @@
     </ClInclude>
     <ClInclude Include="gameUI\TitleLogo.h">
       <Filter>ソース ファイル\gameUI\titleLogo</Filter>
+    </ClInclude>
+    <ClInclude Include="gameUI\RankWordSprite.h">
+      <Filter>ソース ファイル\gameUI\snowBallLankUI</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

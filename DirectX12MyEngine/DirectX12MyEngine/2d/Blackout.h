@@ -12,9 +12,9 @@ private: //シングルトン化
 	Blackout() = default;
 public:
 	//コピーコンストラクタを無効化
-	Blackout(const Blackout& debugText) = delete;
+	Blackout(const Blackout& blackout) = delete;
 	//代入演算子を無効化
-	void operator = (const Blackout& debugText) = delete;
+	void operator = (const Blackout& blackout) = delete;
 
 public:
 	/// <summary>
