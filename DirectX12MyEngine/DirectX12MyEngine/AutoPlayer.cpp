@@ -1,5 +1,6 @@
 #include "AutoPlayer.h"
 #include "Input.h"
+#include "Blackout.h"
 //#include "GameScene.h"
 
 const Vector2 AutoPlayer::rotLimit = { 35.0f, 25.0f };
@@ -55,10 +56,7 @@ void AutoPlayer::Update()
 		Move();
 	}
 
-	if (position.z >= goalPosition)
-	{
-		DemoEnd();
-	}
+	Black();
 
 	//オブジェクト更新
 	ObjObject3d::Update();
@@ -188,13 +186,9 @@ void AutoPlayer::Move()
 	position.y = ballScale;
 
 	//移動限界から出ないようにする(Zを追加したのでVector3にした)
-	const Vector3 moveLimit = { 20.0f, 5.0f, goalPosition };
-	position.x = max(position.x, -moveLimit.x);
-	position.x = min(position.x, +moveLimit.x);
-	position.y = max(position.y, -moveLimit.y);
-	position.y = min(position.y, +moveLimit.y);
-	position.z = max(position.z, -moveLimit.z);
-	position.z = min(position.z, +moveLimit.z);
+	const float moveLimit = 20;
+	position.x = max(position.x, -moveLimit);
+	position.x = min(position.x, +moveLimit);
 }
 
 void AutoPlayer::SetKnockback(const Vector3& subjectPos)
@@ -228,13 +222,9 @@ void AutoPlayer::Knockback()
 	position.x += knockbackVel.x *= speed;
 
 	//移動限界から出ないようにする(Zを追加したのでVector3にした)
-	const Vector3 moveLimit = { 10.0f, 5.0f, goalPosition };
-	position.x = max(position.x, -moveLimit.x);
-	position.x = min(position.x, +moveLimit.x);
-	position.y = max(position.y, -moveLimit.y);
-	position.y = min(position.y, +moveLimit.y);
-	position.z = max(position.z, -moveLimit.z);
-	position.z = min(position.z, +moveLimit.z);
+	const float moveLimit = 20;
+	position.x = max(position.x, -moveLimit);
+	position.x = min(position.x, +moveLimit);
 
 	//ノックバックが終了したらダメージ状態を解除する
 	if (knockbackTimer >= knockbackTime) {
@@ -286,7 +276,31 @@ void AutoPlayer::DemoEnd()
 	time = 0.0f;
 	timer = 0.0f;
 	rotation.y = 0;
+	Blackout::GetInstance()->SetBlackoutReturn();
+	isStart = false;
 }
+
+void AutoPlayer::Black()
+{
+	//暗転用スプライトのインスタンスを取得
+	Blackout* blackout = Blackout::GetInstance();
+
+	if (position.z > blackPosition)
+	{
+		if (blackout->GetColor().w == 0.0f)
+		{
+			//暗転開始
+			blackout->SetBlackout();
+			isStart = true;
+		}
+	}
+	//画面が真っ暗になったら
+	if (blackout->GetIsAllBlack() && isStart == true) {
+		//シーン切り替え
+		DemoEnd();
+	}
+}
+
 
 float AutoPlayer::VelicityZ(float time)
 {

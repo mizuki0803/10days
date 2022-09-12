@@ -78,9 +78,14 @@ private: //メンバ関数
 	void ChangeScale();
 
 	/// <summary>
-	/// ノックバック
+	/// デモプレイ終了(ループ)
 	/// </summary>
 	void DemoEnd();
+
+	/// <summary>
+	/// 暗転
+	/// </summary>
+	void Black();
 
 	/// <summary>
 	/// 移動量Zの計算
@@ -117,10 +122,16 @@ private: //メンバ変数
 	float swayZ = 0.0f;
 	//時間
 	float time = 0.00f;
-	//ゴールの位置
-	float goalPosition = 600.0f;
+	//暗転開始用
+	float blackPosition = 450.0f;
 	//サイズ
 	float ballScale = 1.0f;
 	//タイマー
 	int timer = 0;
+public:
+	//フラグ
+	bool isBlack;
+	bool isBlackout = false;
+	bool isCount = true;
+	bool isStart = false;
 };
