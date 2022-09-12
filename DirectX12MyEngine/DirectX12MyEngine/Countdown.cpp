@@ -24,7 +24,7 @@ bool Countdown::Initialize(UINT texNumber, const Vector2& position, const Vector
 		std::unique_ptr<NumberSprite> newNumberSprite;
 
 		pos = position;
-		pos.x += (i * 400) - 1300;
+		pos.x = leftSide;
 		pos.x += size.x * 3;
 
 		newNumberSprite.reset(NumberSprite::Create(texNumber, pos, size));
@@ -52,18 +52,9 @@ void Countdown::Update()
 void Countdown::Draw()
 {
 	//スプライト描画
-	if (isThree)
-	{
-		numberSprites[1]->Draw();
-	}
-	if (isTwo)
-	{
-		numberSprites[2]->Draw();
-	}
-	if (isOne)
-	{
-		numberSprites[3]->Draw();
-	}
+	numberSprites[1]->Draw();
+	numberSprites[2]->Draw();
+	numberSprites[3]->Draw();
 }
 
 void Countdown::ChangeNumber()
@@ -109,21 +100,40 @@ void Countdown::Move()
 {
 	if (isOne)
 	{
-		numberSprites[3]->SetPosition({ 1040,120 });
-		numberSprites[2]->SetPosition({ 640,120 });
-		numberSprites[1]->SetPosition({ 240,120 });
+		int returnCount = 40;
+		timeRate = easeTimer / returnCount;
+		threePos = Easing::InQuad(leftSide, center, timeRate);
+		if (easeTimer / returnCount < 1)
+		{
+			easeTimer++;
+		}
+		numberSprites[3]->SetPosition({ threePos,120 });
 	}
 	if (isTwo)
 	{
-		numberSprites[3]->SetPosition({ 1440,120 });
-		numberSprites[2]->SetPosition({ 1040,120 });
-		numberSprites[1]->SetPosition({ 640,120 });
+		int returnCount = 40;
+		timeRate = easeTimer2 / returnCount;
+		twoPos = Easing::InQuad(leftSide, center, timeRate);
+		threePos = Easing::InQuad(center, rightSide, timeRate);
+		if (easeTimer2 / returnCount < 1)
+		{
+			easeTimer2++;
+		}
+		numberSprites[3]->SetPosition({ threePos,120 });
+		numberSprites[2]->SetPosition({ twoPos,120 });
 	}
 	if (isThree)
 	{
-		numberSprites[3]->SetPosition({ 1840,120 });
-		numberSprites[2]->SetPosition({ 1440,120 });
-		numberSprites[1]->SetPosition({ 1040,120 });
+		int returnCount = 40;
+		timeRate = easeTimer3 / returnCount;
+		onePos = Easing::InQuad(leftSide, center, timeRate);
+		twoPos = Easing::InQuad(center, rightSide, timeRate);
+		if (easeTimer3 / returnCount < 1)
+		{
+			easeTimer3++;
+		}
+		numberSprites[2]->SetPosition({ twoPos,120 });
+		numberSprites[1]->SetPosition({ onePos,120 });
 	}
 }
 
