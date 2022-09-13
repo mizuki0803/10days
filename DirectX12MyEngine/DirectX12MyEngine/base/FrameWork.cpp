@@ -33,7 +33,7 @@ void FrameWork::Initialize()
 {
 	//ウインドウ作成
 	win = new WindowApp();
-	win->WindowCreate(L"ShootingGame");
+	win->WindowCreate(L"ユキコロ");
 
 	//DirectX初期化
 	dxbase = new DirectXBase();
@@ -46,6 +46,7 @@ void FrameWork::Initialize()
 	//音声初期化
 	audio = Audio::GetInstance();
 	audio->Initialize();
+	audio->LoadAllSoundData();
 
 	//スプライト共通部分初期化
 	spriteCommon = SpriteCommon::GetInstance();

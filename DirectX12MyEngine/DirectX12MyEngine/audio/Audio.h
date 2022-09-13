@@ -111,6 +111,11 @@ public: //メンバ関数
 	/// <param name="volume">音量</param>
 	void ChangeVolume(const float volume);
 
+	/// <summary>
+	/// 全てのサウンドデータを一気に読み込み
+	/// </summary>
+	void LoadAllSoundData();
+
 private: //メンバ変数
 	//xAudio
 	ComPtr<IXAudio2> xAudio2;

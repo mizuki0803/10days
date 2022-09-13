@@ -204,3 +204,14 @@ void Audio::ChangeVolume(const float volume)
 {
 	masterVoice->SetVolume(volume);
 }
+
+void Audio::LoadAllSoundData()
+{
+	LoadWave("countdown.wav");
+	LoadWave("damage.wav");
+	LoadWave("finish.wav");
+	LoadWave("gameBGM.wav");
+	LoadWave("select01.wav");
+	LoadWave("select02.wav");
+	LoadWave("titleBGM.wav");
+}

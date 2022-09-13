@@ -1,4 +1,5 @@
 #include "Countdown.h"
+#include "Audio.h"
 
 Countdown* Countdown::Create(UINT texNumber, const Vector2& position, const Vector2& size)
 {
@@ -106,6 +107,12 @@ void Countdown::Move()
 		if (easeTimer / returnCount < 1)
 		{
 			easeTimer++;
+
+			if (easeTimer == returnCount)
+			{
+				//ピッ効果音を再生
+				Audio::GetInstance()->PlayWave("countdown.wav", false);
+			}
 		}
 		numberSprites[3]->SetPosition({ threePos,120 });
 	}
@@ -118,6 +125,12 @@ void Countdown::Move()
 		if (easeTimer2 / returnCount < 1)
 		{
 			easeTimer2++;
+
+			if (easeTimer2 == returnCount)
+			{
+				//ピッ効果音を再生
+				Audio::GetInstance()->PlayWave("countdown.wav", false);
+			}
 		}
 		numberSprites[3]->SetPosition({ threePos,120 });
 		numberSprites[2]->SetPosition({ twoPos,120 });
@@ -131,6 +144,12 @@ void Countdown::Move()
 		if (easeTimer3 / returnCount < 1)
 		{
 			easeTimer3++;
+
+			if (easeTimer3 == returnCount)
+			{
+				//ピッ効果音を再生
+				Audio::GetInstance()->PlayWave("countdown.wav", false);
+			}
 		}
 		numberSprites[2]->SetPosition({ twoPos,120 });
 		numberSprites[1]->SetPosition({ onePos,120 });

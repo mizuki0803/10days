@@ -127,6 +127,9 @@ void ResultScene::Update()
 		if (input->TriggerKey(DIK_SPACE) || input->TriggerGamePadButton(Input::PAD_A)) {
 			//暗転開始
 			blackout->SetBlackout();
+
+			//ボタン押した効果音を再生
+			Audio::GetInstance()->PlayWave("select02.wav", false);
 		}
 	}
 	//画面が真っ暗になったら

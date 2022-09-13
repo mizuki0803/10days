@@ -20,13 +20,6 @@ using namespace DirectX;
 
 void TitleScene::Initialize()
 {
-	//オーディオのインスタンスを取得
-	Audio* audio = Audio::GetInstance();
-
-	//音全体のボリューム変更
-	audio->ChangeVolume(0.1f);
-	//audio->PlayWave("BGM.wav", true);
-
 	//カメラ初期化
 	camera.reset(new Camera());
 	camera->Initialize();
@@ -111,6 +104,9 @@ void TitleScene::Initialize()
 	titleLogo.reset(TitleLogo::Create(1, { 640, 150 }, { 600, 500 }));
 	//PushAスプライト生成
 	pushASprite.reset(PushASprite::Create(3, { 640, 500 }, { 350, 50 }));
+
+	//タイトルシーン用BGMを再生
+	Audio::GetInstance()->PlayWave("titleBGM.wav", true);
 }
 
 void TitleScene::Update()
@@ -170,12 +166,17 @@ void TitleScene::Update()
 
 			//PushAスプライトの点滅の速さを変える
 			pushASprite->ChangeFlashingSpeed();
+
+			//ボタン押した効果音を再生
+			Audio::GetInstance()->PlayWave("select01.wav", false);
 		}
 	}
 	//画面が真っ暗になったら
 	if (blackout->GetIsAllBlack() && isStart == true) {
 		//シーン切り替え
 		SceneManager::GetInstance()->ChangeScene("GAME");
+		//タイトルシーン用BGM再生を停止
+		Audio::GetInstance()->StopWave("titleBGM.wav");
 	}
 }
 

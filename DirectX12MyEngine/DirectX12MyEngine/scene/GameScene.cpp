@@ -164,6 +164,12 @@ void GameScene::Update()
 
 			//ゴールした瞬間の大きさを記録しておく
 			FinalSnowBallSize::DetermineFinalSize(player->GetScale().x);
+
+			//ゲームシーン用BGM再生を停止
+			Audio::GetInstance()->StopWave("gameBGM.wav");
+
+			//ゴール用効果音を再生
+			Audio::GetInstance()->PlayWave("finish.wav", false);
 		}
 	}
 	//ゴール後
@@ -214,6 +220,9 @@ void GameScene::Update()
 			player->SetIsGameStart(true);
 			//カウントダウンのインスタンスを削除
 			countdown.reset();
+
+			//ゲームシーン用BGMを再生
+			Audio::GetInstance()->PlayWave("gameBGM.wav", true);
 		}
 	}
 	//ミニマップ更新
@@ -336,6 +345,9 @@ void GameScene::CollisionCheck3d()
 
 			//雪玉エフェクトの追加
 			snowEffectManager->AddSnowEffect(player->GetPosition());
+
+			//ダメージ効果音を再生
+			Audio::GetInstance()->PlayWave("damage.wav", false);
 		}
 	}
 #pragma endregion
