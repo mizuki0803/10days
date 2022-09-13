@@ -299,7 +299,7 @@
     <ClCompile Include="gameUI\GoalSprite.cpp">
       <Filter>ソース ファイル\gameUI\goal</Filter>
     </ClCompile>
-    <ClCompile Include="gameUI\PushASprite.cpp">
+    <ClCompile Include="gameUI\TitlePushASprite.cpp">
       <Filter>ソース ファイル\gameUI\pushA</Filter>
     </ClCompile>
     <ClCompile Include="gameUI\TitleLogo.cpp">
@@ -307,6 +307,9 @@
     </ClCompile>
     <ClCompile Include="gameUI\RankWordSprite.cpp">
       <Filter>ソース ファイル\gameUI\snowBallLankUI</Filter>
+    </ClCompile>
+    <ClCompile Include="gameUI\ResultPushASprite.cpp">
+      <Filter>ソース ファイル\gameUI\pushA</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -557,7 +560,7 @@
     <ClInclude Include="gameUI\GoalSprite.h">
       <Filter>ソース ファイル\gameUI\goal</Filter>
     </ClInclude>
-    <ClInclude Include="gameUI\PushASprite.h">
+    <ClInclude Include="gameUI\TitlePushASprite.h">
       <Filter>ソース ファイル\gameUI\pushA</Filter>
     </ClInclude>
     <ClInclude Include="gameUI\TitleLogo.h">
@@ -565,6 +568,9 @@
     </ClInclude>
     <ClInclude Include="gameUI\RankWordSprite.h">
       <Filter>ソース ファイル\gameUI\snowBallLankUI</Filter>
+    </ClInclude>
+    <ClInclude Include="gameUI\ResultPushASprite.h">
+      <Filter>ソース ファイル\gameUI\pushA</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

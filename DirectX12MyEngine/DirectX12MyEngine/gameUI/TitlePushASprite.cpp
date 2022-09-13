@@ -1,31 +1,31 @@
-#include "PushASprite.h"
+#include "TitlePushASprite.h"
 
-PushASprite* PushASprite::Create(UINT texNumber, const Vector2& position, const Vector2& size)
+TitlePushASprite* TitlePushASprite::Create(UINT texNumber, const Vector2& position, const Vector2& size)
 {
 	//PushAスプライトのインスタンスを生成
-	PushASprite* pushASprite = new PushASprite();
-	if (pushASprite == nullptr) {
+	TitlePushASprite* titlePushASprite = new TitlePushASprite();
+	if (titlePushASprite == nullptr) {
 		return nullptr;
 	}
 
 	// 初期化
-	if (!pushASprite->Initialize(texNumber, { 0.5f, 0.5f }, false, false)) {
-		delete pushASprite;
+	if (!titlePushASprite->Initialize(texNumber, { 0.5f, 0.5f }, false, false)) {
+		delete titlePushASprite;
 		assert(0);
 		return nullptr;
 	}
 
 	//座標をセット
-	pushASprite->position = position;
+	titlePushASprite->position = position;
 
 	//大きさをセット
-	pushASprite->size = size;
-	pushASprite->texSize = size;
+	titlePushASprite->size = size;
+	titlePushASprite->texSize = size;
 
-	return pushASprite;
+	return titlePushASprite;
 }
 
-void PushASprite::Update()
+void TitlePushASprite::Update()
 {
 	//点滅
 	if (isDraw) {
@@ -43,7 +43,7 @@ void PushASprite::Update()
 	Sprite::Update();
 }
 
-void PushASprite::Draw()
+void TitlePushASprite::Draw()
 {
 	//描画状態でなければ抜ける
 	if (!isDraw) { return; }
@@ -52,14 +52,14 @@ void PushASprite::Draw()
 	Sprite::Draw();
 }
 
-void PushASprite::ChangeFlashingSpeed()
+void TitlePushASprite::ChangeFlashingSpeed()
 {
 	//点滅の速さを変える
 	drawModeTime = 3;
 	flashingTime = 3;
 }
 
-void PushASprite::Flashing()
+void TitlePushASprite::Flashing()
 {
 	//タイマーを更新
 	flashingTimer++;
@@ -73,7 +73,7 @@ void PushASprite::Flashing()
 	}
 }
 
-void PushASprite::DrawMode()
+void TitlePushASprite::DrawMode()
 {
 	//タイマーを更新
 	drawModeTimer++;

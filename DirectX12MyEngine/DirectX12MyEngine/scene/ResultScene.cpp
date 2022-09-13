@@ -47,6 +47,7 @@ void ResultScene::Initialize()
 	spriteCommon->LoadTexture(2, "Number.png");
 	spriteCommon->LoadTexture(3, "rank.png");
 	spriteCommon->LoadTexture(4, "rankWord.png");
+	spriteCommon->LoadTexture(5, "pushATitle.png");
 
 	//objからモデルデータを読み込む
 	modelSkydome.reset(ObjModel::LoadFromOBJ("skydome"));
@@ -81,11 +82,17 @@ void ResultScene::Initialize()
 
 	//雪玉の大きさランクを表示するUI
 	snowBallRankUI.reset(SnowBallRankUI::Create(3, 4, { 1000, 200 }, FinalSnowBallSize::GetFinalSize()));
+	//PushAスプライト生成
+	pushASprite.reset(ResultPushASprite::Create(5, { 640, 550 }, { 350, 50 }));
+
 
 	//暗転中なら暗転解除
 	if (Blackout::GetInstance()->GetColor().w != 0.0f) {
 		Blackout::GetInstance()->SetBlackoutReturn();
 	}
+
+	//リザルトシーン用BGMを再生
+	Audio::GetInstance()->PlayWave("resultBGM.wav", true);
 }
 
 void ResultScene::Update()
@@ -115,6 +122,8 @@ void ResultScene::Update()
 	finalSnowBallSizeUI->Update();
 	//雪玉の大きさランクUI更新
 	snowBallRankUI->Update();
+	//PushAスプライト更新
+	pushASprite->Update();
 
 	//std::string scale = std::to_string(FinalSnowBallSize::GetFinalSize());
 	//DebugText::GetInstance()->Print("Scale : " + scale, 100, 200);
@@ -136,6 +145,8 @@ void ResultScene::Update()
 	if (blackout->GetIsAllBlack()) {
 		//シーン切り替え
 		SceneManager::GetInstance()->ChangeScene("TITLE");
+		//リザルトシーン用BGM再生を停止
+		Audio::GetInstance()->StopWave("resultBGM.wav");
 	}
 }
 
@@ -178,6 +189,8 @@ void ResultScene::Draw()
 	finalSnowBallSizeUI->Draw();
 	//雪玉の大きさランクUI描画
 	snowBallRankUI->Draw();
+	//PushAスプライト描画
+	pushASprite->Draw();
 
 
 	///-------スプライト描画ここまで-------///

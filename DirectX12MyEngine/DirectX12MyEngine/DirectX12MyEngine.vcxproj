@@ -195,7 +195,8 @@
     <ClCompile Include="gameUI\MiniMapSnowBall.cpp" />
     <ClCompile Include="gameUI\MiniMapSprite.cpp" />
     <ClCompile Include="gameUI\NumberSprite.cpp" />
-    <ClCompile Include="gameUI\PushASprite.cpp" />
+    <ClCompile Include="gameUI\ResultPushASprite.cpp" />
+    <ClCompile Include="gameUI\TitlePushASprite.cpp" />
     <ClCompile Include="gameUI\RankWordSprite.cpp" />
     <ClCompile Include="gameUI\SnowBallRankUI.cpp" />
     <ClCompile Include="gameUI\SnowBallSizeUI.cpp" />
@@ -347,7 +348,8 @@
     <ClInclude Include="gameUI\MiniMapSnowBall.h" />
     <ClInclude Include="gameUI\MiniMapSprite.h" />
     <ClInclude Include="gameUI\NumberSprite.h" />
-    <ClInclude Include="gameUI\PushASprite.h" />
+    <ClInclude Include="gameUI\ResultPushASprite.h" />
+    <ClInclude Include="gameUI\TitlePushASprite.h" />
     <ClInclude Include="gameUI\RankWordSprite.h" />
     <ClInclude Include="gameUI\SnowBallRankUI.h" />
     <ClInclude Include="gameUI\SnowBallSizeUI.h" />

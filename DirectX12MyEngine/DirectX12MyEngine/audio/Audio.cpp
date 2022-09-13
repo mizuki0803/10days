@@ -211,6 +211,7 @@ void Audio::LoadAllSoundData()
 	LoadWave("damage.wav");
 	LoadWave("finish.wav");
 	LoadWave("gameBGM.wav");
+	LoadWave("resultBGM.wav");
 	LoadWave("select01.wav");
 	LoadWave("select02.wav");
 	LoadWave("titleBGM.wav");

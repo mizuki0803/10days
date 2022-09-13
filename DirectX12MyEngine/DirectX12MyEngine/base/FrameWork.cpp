@@ -33,7 +33,7 @@ void FrameWork::Initialize()
 {
 	//ウインドウ作成
 	win = new WindowApp();
-	win->WindowCreate(L"ユキコロ");
+	win->WindowCreate(L"3027_ユキコロ");
 
 	//DirectX初期化
 	dxbase = new DirectXBase();

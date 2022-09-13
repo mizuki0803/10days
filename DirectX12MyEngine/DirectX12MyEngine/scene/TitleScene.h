@@ -14,7 +14,7 @@
 #include "Skydome.h"
 #include "SnowPlate.h"
 #include "Countdown.h"
-#include "PushASprite.h"
+#include "TitlePushASprite.h"
 #include <sstream>
 
 
@@ -119,5 +119,5 @@ private: //メンバ変数
 	//タイトルロゴ
 	std::unique_ptr<TitleLogo> titleLogo;
 	//PushAスプライト
-	std::unique_ptr<PushASprite> pushASprite;
+	std::unique_ptr<TitlePushASprite> pushASprite;
 };

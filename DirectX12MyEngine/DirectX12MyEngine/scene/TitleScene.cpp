@@ -103,7 +103,7 @@ void TitleScene::Initialize()
 	//タイトルロゴ生成
 	titleLogo.reset(TitleLogo::Create(1, { 640, 150 }, { 600, 500 }));
 	//PushAスプライト生成
-	pushASprite.reset(PushASprite::Create(3, { 640, 500 }, { 350, 50 }));
+	pushASprite.reset(TitlePushASprite::Create(3, { 640, 550 }, { 350, 50 }));
 
 	//タイトルシーン用BGMを再生
 	Audio::GetInstance()->PlayWave("titleBGM.wav", true);

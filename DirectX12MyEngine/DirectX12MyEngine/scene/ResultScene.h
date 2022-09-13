@@ -13,6 +13,7 @@
 #include "Skydome.h"
 #include "SnowPlate.h"
 #include "SnowBallRankUI.h"
+#include "ResultPushASprite.h"
 
 /// <summary>
 /// リザルトシーン
@@ -92,4 +93,6 @@ private: //メンバ変数
 	std::list < std::unique_ptr<SnowPlate>> snowPlates;
 	//雪玉の大きさランクを表示するUI
 	std::unique_ptr<SnowBallRankUI> snowBallRankUI;
+	//PushAスプライト
+	std::unique_ptr<ResultPushASprite> pushASprite;
 };

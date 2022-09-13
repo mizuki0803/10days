@@ -2,16 +2,16 @@
 #include "Sprite.h"
 
 /// <summary>
-/// PushAスプライト
+/// タイトルシーンPushAスプライト
 /// </summary>
-class PushASprite : public Sprite
+class TitlePushASprite : public Sprite
 {
 public: //静的メンバ関数
 	/// <summary>
 	/// 生成処理
 	/// </summary>
 	/// <returns>PushAスプライト</returns>
-	static PushASprite* Create(UINT texNumber, const Vector2& position, const Vector2& size);
+	static TitlePushASprite* Create(UINT texNumber, const Vector2& position, const Vector2& size);
 
 public: //メンバ関数
 	/// <summary>
