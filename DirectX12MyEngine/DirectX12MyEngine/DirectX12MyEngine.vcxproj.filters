@@ -132,6 +132,9 @@
     <Filter Include="ソース ファイル\gameObject\snowWall">
       <UniqueIdentifier>{852485b0-a83d-4984-9ff2-e54dbcd0a14f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\gameUI\gamePadUI">
+      <UniqueIdentifier>{2d99cbe4-ebb9-41bc-adf0-3eba20962233}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="audio\Audio.cpp">
@@ -322,6 +325,9 @@
     </ClCompile>
     <ClCompile Include="gameObject\SnowWall.cpp">
       <Filter>ソース ファイル\gameObject\snowWall</Filter>
+    </ClCompile>
+    <ClCompile Include="gameUI\PadStickUI.cpp">
+      <Filter>ソース ファイル\gameUI\gamePadUI</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -589,6 +595,9 @@
     </ClInclude>
     <ClInclude Include="gameObject\SnowWall.h">
       <Filter>ソース ファイル\gameObject\snowWall</Filter>
+    </ClInclude>
+    <ClInclude Include="gameUI\PadStickUI.h">
+      <Filter>ソース ファイル\gameUI\gamePadUI</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

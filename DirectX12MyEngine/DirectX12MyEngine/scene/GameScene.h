@@ -14,6 +14,7 @@
 #include "SnowPlate.h"
 #include "SnowWall.h"
 #include "GoalPole.h"
+#include "PadStickUI.h"
 #include "Countdown.h"
 #include "MiniMap.h"
 #include "GoalSprite.h"
@@ -122,6 +123,9 @@ private: //メンバ変数
 	std::list<std::unique_ptr<SnowWall>> snowWalls;
 	//ゴールポール
 	std::vector<std::unique_ptr<GoalPole>> goalPoles;
+
+	//パッドスティックUI
+	std::unique_ptr<PadStickUI> padStickUI;
 	//カウントダウン
 	std::unique_ptr<Countdown> countdown;
 	//ミニマップ

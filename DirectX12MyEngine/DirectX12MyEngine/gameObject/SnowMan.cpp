@@ -31,6 +31,7 @@ bool SnowMan::Initialize(ObjModel* upperModel, ObjModel* underModel, const Vecto
 	Vector3 upperScale = { 1, 1, 1 };
 	Vector3 upperPos = { underPos.x, underSize * 2 + upperScale.y / 2, underPos.z };
 	snowManUpper.reset(SnowManUpper::Create(upperModel, upperPos, upperScale));
+	snowManUpper->SetRotation({ 0, 90, 0 });
 
 	return true;
 }

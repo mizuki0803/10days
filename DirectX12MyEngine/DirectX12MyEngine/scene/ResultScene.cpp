@@ -53,11 +53,12 @@ void ResultScene::Initialize()
 	//objからモデルデータを読み込む
 	modelSkydome.reset(ObjModel::LoadFromOBJ("skydome"));
 	modelSnowBall.reset(ObjModel::LoadFromOBJ("Snowball", true));
+	modelSnowHead.reset(ObjModel::LoadFromOBJ("Snowhead", true));
 	modelRock.reset(ObjModel::LoadFromOBJ("Rock"));
 	modelSnowPlate.reset(ObjModel::LoadFromOBJ("Snowplate"));
 
 	//雪だるま生成
-	snowMan.reset(SnowMan::Create(modelSnowBall.get(), modelSnowBall.get(), { 0, 0, 15 }, FinalSnowBallSize::GetFinalSize()));
+	snowMan.reset(SnowMan::Create(modelSnowHead.get(), modelSnowBall.get(), { 0, 0, 15 }, FinalSnowBallSize::GetFinalSize()));
 
 	//最終的な雪玉の大きさ表示生成
 	finalSnowBallSizeUI.reset(FinalSnowBallSizeUI::Create(2, 6, { 640, 60 }, { 32, 48 }, FinalSnowBallSize::GetFinalSize()));
@@ -65,7 +66,6 @@ void ResultScene::Initialize()
 	//天球生成
 	skydome.reset(Skydome::Create(modelSkydome.get()));
 	skydome->SetPosition({ 0, 5, 0 });
-	skydome->SetScale({ 10, 10, 10 });
 	//雪のフィールド生成
 	for (int i = 0; i < 10; i++) {
 		for (int j = 0; j < 10; j++) {

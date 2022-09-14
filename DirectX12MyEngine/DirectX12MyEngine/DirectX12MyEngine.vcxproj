@@ -192,6 +192,7 @@
     <ClCompile Include="gameUI\FinalSnowBallSize.cpp" />
     <ClCompile Include="gameUI\FinalSnowBallSizeUI.cpp" />
     <ClCompile Include="gameUI\GoalSprite.cpp" />
+    <ClCompile Include="gameUI\PadStickUI.cpp" />
     <ClCompile Include="gameUI\RankSprite.cpp" />
     <ClCompile Include="gameUI\MiniMap.cpp" />
     <ClCompile Include="gameUI\MiniMapSnowBall.cpp" />
@@ -347,6 +348,7 @@
     <ClInclude Include="gameUI\FinalSnowBallSize.h" />
     <ClInclude Include="gameUI\FinalSnowBallSizeUI.h" />
     <ClInclude Include="gameUI\GoalSprite.h" />
+    <ClInclude Include="gameUI\PadStickUI.h" />
     <ClInclude Include="gameUI\RankSprite.h" />
     <ClInclude Include="gameUI\MiniMap.h" />
     <ClInclude Include="gameUI\MiniMapSnowBall.h" />

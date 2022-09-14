@@ -46,6 +46,7 @@ void GameScene::Initialize()
 	spriteCommon->LoadTexture(3, "miniMap.png");
 	spriteCommon->LoadTexture(4, "miniSnowBall.png");
 	spriteCommon->LoadTexture(5, "goal.png");
+	spriteCommon->LoadTexture(6, "stick.png");
 
 
 	//objからモデルデータを読み込む
@@ -63,14 +64,17 @@ void GameScene::Initialize()
 	//雪玉の大きさ表示生成
 	snowBallSizeUI.reset(SnowBallSizeUI::Create(2, 4, { 640, 60 }, { 32, 48 }));
 
+	//パッドスティックUI生成
+	padStickUI.reset(PadStickUI::Create(6, { 1050, 550 }, { 100, 100 }));
+
 	//カウントダウンUI表示生成
-	countdown.reset(Countdown::Create(2, { 640, 120 }, { 32, 48 }));
+	countdown.reset(Countdown::Create(2, { 640, 200 }, { 32, 48 }));
 
 	//ミニマップ生成
 	miniMap.reset(MiniMap::Create(3, 4, { 50, 150 }, { 20, 400 }, goalPosition));
 
 	//ゴールスプライト生成
-	goalSprite.reset(GoalSprite::Create(5, { 400, 200 }));
+	goalSprite.reset(GoalSprite::Create(5, { 616, 400 }));
 
 	//障害物生成
 	LoadObstacleSetData();
@@ -98,7 +102,7 @@ void GameScene::Initialize()
 			std::unique_ptr<SnowWall> newSnowWall;
 
 			Vector3 pos = { -20 + (float)(50 * i), 0, (float)(50 * j) };
-			if (i == 1) { pos.x -= 12.0f; }
+			if (i == 1) { pos.x -= 11.8f; }
 			Vector3 rota = { 0, 90 + 180 * (float)i, 0 };
 			newSnowWall.reset(SnowWall::Create(modelSnowWall.get(), pos, rota));
 			snowWalls.push_back(std::move(newSnowWall));
@@ -242,6 +246,17 @@ void GameScene::Update()
 	//UI更新
 	//大きさUI更新
 	snowBallSizeUI->Update(player->GetScale().x);
+	//パッドスティックUI更新
+	if (padStickUI) {
+		padStickUI->Update();
+
+		//プレイヤーが指定した位置を過ぎたら
+		const float padStickUIDeadPos = 500;
+		if (player->GetPosition().z >= padStickUIDeadPos) {
+			//パッドスティックUIのインスタンスを削除
+			padStickUI.reset();
+		}
+	}
 	//カウントダウン更新
 	if (countdown) {
 		countdown->Update();
@@ -326,6 +341,9 @@ void GameScene::Draw()
 
 	//UI描画
 	snowBallSizeUI->Draw();
+	if (padStickUI) {
+		padStickUI->Draw();
+	}
 	if (countdown) {
 		countdown->Draw();
 	}

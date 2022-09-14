@@ -21,7 +21,7 @@ GoalSprite* GoalSprite::Create(UINT texNumber, const Vector2& size)
 
 	//‘å‚«‚³‚ðƒZƒbƒg
 	goalSprite->size = size;
-	goalSprite->texSize = size;
+	goalSprite->texSize = { 924, 600 };
 
 	return goalSprite;
 }

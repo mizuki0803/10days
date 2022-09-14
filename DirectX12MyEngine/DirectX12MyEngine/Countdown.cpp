@@ -117,7 +117,7 @@ void Countdown::Move()
 				Audio::GetInstance()->PlayWave("countdown.wav", false);
 			}
 		}
-		numberSprites[3]->SetPosition({ threePos,120 });
+		numberSprites[3]->SetPosition({ threePos, pos.y });
 	}
 	if (isTwo)
 	{
@@ -135,8 +135,8 @@ void Countdown::Move()
 				Audio::GetInstance()->PlayWave("countdown.wav", false);
 			}
 		}
-		numberSprites[3]->SetPosition({ threePos,120 });
-		numberSprites[2]->SetPosition({ twoPos,120 });
+		numberSprites[3]->SetPosition({ threePos, pos.y });
+		numberSprites[2]->SetPosition({ twoPos, pos.y });
 	}
 	if (isThree)
 	{
@@ -154,8 +154,8 @@ void Countdown::Move()
 				Audio::GetInstance()->PlayWave("countdown.wav", false);
 			}
 		}
-		numberSprites[2]->SetPosition({ twoPos,120 });
-		numberSprites[1]->SetPosition({ onePos,120 });
+		numberSprites[2]->SetPosition({ twoPos, pos.y });
+		numberSprites[1]->SetPosition({ onePos, pos.y });
 	}
 }
 

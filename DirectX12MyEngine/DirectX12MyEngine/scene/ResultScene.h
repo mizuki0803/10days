@@ -81,6 +81,7 @@ private: //ƒƒ“ƒo•Ï”
 	std::unique_ptr<ObjModel> modelSkydome;
 	std::unique_ptr<ObjModel> modelRock;
 	std::unique_ptr<ObjModel> modelSnowBall;
+	std::unique_ptr<ObjModel> modelSnowHead;
 	std::unique_ptr<ObjModel> modelSnowPlate;
 
 	//á‚¾‚é‚Ü

@@ -85,7 +85,7 @@ void TitleScene::Initialize()
 			std::unique_ptr<SnowWall> newSnowWall;
 
 			Vector3 pos = { -20 + (float)(50 * i), 0, (float)(50 * j) };
-			if (i == 1) { pos.x -= 12.0f; }
+			if (i == 1) { pos.x -= 11.8f; }
 			Vector3 rota = { 0, 90 + 180 * (float)i, 0 };
 			newSnowWall.reset(SnowWall::Create(modelSnowWall.get(), pos, rota));
 			snowWalls.push_back(std::move(newSnowWall));
