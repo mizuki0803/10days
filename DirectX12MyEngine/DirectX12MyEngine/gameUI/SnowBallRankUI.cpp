@@ -21,11 +21,12 @@ SnowBallRankUI* SnowBallRankUI::Create(UINT rankTexNumber, UINT wordTexNumber, c
 bool SnowBallRankUI::Initialize(UINT rankTexNumber, UINT wordTexNumber, const Vector2& position, const float snowBallSize)
 {
 	//スプライト生成
-	Vector2 rankSize = { 50, 50 };
+	Vector2 rankSize = { 120, 120 };
 	rankSprite.reset(RankSprite::Create(rankTexNumber, position, rankSize));
 	Vector2 wordPos = position;
-	wordPos.y -= 50;
-	Vector2 wordSize = { 160, 40 };
+	wordPos.x += 10;
+	wordPos.y -= 140;
+	Vector2 wordSize = { 369.6f, 240 };
 	rankWordSprite.reset(RankWordSprite::Create(wordTexNumber, wordPos, wordSize));
 
 	//ランクを確定させる

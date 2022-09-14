@@ -20,7 +20,7 @@ RankWordSprite* RankWordSprite::Create(UINT texNumber, const Vector2& position, 
 
 	//‘å‚«‚³‚ðƒZƒbƒg
 	rankWordSprite->size = size;
-	rankWordSprite->texSize = size;
+	rankWordSprite->texSize = { 926, 600 };
 
 	return rankWordSprite;
 }

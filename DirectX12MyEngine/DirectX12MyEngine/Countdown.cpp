@@ -2,7 +2,7 @@
 #include "Audio.h"
 #include "Easing.h"
 
-Countdown* Countdown::Create(UINT texNumber, const Vector2& position, const Vector2& size)
+Countdown* Countdown::Create(UINT texNumber, const Vector2& position, const Vector2& size, const Vector2& texSize)
 {
 	//雪玉の大きさを表示するUIのインスタンスを生成
 	Countdown* countdown = new Countdown();
@@ -11,7 +11,7 @@ Countdown* Countdown::Create(UINT texNumber, const Vector2& position, const Vect
 	}
 
 	// 初期化
-	if (!countdown->Initialize(texNumber, position, size)) {
+	if (!countdown->Initialize(texNumber, position, size, texSize)) {
 		delete countdown;
 		assert(0);
 		return nullptr;
@@ -20,16 +20,16 @@ Countdown* Countdown::Create(UINT texNumber, const Vector2& position, const Vect
 	return countdown;
 }
 
-bool Countdown::Initialize(UINT texNumber, const Vector2& position, const Vector2& size)
+bool Countdown::Initialize(UINT texNumber, const Vector2& position, const Vector2& size, const Vector2& texSize)
 {
 	for (int i = 0; i < 4; i++) {
 		std::unique_ptr<NumberSprite> newNumberSprite;
 
 		pos = position;
-		pos.x = leftSide;
+		pos.x = leftSide - 400;
 		pos.x += size.x * 3;
 
-		newNumberSprite.reset(NumberSprite::Create(texNumber, pos, size));
+		newNumberSprite.reset(NumberSprite::Create(texNumber, pos, size, texSize));
 		numberSprites.push_back(std::move(newNumberSprite));
 	}
 

@@ -61,7 +61,7 @@ void ResultScene::Initialize()
 	snowMan.reset(SnowMan::Create(modelSnowHead.get(), modelSnowBall.get(), { 0, 0, 15 }, FinalSnowBallSize::GetFinalSize()));
 
 	//最終的な雪玉の大きさ表示生成
-	finalSnowBallSizeUI.reset(FinalSnowBallSizeUI::Create(2, 6, { 640, 60 }, { 32, 48 }, FinalSnowBallSize::GetFinalSize()));
+	finalSnowBallSizeUI.reset(FinalSnowBallSizeUI::Create(2, 6, { 640, 60 }, { 32, 48 }, { 32, 48 }, FinalSnowBallSize::GetFinalSize()));
 
 	//天球生成
 	skydome.reset(Skydome::Create(modelSkydome.get()));
@@ -84,7 +84,7 @@ void ResultScene::Initialize()
 	ObjObject3d::SetLightGroup(lightGroup.get());
 
 	//雪玉の大きさランクを表示するUI
-	snowBallRankUI.reset(SnowBallRankUI::Create(3, 4, { 1000, 200 }, FinalSnowBallSize::GetFinalSize()));
+	snowBallRankUI.reset(SnowBallRankUI::Create(3, 4, { 1000, 350 }, FinalSnowBallSize::GetFinalSize()));
 	//PushAスプライト生成
 	pushASprite.reset(ResultPushASprite::Create(5, { 640, 650 }, { 320, 64 }));
 

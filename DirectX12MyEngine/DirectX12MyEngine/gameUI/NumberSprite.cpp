@@ -1,6 +1,6 @@
 #include "NumberSprite.h"
 
-NumberSprite* NumberSprite::Create(UINT texNumber, const Vector2& position, const Vector2& size)
+NumberSprite* NumberSprite::Create(UINT texNumber, const Vector2& position, const Vector2& size, const Vector2& texSize)
 {
 	//数字スプライトのインスタンスを生成
 	NumberSprite* numberSprite = new NumberSprite();
@@ -20,7 +20,7 @@ NumberSprite* NumberSprite::Create(UINT texNumber, const Vector2& position, cons
 
 	//大きさをセット
 	numberSprite->size = size;
-	numberSprite->texSize = size;
+	numberSprite->texSize = texSize;
 
 	return numberSprite;
 }

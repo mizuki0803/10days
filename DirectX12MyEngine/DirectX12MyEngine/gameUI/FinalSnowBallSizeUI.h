@@ -14,13 +14,13 @@ public:
 	/// 生成処理
 	/// </summary>
 	/// <returns>最終的な雪玉の大きさを表示するUI</returns>
-	static FinalSnowBallSizeUI* Create(UINT numberTexNumber, UINT snowBallTexNumber, const Vector2& position, const Vector2& size, const float finalSnowBallSize);
+	static FinalSnowBallSizeUI* Create(UINT numberTexNumber, UINT snowBallTexNumber, const Vector2& position, const Vector2& size, const Vector2& texSize, const float finalSnowBallSize);
 
 public: //メンバ関数
 	/// <summary>
 	/// 初期化
 	/// </summary>
-	bool Initialize(UINT numberTexNumber, UINT snowBallTexNumber, const Vector2& position, const Vector2& size, const float finalSnowBallSize);
+	bool Initialize(UINT numberTexNumber, UINT snowBallTexNumber, const Vector2& position, const Vector2& size, const Vector2& texSize, const float finalSnowBallSize);
 
 	/// <summary>
 	/// 更新

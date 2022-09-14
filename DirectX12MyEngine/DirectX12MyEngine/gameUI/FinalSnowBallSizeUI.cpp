@@ -1,6 +1,6 @@
 #include "FinalSnowBallSizeUI.h"
 
-FinalSnowBallSizeUI* FinalSnowBallSizeUI::Create(UINT numberTexNumber, UINT snowBallTexNumber, const Vector2& position, const Vector2& size, const float finalSnowBallSize)
+FinalSnowBallSizeUI* FinalSnowBallSizeUI::Create(UINT numberTexNumber, UINT snowBallTexNumber, const Vector2& position, const Vector2& size, const Vector2& texSize, const float finalSnowBallSize)
 {
 	//最終的な雪玉の大きさを表示するUIのインスタンスを生成
 	FinalSnowBallSizeUI* finalSnowBallSizeUI = new FinalSnowBallSizeUI();
@@ -9,7 +9,7 @@ FinalSnowBallSizeUI* FinalSnowBallSizeUI::Create(UINT numberTexNumber, UINT snow
 	}
 
 	// 初期化
-	if (!finalSnowBallSizeUI->Initialize(numberTexNumber, snowBallTexNumber, position, size, finalSnowBallSize)) {
+	if (!finalSnowBallSizeUI->Initialize(numberTexNumber, snowBallTexNumber, position, size, texSize, finalSnowBallSize)) {
 		delete finalSnowBallSizeUI;
 		assert(0);
 		return nullptr;
@@ -18,7 +18,7 @@ FinalSnowBallSizeUI* FinalSnowBallSizeUI::Create(UINT numberTexNumber, UINT snow
 	return finalSnowBallSizeUI;
 }
 
-bool FinalSnowBallSizeUI::Initialize(UINT numberTexNumber, UINT snowBallTexNumber, const Vector2& position, const Vector2& size, const float finalSnowBallSize)
+bool FinalSnowBallSizeUI::Initialize(UINT numberTexNumber, UINT snowBallTexNumber, const Vector2& position, const Vector2& size, const Vector2& texSize, const float finalSnowBallSize)
 {
 	for (int i = 0; i < 4; i++) {
 		std::unique_ptr<NumberSprite> newNumberSprite;
@@ -27,7 +27,7 @@ bool FinalSnowBallSizeUI::Initialize(UINT numberTexNumber, UINT snowBallTexNumbe
 		pos.x -= i * size.x;
 		pos.x += size.x * 3;
 
-		newNumberSprite.reset(NumberSprite::Create(numberTexNumber, pos, size));
+		newNumberSprite.reset(NumberSprite::Create(numberTexNumber, pos, size, texSize));
 		numberSprites.push_back(std::move(newNumberSprite));
 		numberSprites[i]->SetColor({ 1, 1, 0, 1 });
 	}

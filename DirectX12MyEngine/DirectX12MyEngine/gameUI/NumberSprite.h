@@ -11,7 +11,7 @@ public:
 	/// 生成処理
 	/// </summary>
 	/// <returns>数字スプライト</returns>
-	static NumberSprite* Create(UINT texNumber, const Vector2& position, const Vector2& size);
+	static NumberSprite* Create(UINT texNumber, const Vector2& position, const Vector2& size, const Vector2& texSize);
 
 public: //メンバ関数
 	/// <summary>

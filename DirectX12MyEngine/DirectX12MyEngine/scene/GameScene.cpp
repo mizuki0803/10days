@@ -41,7 +41,7 @@ void GameScene::Initialize()
 	//スプライト共通部分のインスタンスを取得
 	SpriteCommon* spriteCommon = SpriteCommon::GetInstance();
 	//スプライト用テクスチャ読み込み
-
+	spriteCommon->LoadTexture(1, "CountNumber.png");
 	spriteCommon->LoadTexture(2, "Number.png");
 	spriteCommon->LoadTexture(3, "miniMap.png");
 	spriteCommon->LoadTexture(4, "miniSnowBall.png");
@@ -62,13 +62,13 @@ void GameScene::Initialize()
 	player.reset(Player::Create(modelSnowBall.get()));
 
 	//雪玉の大きさ表示生成
-	snowBallSizeUI.reset(SnowBallSizeUI::Create(2, 4, { 640, 60 }, { 32, 48 }));
+	snowBallSizeUI.reset(SnowBallSizeUI::Create(2, 4, { 640, 60 }, { 32, 48 }, { 32, 48 }));
 
 	//パッドスティックUI生成
 	padStickUI.reset(PadStickUI::Create(6, { 1050, 550 }, { 100, 100 }));
 
 	//カウントダウンUI表示生成
-	countdown.reset(Countdown::Create(2, { 640, 200 }, { 32, 48 }));
+	countdown.reset(Countdown::Create(1, { 640, 200 }, { 100, 100 }, { 1000, 1000 }));
 
 	//ミニマップ生成
 	miniMap.reset(MiniMap::Create(3, 4, { 50, 150 }, { 20, 400 }, goalPosition));

@@ -20,7 +20,7 @@ RankSprite* RankSprite::Create(UINT texNumber, const Vector2& position, const Ve
 
 	//‘å‚«‚³‚ðƒZƒbƒg
 	rankSprite->size = size;
-	rankSprite->texSize = size;
+	rankSprite->texSize = { 1000, 1000 };
 
 	return rankSprite;
 }
