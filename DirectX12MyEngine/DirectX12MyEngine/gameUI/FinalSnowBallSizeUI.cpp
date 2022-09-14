@@ -1,6 +1,6 @@
 #include "FinalSnowBallSizeUI.h"
 
-FinalSnowBallSizeUI* FinalSnowBallSizeUI::Create(UINT texNumber, const Vector2& position, const Vector2& size, const float finalSnowBallSize)
+FinalSnowBallSizeUI* FinalSnowBallSizeUI::Create(UINT numberTexNumber, UINT snowBallTexNumber, const Vector2& position, const Vector2& size, const float finalSnowBallSize)
 {
 	//最終的な雪玉の大きさを表示するUIのインスタンスを生成
 	FinalSnowBallSizeUI* finalSnowBallSizeUI = new FinalSnowBallSizeUI();
@@ -9,7 +9,7 @@ FinalSnowBallSizeUI* FinalSnowBallSizeUI::Create(UINT texNumber, const Vector2& 
 	}
 
 	// 初期化
-	if (!finalSnowBallSizeUI->Initialize(texNumber, position, size, finalSnowBallSize)) {
+	if (!finalSnowBallSizeUI->Initialize(numberTexNumber, snowBallTexNumber, position, size, finalSnowBallSize)) {
 		delete finalSnowBallSizeUI;
 		assert(0);
 		return nullptr;
@@ -18,7 +18,7 @@ FinalSnowBallSizeUI* FinalSnowBallSizeUI::Create(UINT texNumber, const Vector2& 
 	return finalSnowBallSizeUI;
 }
 
-bool FinalSnowBallSizeUI::Initialize(UINT texNumber, const Vector2& position, const Vector2& size, const float finalSnowBallSize)
+bool FinalSnowBallSizeUI::Initialize(UINT numberTexNumber, UINT snowBallTexNumber, const Vector2& position, const Vector2& size, const float finalSnowBallSize)
 {
 	for (int i = 0; i < 4; i++) {
 		std::unique_ptr<NumberSprite> newNumberSprite;
@@ -27,11 +27,19 @@ bool FinalSnowBallSizeUI::Initialize(UINT texNumber, const Vector2& position, co
 		pos.x -= i * size.x;
 		pos.x += size.x * 3;
 
-		newNumberSprite.reset(NumberSprite::Create(texNumber, pos, size));
+		newNumberSprite.reset(NumberSprite::Create(numberTexNumber, pos, size));
 		numberSprites.push_back(std::move(newNumberSprite));
+		numberSprites[i]->SetColor({ 1, 1, 0, 1 });
 	}
 
 	ChangeNumber(finalSnowBallSize);
+
+	Vector2 snowBallPos = position;
+	snowBallPos.x -= 65;
+	snowBallPos.y += 3;
+	snowBallSprite.reset(MiniMapSnowBall::Create(snowBallTexNumber, snowBallPos, { 10, 10 }));
+
+	ChangeSnowBallSize(finalSnowBallSize);
 
 	return true;
 }
@@ -42,6 +50,7 @@ void FinalSnowBallSizeUI::Update()
 	for (int i = 0; i < numberSprites.size(); i++) {
 		numberSprites[i]->Update();
 	}
+	snowBallSprite->Update();
 }
 
 void FinalSnowBallSizeUI::Draw()
@@ -50,6 +59,7 @@ void FinalSnowBallSizeUI::Draw()
 	for (int i = 0; i < numberSprites.size(); i++) {
 		numberSprites[i]->Draw();
 	}
+	snowBallSprite->Draw();
 }
 
 void FinalSnowBallSizeUI::ChangeNumber(const float finalSnowBallSize)
@@ -60,4 +70,11 @@ void FinalSnowBallSizeUI::ChangeNumber(const float finalSnowBallSize)
 	numberSprites[1]->SetNumber((scaleNum / 10) % 10);		//000 10
 	numberSprites[2]->SetNumber(10);						//000.00
 	numberSprites[3]->SetNumber((scaleNum / 100) % 10);		//001 00
+}
+
+void FinalSnowBallSizeUI::ChangeSnowBallSize(const float snowBallSize)
+{
+	Vector2 size = { snowBallSize * 20, snowBallSize * 20 };
+
+	snowBallSprite->SetSize(size);
 }

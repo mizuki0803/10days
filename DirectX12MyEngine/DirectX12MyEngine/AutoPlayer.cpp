@@ -186,7 +186,7 @@ void AutoPlayer::Move()
 	position.y = ballScale;
 
 	//ˆÚ“®ŒÀŠE‚©‚ço‚È‚¢‚æ‚¤‚É‚·‚é(Z‚ğ’Ç‰Á‚µ‚½‚Ì‚ÅVector3‚É‚µ‚½)
-	const float moveLimit = 20;
+	const float moveLimit = 20 - scale.x;
 	position.x = max(position.x, -moveLimit);
 	position.x = min(position.x, +moveLimit);
 }
@@ -222,7 +222,7 @@ void AutoPlayer::Knockback()
 	position.x += knockbackVel.x *= speed;
 
 	//ˆÚ“®ŒÀŠE‚©‚ço‚È‚¢‚æ‚¤‚É‚·‚é(Z‚ğ’Ç‰Á‚µ‚½‚Ì‚ÅVector3‚É‚µ‚½)
-	const float moveLimit = 20;
+	const float moveLimit = 20 - scale.x;
 	position.x = max(position.x, -moveLimit);
 	position.x = min(position.x, +moveLimit);
 

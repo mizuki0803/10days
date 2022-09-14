@@ -21,8 +21,8 @@ void ResultScene::Initialize()
 	//カメラ初期化
 	camera.reset(new Camera());
 	camera->Initialize();
-	camera->SetEye({ 0, 7, -4 });
-	camera->SetTarget({ 0, 5, 5 });
+	camera->SetEye({ 0, 7, -6 });
+	camera->SetTarget({ 0, 7, 5 });
 
 	//ライト生成
 	lightGroup.reset(LightGroup::Create());
@@ -47,7 +47,8 @@ void ResultScene::Initialize()
 	spriteCommon->LoadTexture(2, "Number.png");
 	spriteCommon->LoadTexture(3, "rank.png");
 	spriteCommon->LoadTexture(4, "rankWord.png");
-	spriteCommon->LoadTexture(5, "pushATitle.png");
+	spriteCommon->LoadTexture(5, "pushA.png");
+	spriteCommon->LoadTexture(6, "miniSnowBall.png");
 
 	//objからモデルデータを読み込む
 	modelSkydome.reset(ObjModel::LoadFromOBJ("skydome"));
@@ -59,10 +60,12 @@ void ResultScene::Initialize()
 	snowMan.reset(SnowMan::Create(modelSnowBall.get(), modelSnowBall.get(), { 0, 0, 15 }, FinalSnowBallSize::GetFinalSize()));
 
 	//最終的な雪玉の大きさ表示生成
-	finalSnowBallSizeUI.reset(FinalSnowBallSizeUI::Create(2, { 640, 60 }, { 32, 48 }, FinalSnowBallSize::GetFinalSize()));
+	finalSnowBallSizeUI.reset(FinalSnowBallSizeUI::Create(2, 6, { 640, 60 }, { 32, 48 }, FinalSnowBallSize::GetFinalSize()));
 
 	//天球生成
 	skydome.reset(Skydome::Create(modelSkydome.get()));
+	skydome->SetPosition({ 0, 5, 0 });
+	skydome->SetScale({ 10, 10, 10 });
 	//雪のフィールド生成
 	for (int i = 0; i < 10; i++) {
 		for (int j = 0; j < 10; j++) {
@@ -83,7 +86,7 @@ void ResultScene::Initialize()
 	//雪玉の大きさランクを表示するUI
 	snowBallRankUI.reset(SnowBallRankUI::Create(3, 4, { 1000, 200 }, FinalSnowBallSize::GetFinalSize()));
 	//PushAスプライト生成
-	pushASprite.reset(ResultPushASprite::Create(5, { 640, 550 }, { 350, 50 }));
+	pushASprite.reset(ResultPushASprite::Create(5, { 640, 650 }, { 320, 64 }));
 
 
 	//暗転中なら暗転解除

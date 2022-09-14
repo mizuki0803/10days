@@ -1,7 +1,7 @@
 #pragma once
 #include "NumberSprite.h"
-#include "Player.h"
-#include "Easing.h"
+#include <vector>
+#include <memory>
 
 /// <summary>
 /// 雪玉の大きさを表示するUI
@@ -57,9 +57,6 @@ private: //メンバ関数
 	void ChangeNumber();
 
 private: //メンバ変数
-	//雪玉
-	Player* player = nullptr;
-
 	Vector2 pos = { 0, 0 };
 	//数字スプライト
 	std::vector<std::unique_ptr<NumberSprite>> numberSprites;

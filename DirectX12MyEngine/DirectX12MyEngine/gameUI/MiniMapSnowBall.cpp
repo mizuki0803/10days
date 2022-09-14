@@ -20,7 +20,7 @@ MiniMapSnowBall* MiniMapSnowBall::Create(UINT texNumber, const Vector2& position
 
 	//‘å‚«‚³‚ðƒZƒbƒg
 	miniMapSnowBall->size = size;
-	miniMapSnowBall->texSize = size;
+	miniMapSnowBall->texSize = { 768, 768 };
 
 	return miniMapSnowBall;
 }

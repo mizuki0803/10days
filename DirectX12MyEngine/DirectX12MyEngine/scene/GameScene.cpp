@@ -54,20 +54,20 @@ void GameScene::Initialize()
 	modelRock.reset(ObjModel::LoadFromOBJ("Rock"));
 	modelTree.reset(ObjModel::LoadFromOBJ("tree"));
 	modelSnowPlate.reset(ObjModel::LoadFromOBJ("Snowplate"));
+	modelSnowWall.reset(ObjModel::LoadFromOBJ("Snowwall", true));
+	modelGoalPole.reset(ObjModel::LoadFromOBJ("Goalpole"));
 
 	//雪玉生成
 	player.reset(Player::Create(modelSnowBall.get()));
 
 	//雪玉の大きさ表示生成
-	snowBallSizeUI.reset(SnowBallSizeUI::Create(2, { 640, 60 }, { 32, 48 }));
-	snowBallSizeUI->SetPlayer(player.get());
+	snowBallSizeUI.reset(SnowBallSizeUI::Create(2, 4, { 640, 60 }, { 32, 48 }));
 
 	//カウントダウンUI表示生成
 	countdown.reset(Countdown::Create(2, { 640, 120 }, { 32, 48 }));
 
 	//ミニマップ生成
 	miniMap.reset(MiniMap::Create(3, 4, { 50, 150 }, { 20, 400 }, goalPosition));
-	miniMap->SetPlayer(player.get());
 
 	//ゴールスプライト生成
 	goalSprite.reset(GoalSprite::Create(5, { 400, 200 }));
@@ -79,7 +79,7 @@ void GameScene::Initialize()
 
 	//天球生成
 	skydome.reset(Skydome::Create(modelSkydome.get()));
-	skydome->SetRotation({ -30, 0, 0 });
+	skydome->SetRotation({ -10, 0, 0 });
 	//雪のフィールド生成
 	for (int i = 0; i < 3; i++) {
 		for (int j = 0; j < 40; j++) {
@@ -91,6 +91,28 @@ void GameScene::Initialize()
 		}
 	}
 	SnowPlate::SetPlayer(player.get());
+
+	//壁生成
+	for (int i = 0; i < 2; i++) {
+		for (int j = 0; j < 40; j++) {
+			std::unique_ptr<SnowWall> newSnowWall;
+
+			Vector3 pos = { -20 + (float)(50 * i), 0, (float)(50 * j) };
+			if (i == 1) { pos.x -= 12.0f; }
+			Vector3 rota = { 0, 90 + 180 * (float)i, 0 };
+			newSnowWall.reset(SnowWall::Create(modelSnowWall.get(), pos, rota));
+			snowWalls.push_back(std::move(newSnowWall));
+		}
+	}
+	SnowWall::SetPlayer(player.get());
+
+	//ゴールポール生成
+	for (int i = 0; i < 2; i++) {
+		std::unique_ptr<GoalPole> newGoalPole;
+		Vector3 pos = { -19 + (float)(36 * i), 0, goalPosition };
+		newGoalPole.reset(GoalPole::Create(modelGoalPole.get(), pos));
+		goalPoles.push_back(std::move(newGoalPole));
+	}
 
 	//とりあえず雪玉にカメラ追従させる
 	camera->SetTarget(player->GetPosition());
@@ -175,7 +197,7 @@ void GameScene::Update()
 	//ゴール後
 	else {
 		//ゴール後の余韻時間
-		const int goalAfterTime = 240;
+		const int goalAfterTime = 180;
 		//タイマーを更新
 		goalAfterTimer++;
 
@@ -204,13 +226,22 @@ void GameScene::Update()
 	for (const std::unique_ptr<SnowPlate>& snowPlate : snowPlates) {
 		snowPlate->Update();
 	}
+	//壁
+	for (const std::unique_ptr<SnowWall>& snowWall : snowWalls) {
+		snowWall->Update();
+	}
+	//ゴールポール
+	for (int i = 0; i < 2; i++) {
+		goalPoles[i]->Update();
+	}
+
 	//カメラ更新
 	camera->Update();
 
 
 	//UI更新
 	//大きさUI更新
-	snowBallSizeUI->Update();
+	snowBallSizeUI->Update(player->GetScale().x);
 	//カウントダウン更新
 	if (countdown) {
 		countdown->Update();
@@ -226,7 +257,7 @@ void GameScene::Update()
 		}
 	}
 	//ミニマップ更新
-	miniMap->Update();
+	miniMap->Update(player->GetPosition().z);
 	//ゴールスプライト更新
 	goalSprite->Update();
 
@@ -273,6 +304,14 @@ void GameScene::Draw()
 	//雪のフィールド
 	for (const std::unique_ptr<SnowPlate>& snowPlate : snowPlates) {
 		snowPlate->Draw();
+	}
+	//壁
+	for (const std::unique_ptr<SnowWall>& snowWall : snowWalls) {
+		snowWall->Draw();
+	}
+	//ゴールポール
+	for (int i = 0; i < 2; i++) {
+		goalPoles[i]->Draw();
 	}
 
 	//雪玉エフェクトマネージャー描画

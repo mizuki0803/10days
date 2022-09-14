@@ -12,6 +12,8 @@
 #include "Obstacle.h"
 #include "Skydome.h"
 #include "SnowPlate.h"
+#include "SnowWall.h"
+#include "GoalPole.h"
 #include "Countdown.h"
 #include "MiniMap.h"
 #include "GoalSprite.h"
@@ -101,6 +103,8 @@ private: //メンバ変数
 	std::unique_ptr<ObjModel> modelTree;
 	std::unique_ptr<ObjModel> modelSnowBall;
 	std::unique_ptr<ObjModel> modelSnowPlate;
+	std::unique_ptr<ObjModel> modelSnowWall;
+	std::unique_ptr<ObjModel> modelGoalPole;
 
 	//自機
 	std::unique_ptr<Player> player;
@@ -113,7 +117,11 @@ private: //メンバ変数
 	//天球
 	std::unique_ptr<Skydome> skydome;
 	//雪のフィールド
-	std::list < std::unique_ptr<SnowPlate>> snowPlates;
+	std::list<std::unique_ptr<SnowPlate>> snowPlates;
+	//壁
+	std::list<std::unique_ptr<SnowWall>> snowWalls;
+	//ゴールポール
+	std::vector<std::unique_ptr<GoalPole>> goalPoles;
 	//カウントダウン
 	std::unique_ptr<Countdown> countdown;
 	//ミニマップ

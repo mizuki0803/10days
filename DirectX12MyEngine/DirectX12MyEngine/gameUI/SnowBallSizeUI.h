@@ -1,6 +1,8 @@
 #pragma once
 #include "NumberSprite.h"
-#include "Player.h"
+#include "MiniMapSnowBall.h"
+#include <vector>
+#include <memory>
 
 /// <summary>
 /// 雪玉の大きさを表示するUI
@@ -12,41 +14,41 @@ public:
 	/// 生成処理
 	/// </summary>
 	/// <returns>雪玉の大きさを表示するUI</returns>
-	static SnowBallSizeUI* Create(UINT texNumber, const Vector2& position, const Vector2& size);
+	static SnowBallSizeUI* Create(UINT numberTexNumber, UINT snowBallTexNumber, const Vector2& position, const Vector2& size);
 
 public: //メンバ関数
 	/// <summary>
 	/// 初期化
 	/// </summary>
-	bool Initialize(UINT texNumber, const Vector2& position, const Vector2& size);
+	bool Initialize(UINT numberTexNumber, UINT snowBallTexNumber, const Vector2& position, const Vector2& size);
 
 	/// <summary>
 	/// 更新
 	/// </summary>
-	void Update();
+	void Update(const float snowBallSize);
 
 	/// <summary>
 	/// 描画
 	/// </summary>
 	void Draw();
 
-	//getter
-
-	//setter
-	void SetPlayer(Player* player) { this->player = player; }
-
 private: //メンバ関数
 	/// <summary>
 	/// 数字スプライトの数字を変更
 	/// </summary>
-	void ChangeNumber();
+	void ChangeNumber(const float snowBallSize);
+
+	/// <summary>
+	/// 雪玉スプライトの大きさ変更
+	/// </summary>
+	void ChangeSnowBallSize(const float snowBallSize);
 
 private: //静的メンバ変数
 	static const int numberDigit = 5;
 
 private: //メンバ変数
-	//雪玉
-	Player* player = nullptr;
 	//数字スプライト
 	std::vector<std::unique_ptr<NumberSprite>> numberSprites;
+	//雪玉スプライト
+	std::unique_ptr<MiniMapSnowBall> snowBallSprite;
 };

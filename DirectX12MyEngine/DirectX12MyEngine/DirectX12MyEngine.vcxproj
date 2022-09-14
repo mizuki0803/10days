@@ -178,6 +178,7 @@
     <ClCompile Include="effect\Easing.cpp" />
     <ClCompile Include="effect\SnowEffect.cpp" />
     <ClCompile Include="effect\SnowEffectManager.cpp" />
+    <ClCompile Include="gameObject\GoalPole.cpp" />
     <ClCompile Include="gameObject\Obstacle.cpp" />
     <ClCompile Include="gameObject\Player.cpp" />
     <ClCompile Include="gameObject\Rock.cpp" />
@@ -186,6 +187,7 @@
     <ClCompile Include="gameObject\SnowManUnder.cpp" />
     <ClCompile Include="gameObject\SnowManUpper.cpp" />
     <ClCompile Include="gameObject\SnowPlate.cpp" />
+    <ClCompile Include="gameObject\SnowWall.cpp" />
     <ClCompile Include="gameObject\Tree.cpp" />
     <ClCompile Include="gameUI\FinalSnowBallSize.cpp" />
     <ClCompile Include="gameUI\FinalSnowBallSizeUI.cpp" />
@@ -331,6 +333,7 @@
     <ClInclude Include="effect\Easing.h" />
     <ClInclude Include="effect\SnowEffect.h" />
     <ClInclude Include="effect\SnowEffectManager.h" />
+    <ClInclude Include="gameObject\GoalPole.h" />
     <ClInclude Include="gameObject\Obstacle.h" />
     <ClInclude Include="gameObject\Player.h" />
     <ClInclude Include="gameObject\Rock.h" />
@@ -339,6 +342,7 @@
     <ClInclude Include="gameObject\SnowManUnder.h" />
     <ClInclude Include="gameObject\SnowManUpper.h" />
     <ClInclude Include="gameObject\SnowPlate.h" />
+    <ClInclude Include="gameObject\SnowWall.h" />
     <ClInclude Include="gameObject\Tree.h" />
     <ClInclude Include="gameUI\FinalSnowBallSize.h" />
     <ClInclude Include="gameUI\FinalSnowBallSizeUI.h" />

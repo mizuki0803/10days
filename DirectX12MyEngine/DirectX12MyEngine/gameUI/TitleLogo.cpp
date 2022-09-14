@@ -20,7 +20,7 @@ TitleLogo* TitleLogo::Create(UINT texNumber, const Vector2& position, const Vect
 
 	//‘å‚«‚³‚ðƒZƒbƒg
 	titleLogo->size = size;
-	titleLogo->texSize = size;
+	titleLogo->texSize = { 924, 600 };
 
 	return titleLogo;
 }

@@ -1,5 +1,6 @@
 #include "Countdown.h"
 #include "Audio.h"
+#include "Easing.h"
 
 Countdown* Countdown::Create(UINT texNumber, const Vector2& position, const Vector2& size)
 {
@@ -32,14 +33,16 @@ bool Countdown::Initialize(UINT texNumber, const Vector2& position, const Vector
 		numberSprites.push_back(std::move(newNumberSprite));
 	}
 
+
+	//スプライト数字変更
+	ChangeNumber();
+
 	return true;
 }
 
 void Countdown::Update()
 {
 	BeforeStart();
-	//雪玉の大きさに応じて数字変更
-	ChangeNumber();
 	//移動処理
 	Move();
 

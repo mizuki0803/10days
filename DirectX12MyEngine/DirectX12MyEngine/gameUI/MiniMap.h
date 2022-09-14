@@ -23,27 +23,20 @@ public: //メンバ関数
 	/// <summary>
 	/// 更新
 	/// </summary>
-	void Update();
+	void Update(const float playerPosZ);
 
 	/// <summary>
 	/// 描画
 	/// </summary>
 	void Draw();
 
-	//getter
-
-	//setter
-	void SetPlayer(Player* player) { this->player = player; }
-
 private: //メンバ関数
 	/// <summary>
 	/// 雪玉の座標を変更
 	/// </summary>
-	void ChangeSnowBallPos();
+	void ChangeSnowBallPos(const float playerPosZ);
 
 private: //メンバ変数
-	//雪玉
-	Player* player = nullptr;
 	//ゴール座標
 	float goalPos = 0;
 	//マップスプライト

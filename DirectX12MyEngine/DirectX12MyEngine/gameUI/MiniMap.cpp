@@ -28,16 +28,16 @@ bool MiniMap::Initialize(UINT miniMapTexNumber, UINT snowBallTexNumber, const Ve
 	std::unique_ptr<MiniMapSnowBall> newMiniMapSnowBall;
 	Vector2 snowBallPos = position;
 	snowBallPos.y += size.y;
-	Vector2 snowBallSize = { 40, 40 };
+	Vector2 snowBallSize = { 60, 60 };
 	miniMapSnowBall.reset(MiniMapSnowBall::Create(snowBallTexNumber, snowBallPos, snowBallSize));
 
-    return true;
+	return true;
 }
 
-void MiniMap::Update()
+void MiniMap::Update(const float playerPosZ)
 {
 	//雪玉の座標変更
-	ChangeSnowBallPos();
+	ChangeSnowBallPos(playerPosZ);
 
 	//スプライト更新
 	miniMapSprite->Update();
@@ -51,10 +51,10 @@ void MiniMap::Draw()
 	miniMapSnowBall->Draw();
 }
 
-void MiniMap::ChangeSnowBallPos()
+void MiniMap::ChangeSnowBallPos(const float playerPosZ)
 {
 	//雪玉の座標を取得
-	float snowBallPos = player->GetPosition().z;
+	float snowBallPos = playerPosZ;
 	if (snowBallPos >= goalPos) {
 		snowBallPos = goalPos;
 	}

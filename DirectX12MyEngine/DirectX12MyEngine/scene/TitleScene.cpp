@@ -47,7 +47,7 @@ void TitleScene::Initialize()
 	//スプライト用テクスチャ読み込み
 	spriteCommon->LoadTexture(1, "title.png");
 	spriteCommon->LoadTexture(2, "Number.png");
-	spriteCommon->LoadTexture(3, "pushAStart.png");
+	spriteCommon->LoadTexture(3, "pushA.png");
 
 	//objからモデルデータを読み込む
 	modelSkydome.reset(ObjModel::LoadFromOBJ("skydome"));
@@ -55,6 +55,7 @@ void TitleScene::Initialize()
 	modelRock.reset(ObjModel::LoadFromOBJ("Rock"));
 	modelTree.reset(ObjModel::LoadFromOBJ("tree"));
 	modelSnowPlate.reset(ObjModel::LoadFromOBJ("Snowplate"));
+	modelSnowWall.reset(ObjModel::LoadFromOBJ("Snowwall", true));
 
 	//雪玉生成
 	autoPlayer.reset(AutoPlayer::Create(modelSnowBall.get()));
@@ -66,6 +67,7 @@ void TitleScene::Initialize()
 
 	//天球生成
 	skydome.reset(Skydome::Create(modelSkydome.get()));
+	skydome->SetRotation({ -10, 0, 0 });
 	//雪のフィールド生成
 	for (int i = 0; i < 3; i++) {
 		for (int j = 0; j < 35; j++) {
@@ -77,6 +79,19 @@ void TitleScene::Initialize()
 		}
 	}
 	SnowPlate::SetPlayer(nullptr);
+	//壁生成
+	for (int i = 0; i < 2; i++) {
+		for (int j = 0; j < 40; j++) {
+			std::unique_ptr<SnowWall> newSnowWall;
+
+			Vector3 pos = { -20 + (float)(50 * i), 0, (float)(50 * j) };
+			if (i == 1) { pos.x -= 12.0f; }
+			Vector3 rota = { 0, 90 + 180 * (float)i, 0 };
+			newSnowWall.reset(SnowWall::Create(modelSnowWall.get(), pos, rota));
+			snowWalls.push_back(std::move(newSnowWall));
+		}
+	}
+	SnowWall::SetPlayer(nullptr);
 
 	//とりあえず雪玉にカメラ追従させる
 	camera->SetTarget(autoPlayer->GetPosition());
@@ -101,9 +116,9 @@ void TitleScene::Initialize()
 	}
 
 	//タイトルロゴ生成
-	titleLogo.reset(TitleLogo::Create(1, { 640, 150 }, { 600, 500 }));
+	titleLogo.reset(TitleLogo::Create(1, { 640, 180 }, { 616, 400 }));
 	//PushAスプライト生成
-	pushASprite.reset(TitlePushASprite::Create(3, { 640, 550 }, { 350, 50 }));
+	pushASprite.reset(TitlePushASprite::Create(3, { 640, 550 }, { 320, 64 }));
 
 	//タイトルシーン用BGMを再生
 	Audio::GetInstance()->PlayWave("titleBGM.wav", true);
@@ -144,6 +159,10 @@ void TitleScene::Update()
 	//雪のフィールド
 	for (const std::unique_ptr<SnowPlate>& snowPlate : snowPlates) {
 		snowPlate->Update();
+	}
+	//壁
+	for (const std::unique_ptr<SnowWall>& snowWall : snowWalls) {
+		snowWall->Update();
 	}
 
 	//タイトルロゴ描画
@@ -209,6 +228,11 @@ void TitleScene::Draw()
 	for (const std::unique_ptr<SnowPlate>& snowPlate : snowPlates) {
 		snowPlate->Draw();
 	}
+	//壁
+	for (const std::unique_ptr<SnowWall>& snowWall : snowWalls) {
+		snowWall->Draw();
+	}
+
 
 	///-------Object3d描画ここまで-------///
 

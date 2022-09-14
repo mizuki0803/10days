@@ -126,6 +126,12 @@
     <Filter Include="ソース ファイル\gameUI\titleLogo">
       <UniqueIdentifier>{814fa406-3466-462b-9b7a-8f1a0af60c2e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\gameObject\goalPole">
+      <UniqueIdentifier>{62983b1a-e5d2-413c-8390-b929a47ea631}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\gameObject\snowWall">
+      <UniqueIdentifier>{852485b0-a83d-4984-9ff2-e54dbcd0a14f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="audio\Audio.cpp">
@@ -310,6 +316,12 @@
     </ClCompile>
     <ClCompile Include="gameUI\ResultPushASprite.cpp">
       <Filter>ソース ファイル\gameUI\pushA</Filter>
+    </ClCompile>
+    <ClCompile Include="gameObject\GoalPole.cpp">
+      <Filter>ソース ファイル\gameObject\goalPole</Filter>
+    </ClCompile>
+    <ClCompile Include="gameObject\SnowWall.cpp">
+      <Filter>ソース ファイル\gameObject\snowWall</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -571,6 +583,12 @@
     </ClInclude>
     <ClInclude Include="gameUI\ResultPushASprite.h">
       <Filter>ソース ファイル\gameUI\pushA</Filter>
+    </ClInclude>
+    <ClInclude Include="gameObject\GoalPole.h">
+      <Filter>ソース ファイル\gameObject\goalPole</Filter>
+    </ClInclude>
+    <ClInclude Include="gameObject\SnowWall.h">
+      <Filter>ソース ファイル\gameObject\snowWall</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

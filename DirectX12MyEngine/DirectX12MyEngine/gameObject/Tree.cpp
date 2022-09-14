@@ -26,7 +26,7 @@ Tree* Tree::Create(ObjModel* model, const Vector3& position)
 	tree->scale = { 2.5f, 2.5f, 2.5f };
 
 	//‰ñ“]‚ðƒZƒbƒg
-	tree->rotation = { -30, 0, 0 };
+	tree->rotation = { -40, 0, 0 };
 
 	return tree;
 }

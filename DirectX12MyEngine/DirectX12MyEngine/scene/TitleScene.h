@@ -13,6 +13,7 @@
 #include "Obstacle.h"
 #include "Skydome.h"
 #include "SnowPlate.h"
+#include "SnowWall.h"
 #include "Countdown.h"
 #include "TitlePushASprite.h"
 #include <sstream>
@@ -103,6 +104,7 @@ private: //メンバ変数
 	std::unique_ptr<ObjModel> modelTree;
 	std::unique_ptr<ObjModel> modelSnowBall;
 	std::unique_ptr<ObjModel> modelSnowPlate;
+	std::unique_ptr<ObjModel> modelSnowWall;
 
 	//自機
 	std::unique_ptr<AutoPlayer> autoPlayer;
@@ -116,6 +118,8 @@ private: //メンバ変数
 	std::unique_ptr<Skydome> skydome;
 	//雪のフィールド
 	std::list<std::unique_ptr<SnowPlate>> snowPlates;
+	//壁
+	std::list<std::unique_ptr<SnowWall>> snowWalls;
 	//タイトルロゴ
 	std::unique_ptr<TitleLogo> titleLogo;
 	//PushAスプライト
