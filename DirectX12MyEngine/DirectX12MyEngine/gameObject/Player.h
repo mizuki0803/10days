@@ -87,7 +87,7 @@ protected: //静的メンバ変数
 	//スピードに掛ける値
 	const float speedRate = 0.02f;
 	//scaleに掛ける値
-	const float scaleRate = 0.003f;
+	const float scaleRate = 0.0032f;
 
 protected: //メンバ変数
 	//ゲーム開始か

@@ -229,21 +229,21 @@ void Player::ChangeScale()
 
 	if (isDam)
 	{
-		if (ballScale < 2.0f)
+		if (ballScale < 2.5f)
 		{
 			ballScale = 1.0f;
 		}
-		else if (ballScale < 3.0f)
+		else if (ballScale < 3.5f)
 		{
-			ballScale /= 2.0f;
+			ballScale /= 2.5f;
 		}
 		else if (ballScale < 4.0f)
 		{
-			ballScale /= 1.5f;
+			ballScale /= 2.25f;
 		}
 		else
 		{
-			ballScale /= 1.25f;
+			ballScale /= 2.0f;
 		}
 	}
 	else
